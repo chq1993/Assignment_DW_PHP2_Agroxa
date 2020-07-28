@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePositionFormTable extends Migration
+class CreatePositionFormsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreatePositionFormTable extends Migration
      */
     public function up()
     {
-        Schema::create('position_form', function (Blueprint $table) {
+        Schema::create('position_forms', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_position')->unsigned()->nullable();
-            $table->foreign('id_position')->references('id')->on('position')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_position')->references('id')->on('positions')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('id_form')->unsigned()->nullable();
-            $table->foreign('id_form')->references('id')->on('form')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_form')->references('id')->on('forms')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -29,6 +29,6 @@ class CreatePositionFormTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('position_form');
+        Schema::dropIfExists('position_forms');
     }
 }

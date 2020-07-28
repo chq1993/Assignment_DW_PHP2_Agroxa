@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateResultTable extends Migration
+class CreateResultsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateResultTable extends Migration
      */
     public function up()
     {
-        Schema::create('result', function (Blueprint $table) {
+        Schema::create('results', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_role_form_role')->unsigned()->nullable();
-            $table->foreign('id_role_form_role')->references('id')->on('role_form_role')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_role_form_role')->references('id')->on('role_form_roles')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('id_question')->unsigned()->nullable();
-            $table->foreign('id_question')->references('id')->on('question')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_question')->references('id')->on('questions')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('answer');
             $table->string('noidungdanhgia',255);
             $table->timestamps();
@@ -32,6 +32,6 @@ class CreateResultTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('result');
+        Schema::dropIfExists('results');
     }
 }

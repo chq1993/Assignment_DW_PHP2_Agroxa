@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAnswerQuestionTable extends Migration
+class CreateQuestionFormsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateAnswerQuestionTable extends Migration
      */
     public function up()
     {
-        Schema::create('answer_question', function (Blueprint $table) {
+        Schema::create('question_forms', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_answer')->unsigned()->nullable();
-            $table->foreign('id_answer')->references('id')->on('answer')->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('id_form')->unsigned()->nullable();
+            $table->foreign('id_form')->references('id')->on('forms')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('id_question')->unsigned()->nullable();
-            $table->foreign('id_question')->references('id')->on('question')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_question')->references('id')->on('questions')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -29,6 +29,6 @@ class CreateAnswerQuestionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('answer_question');
+        Schema::dropIfExists('question_forms');
     }
 }
