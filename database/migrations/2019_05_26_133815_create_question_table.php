@@ -19,7 +19,7 @@ class CreateQuestionTable extends Migration
             $table->string('description_question', 1000);
             $table->integer('group_question');
             $table->string('kind_question', 500);
-            $table->boolean('required_question');
+            $table->boolean('required_question')->default(true);
             $table->timestamps();
         });
     }
