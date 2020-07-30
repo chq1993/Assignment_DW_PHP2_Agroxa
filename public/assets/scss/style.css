@@ -3822,4 +3822,17 @@ Invoice
     border: none !important;
   }
 }
+
+.cursor {
+  cursor: pointer;
+}
+
+.btn-hover {
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.btn-hover:hover {
+  border: 1px solid #35a989;
+}
 /*# sourceMappingURL=style.css.map */

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,3 +33,6 @@ Route::get('dashboard','Controller@show_dashboard');
 Route::get('user/changeStatus', 'UserController@changeStatus')->name('user.changeStatus');
 Route::post('user/ajax-update', 'UserController@ajax_update')->name('user.ajax_update');
 Route::resource('user', 'UserController');
+
+Route::resource('question-manage', 'QuestionManageController');
+Route::resource('form-manage', 'FormManageController');
