@@ -142,17 +142,6 @@
               </ul>
             </li>
 
-            <li>
-              <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-buffer"></i> <span> UI
-                  Elements <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span>
-                </span> </a>
-              <ul class="submenu">
-                <li><a href="ui-alerts.html">Alerts</a></li>
-                <li><a href="ui-buttons.html">Buttons</a></li>
-                <li><a href="ui-badge.html">Badge</a></li>
-                <li><a href="ui-cards.html">Cards</a></li>
-              </ul>
-            </li>
           </ul>
 
         </div>

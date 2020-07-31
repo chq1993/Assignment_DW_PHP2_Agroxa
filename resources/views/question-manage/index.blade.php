@@ -231,7 +231,7 @@
                         <form action="{{ route('question-manage.destroy', $question->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
-                          <button onclick="return confirm('Are you sure?')" class="btn btn-danger" type="submit"><i
+                          <button onclick="return confirm('Bạn có chắc muốn xóa?')" class="btn btn-danger" type="submit"><i
                               class="far fa-trash-alt"></i></button>
                         </form>
                       </div>

@@ -16,7 +16,13 @@ class FormManageController extends Controller
     public function index()
     {
 
-        $forms = DB::table('forms')->paginate(5);
+        $forms = DB::table('forms');
+
+        if(isset($_GET['search-form'])){
+            $forms = $forms->where("name_form", "like", "%" . $_GET["search-form"] . "%");
+        }
+
+        $forms = $forms->paginate(5)->appends(request()->query());
         return view('form-manage.index', ['forms' => $forms]);
     }
 
@@ -38,6 +44,9 @@ class FormManageController extends Controller
      */
     public function store(Request $request)
     {
+        //Hiển thị thông báo check với điều kiện ngoài index
+        alert()->success('Mẫu phiếu được thêm mới', 'Thành công');
+
         $request->validate([
             'name_form' => 'required|max:255',
             'description_form' => 'required|max:255'
@@ -48,7 +57,7 @@ class FormManageController extends Controller
             'description_form' => $request->get('description_form')
         ]);
         $form->save();
-        return redirect('form-manage')->with('success', 'Phiếu tạo thành công !');
+        return redirect('form-manage')->with('create-success', 'Phiếu tạo thành công !');
     }
 
     /**
@@ -83,6 +92,9 @@ class FormManageController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //Hiển thị thông báo check với điều kiện ngoài index
+        alert()->success('Mẫu phiếu được cập nhật', 'Thành công');
+
         $request->validate([
             'name_form' => 'required|max:255',
             'description_form' => 'required|max:255'
@@ -92,7 +104,7 @@ class FormManageController extends Controller
         $form->description_form = $request->get('description_form');
         $form->save();
 
-        return redirect('form-manage')->with('success', 'Cập nhật mẫu phiếu thành công');
+        return redirect('form-manage')->with('update-success', 'Cập nhật mẫu phiếu thành công');
     }
 
     /**
@@ -103,8 +115,11 @@ class FormManageController extends Controller
      */
     public function destroy($id)
     {
+        //Hiển thị thông báo check với điều kiện ngoài index
+        alert()->success('Mẫu phiếu được xóa', 'Thành công');
+
         $form = Form::find($id);
         $form->delete();
-        return redirect('form-manage')->with('success', 'Xóa mẫu phiếu thành công !');
+        return redirect('form-manage')->with('delete-success', 'Xóa mẫu phiếu thành công !');
     }
 }
