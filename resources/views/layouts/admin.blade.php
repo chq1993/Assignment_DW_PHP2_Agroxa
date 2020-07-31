@@ -5,10 +5,10 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-  <title>Assignment_PHP2</title>
-  <meta content="Admin Dashboard" name="description" />
+  <title>Atlantic</title>
+  <meta content="Đánh giá đối tượng" name="description" />
   <meta content="Themesbrand" name="author" />
-  <link rel="shortcut icon" href="assets/images/favicon.ico">
+  <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
 
   <!--Chartist Chart CSS -->
   <link rel="stylesheet" href="{{ asset('assets/plugins/chartist/css/chartist.min.css') }}">
