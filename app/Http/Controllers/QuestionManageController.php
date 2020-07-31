@@ -16,22 +16,27 @@ class QuestionManageController extends Controller
     public function index()
     {
         $questions = DB::table('questions');
+        // dd(Question::all());
         // search
         if (isset($_GET["search-question"])) {
+            
             $questions = $questions->where("question", "like", "%" . $_GET["search-question"] . "%");
         }
-
+        
         if (isset($_GET["search-group-question"])) {
             $questions = $questions->where("group_question", "like", "%" . $_GET["search-group-question"] . "%");  
         }
-
+        
         if (isset($_GET["required-question"])) {
+            
             $questions = $questions->where("required_question", "like", "%" . $_GET["required-question"] . "%");
+            
         }
-
+        
         if (isset($_GET["not-required-question"])) {
             $questions = $questions->where("required_question", "like", "%" . $_GET["not-required-question"] . "%");
         }
+      
 
         $questions = $questions->paginate(5)->appends(request()->query());
         return view('question-manage.index', [
