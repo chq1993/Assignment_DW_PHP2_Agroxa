@@ -17,8 +17,9 @@ Sau khi pull code từ master về, luôn chạy các lệnh sau để chánh g�
 4. php artisan serve
 
 ## Về đẩy code lên github
-1. Ae nhớ kiểm tra nhánh - nếu đang ở master thì tạo 1 nhánh khác vào chuyển sang nhánh đó rồi mới đưa code lên github.
+1. Ae nhớ kiểm tra nhánh - nếu đang ở 'master' thì phải tạo 1 nhánh khác và di chuyển sang nhánh đó rồi mới đưa code lên github.
     - cách tạo nhánh: git branch -b "feature/tên-chức-năng"
+    - di chuyển sang nhánh khác: git checkout tên-nhánh-vừa-tạo
     - lưu ý: không đặt tên có ký tự & % # @! ?| \ /
 2. Thứ tự lệnh đẩy lên github khi đã checkout sang nhánh khác:
     - git status (xem thay đổi)
