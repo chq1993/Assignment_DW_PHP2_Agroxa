@@ -79,7 +79,8 @@
                                     <i class="fas fa-search text-white"></i>
                                     <span>tìm kiếm</span>
                                   </button>
-                                  <button type="reset" class="btn btn-sm w-50 ml-1 shadow-sm btn-hover">xóa</button>
+                                  <button type="reset" class="btn btn-sm w-50 ml-1 shadow-sm btn-hover"><i
+                                      class="fas fa-sync-alt"></i></button>
                                 </div>
                               </form>
                             </div>

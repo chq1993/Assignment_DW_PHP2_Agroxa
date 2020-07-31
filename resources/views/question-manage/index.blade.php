@@ -99,16 +99,15 @@
                         <div class="dropdown">
                           <button type="button" class="btn btn-sm shadow-none bg-transparent"
                             id="isearch-group-question" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false" data-offset="-120,15">
-                            <i class="fas fa-search text-white"></i>
+                            aria-expanded="false" data-offset="-130,15">
+                            <i class="fas fa-filter text-white"></i>
                           </button>
 
                           <div class="dropdown-menu shadow" aria-labelledby="isearch-group-question">
-                            <div class="p-2">
+                            <div style="width: 174px" class="p-2">
                               <form role="search-group-question" class="table-search rounded">
                                 <div class="form-group mb-0">
-                                  <select class="custom-select mr-sm-2" name="search-group-question"
-                                    id="search-group-question">
+                                  <select class="form-control" name="search-group-question" id="search-group-question">
                                     @foreach ($groupWorks as $groupWork)
                                     <option value="{{$loop->index + 1}}">{{$groupWork}}</option>
                                     @endforeach
@@ -119,7 +118,8 @@
                                     <i class="fas fa-search text-white"></i>
                                     <span>tìm kiếm</span>
                                   </button>
-                                  <button type="reset" class="btn btn-sm w-50 ml-1 shadow-sm btn-hover">xóa</button>
+                                  <a href="/question-manage" class="btn btn-sm w-50 ml-1 shadow-sm btn-hover"><i
+                                      class="fas fa-sync-alt"></i></a>
                                 </div>
                               </form>
                             </div>
@@ -144,12 +144,14 @@
                             <div class="p-2">
                               <form role="search-type-question" class="table-search rounded">
                                 <div class="form-group form-check">
-                                  <input type="checkbox" class="form-check-input" id="text-question-type">
+                                  <input type="checkbox" class="form-check-input" value="0" name="text-question-type"
+                                    id="text-question-type">
                                   <label class="form-check-label font-weight-normal"
                                     for="text-question-type">Nhập</label>
                                 </div>
                                 <div class="form-group form-check">
-                                  <input type="checkbox" class="form-check-input" id="select-question-type">
+                                  <input type="checkbox" class="form-check-input" value="1" name="select-question-type"
+                                    id="select-question-type">
                                   <label class="form-check-label font-weight-normal" for="select-question-type">Lựa
                                     chọn</label>
                                 </div>
@@ -221,7 +223,7 @@
                     <td>{{$question->id}}</td>
                     <td>{{$question->question}}</td>
                     <td>{{$groupWorks[$question->group_question - 1]}}</td>
-                    <td>{{$question->kind_question}}</td>
+                    <td>{{$groupTypeQuestion[$question->kind_question]}}</td>
                     <td>{{$groupRequests[$question->required_question]}}</td>
                     <td>{{$question->description_question}}</td>
                     <td>
@@ -231,8 +233,8 @@
                         <form action="{{ route('question-manage.destroy', $question->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
-                          <button onclick="return confirm('Bạn có chắc muốn xóa?')" class="btn btn-danger" type="submit"><i
-                              class="far fa-trash-alt"></i></button>
+                          <button onclick="return confirm('Bạn có chắc muốn xóa?')" class="btn btn-danger"
+                            type="submit"><i class="far fa-trash-alt"></i></button>
                         </form>
                       </div>
                     </td>

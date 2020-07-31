@@ -11,7 +11,7 @@
   <link rel="shortcut icon" href="assets/images/favicon.ico">
 
   <!--Chartist Chart CSS -->
-  <link rel="stylesheet" href="{{ asset('../plugins/chartist/css/chartist.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/chartist/css/chartist.min.css') }}">
 
   <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
   <link href="{{ asset('assets/css/metismenu.min.css') }}" rel="stylesheet" type="text/css">
@@ -30,7 +30,7 @@
 
       <!-- LOGO -->
       <div class="topbar-left">
-        <a href="index.html" class="logo">
+        <a href="/dashboard" class="logo">
           <span>
             <img src="assets/images/logo.png" alt="" height="24">
           </span>
@@ -52,6 +52,55 @@
             </form>
           </li>
 
+          <li class="dropdown notification-list">
+            <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#"
+              role="button" aria-haspopup="false" aria-expanded="false">
+              <i class="mdi mdi-bell noti-icon"></i>
+              <span class="badge badge-pill badge-info noti-icon-badge">3</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
+              <!-- item-->
+              <h6 class="dropdown-item-text">
+                Notifications (37)
+              </h6>
+              <div class="slimscroll notification-item-list">
+                <!-- item-->
+                <a href="javascript:void(0);" class="dropdown-item notify-item active">
+                  <div class="notify-icon bg-success"><i class="mdi mdi-cart-outline"></i></div>
+                  <p class="notify-details">Your order is placed<span class="text-muted">Dummy text of the printing and
+                      typesetting industry.</span></p>
+                </a>
+                <!-- item-->
+                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                  <div class="notify-icon bg-warning"><i class="mdi mdi-message"></i></div>
+                  <p class="notify-details">New Message received<span class="text-muted">You have 87 unread
+                      messages</span></p>
+                </a>
+                <!-- item-->
+                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                  <div class="notify-icon bg-info"><i class="mdi mdi-flag"></i></div>
+                  <p class="notify-details">Your item is shipped<span class="text-muted">It is a long established fact
+                      that a reader will</span></p>
+                </a>
+                <!-- item-->
+                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                  <div class="notify-icon bg-primary"><i class="mdi mdi-cart-outline"></i></div>
+                  <p class="notify-details">Your order is placed<span class="text-muted">Dummy text of the printing and
+                      typesetting industry.</span></p>
+                </a>
+                <!-- item-->
+                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                  <div class="notify-icon bg-danger"><i class="mdi mdi-message"></i></div>
+                  <p class="notify-details">New Message received<span class="text-muted">You have 87 unread
+                      messages</span></p>
+                </a>
+              </div>
+              <!-- All-->
+              <a href="javascript:void(0);" class="dropdown-item text-center text-primary">
+                View all <i class="fi-arrow-right"></i>
+              </a>
+            </div>
+          </li>
 
           <li class="dropdown notification-list">
             <div class="dropdown notification-list nav-pro-img">
@@ -133,7 +182,7 @@
             </li>
 
             <li>
-              <a class="waves-effect"><i class="fas fa-user-circle"></i><span> Ngân
+              <a class="waves-effect"><i class="fas fa-university"></i><span> Ngân
                   hàng câu hỏi <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
               <ul class="submenu">
                 <li><a href="{{ route('question-manage.index') }}">Quản lý câu hỏi</a></li>
@@ -181,7 +230,7 @@
   <!-- END wrapper -->
 
   <script>
-    
+
   </script>
 
   <!-- jQuery  -->
@@ -190,16 +239,19 @@
   <script src="{{ asset('assets/js/metisMenu.min.js') }}"></script>
   <script src="{{ asset('assets/js/jquery.slimscroll.js') }}"></script>
   <script src="{{ asset('assets/js/waves.min.js') }}"></script>
+  <script src="{{ asset('js/script.js') }}"></script>
 
-  <script src="{{ asset('../plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
+  <script src="{{ asset('assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
 
   <!--Chartist Chart-->
-  <script src="{{ asset('../plugins/chartist/js/chartist.min.js') }}"></script>
-  <script src="{{ asset('../plugins/chartist/js/chartist-plugin-tooltip.min.js') }}"></script>
-  <script src="{{ asset('assets/pages/chartist.init.js') }}"></script>
+  <script src="{{ asset('assets/plugins/chartist/js/chartist.min.js') }}"></script>
+
+  {{-- chartjs --}}
+  <script src="{{ asset('js/Chart.js') }}"></script>
+
 
   <!-- App js -->
-  <script src="../../node_modules/sweetalert2/dist/sweetalert2.all.js"></script>
+
   <script src="{{ asset('assets/js/app.js') }}"></script>
 
 </body>

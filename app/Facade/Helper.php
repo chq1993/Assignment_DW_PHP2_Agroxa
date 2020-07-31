@@ -15,21 +15,21 @@ class Helper
     ];
     public static $groupRequests = ["Không bắt buộc", "Bắt buộc"];
 
-    /**
-     * 
-     * @return array
-     */
+    public static $groupTypeQuestion = ["Nhập", "Lựa chọn"];
+
+   
     public static function groupWorks()
     {
         return self::$groupWorks;
     }
 
-    /**
-     * 
-     * @return array
-     */
     public static function groupRequests()
     {
         return self::$groupRequests;
+    }
+
+    public static function groupTypeQuestion()
+    {
+        return self::$groupTypeQuestion;
     }
 }
