@@ -17,16 +17,33 @@ class QuestionManageController extends Controller
     {
         $questions = DB::table('questions');
         // dd(Question::all());
+
         // search
         if (isset($_GET["search-question"])) {
             
             $questions = $questions->where("question", "like", "%" . $_GET["search-question"] . "%");
         }
         
+        // search
         if (isset($_GET["search-group-question"])) {
             $questions = $questions->where("group_question", "like", "%" . $_GET["search-group-question"] . "%");  
         }
         
+
+        // search
+        if (isset($_GET["text-question-type"])) {
+            
+            $questions = $questions->where("kind_question", "like", "%" . $_GET["text-question-type"] . "%");
+            
+        }
+
+        if (isset($_GET["select-question-type"])) {
+            
+            $questions = $questions->where("kind_question", "like", "%" . $_GET["select-question-type"] . "%");
+            
+        }
+
+        // search
         if (isset($_GET["required-question"])) {
             
             $questions = $questions->where("required_question", "like", "%" . $_GET["required-question"] . "%");
@@ -43,6 +60,7 @@ class QuestionManageController extends Controller
             'questions' => $questions,
             'groupWorks' => \Helper::groupWorks(),
             'groupRequests' => \Helper::groupRequests(),
+            'groupTypeQuestion'=> \Helper::groupTypeQuestion()
         ]);
         // return view('question-manage.index', compact('questions'));
     }
@@ -70,7 +88,6 @@ class QuestionManageController extends Controller
 
         $request->validate([
             'question' => 'required|max:500',
-            'kind_question' => 'required|max:255',
             'description_question' => 'required|max:1000',
         ]);
 
@@ -122,7 +139,6 @@ class QuestionManageController extends Controller
 
         $request->validate([
             'question' => 'required|max:500',
-            'kind_question' => 'required|max:255',
             'description_question' => 'required|max:1000',
         ]);
 

@@ -60,8 +60,11 @@
             </div>
             <div class="form-group">
               <label for="kind_question">Loại câu hỏi</label>
-              <input type="text" class="form-control" name="kind_question" id="kind_question" required
-                placeholder="Nhập địa chỉ" />
+
+              <select class="custom-select mr-sm-2" name="kind_question" id="kind_question">
+                <option value="0" selected>Nhập</option>
+                <option value="1">Lựa chọn</option>
+              </select>
             </div>
             <div class="form-group">
               <label class="mr-sm-2" for="required_question">Câu hỏi bắt buộc</label>
@@ -73,8 +76,8 @@
             <div class="form-group">
               <label for="description_question">Miêu tả thêm</label>
               <div>
-                <input type="text" name="description_question" id="description_question" class="form-control" required
-                  placeholder="Nhập thông tin thêm" />
+                <textarea rows="3" type="text" name="description_question" id="description_question"
+                  class="form-control" required placeholder="Nhập thông tin thêm"></textarea>
               </div>
             </div>
 
