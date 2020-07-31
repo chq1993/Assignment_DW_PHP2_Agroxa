@@ -1,8 +1,26 @@
-window.onload = function () {
-  // Chart.defaults.global.defaultFontColor = '#000000';
-  // Chart.defaults.global.defaultFontFamily = 'Arial';
-  let lineChart = document.getElementById('lineChart');
-  let doughnutChart = document.getElementById('doughnutChart');
+
+
+function doughnutChart() {
+
+  let doughnutChart = document.getElementById('doughnutChart')
+
+  new Chart(doughnutChart, {
+    "type": "doughnut",
+    "data": {
+      "labels": ["Giải quyết vấn đề", "Làm việc nhóm", "Giáo tiếp", "Trách nhiệm", "Ra quyết định", "lãnh đạo", "Lập kế hoạch"],
+      "datasets": [{
+        "label": "My First Dataset",
+        // thang điểm = 5
+        "data": [5, 3, 4, 4, 3, 2, 5],
+        "backgroundColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)", "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"]
+      }]
+    }
+  });
+}
+
+function lineChart() {
+
+  let lineChart = document.getElementById('lineChart')
 
   new Chart(lineChart, {
     type: 'radar',
@@ -50,17 +68,4 @@ window.onload = function () {
       }
     }
   });
-
-  new Chart(doughnutChart, {
-    "type": "doughnut",
-    "data": {
-      "labels": ["Giải quyết vấn đề", "Làm việc nhóm", "Giáo tiếp","Trách nhiệm", "Ra quyết định","lãnh đạo","Lập kế hoạch"],
-      "datasets": [{
-        "label": "My First Dataset",
-        // thang điểm = 5
-        "data": [5, 3, 4, 4, 3, 2, 5],
-        "backgroundColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)","rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)","rgb(201, 203, 207)"]
-      }]
-    }
-  });
-};
+}
