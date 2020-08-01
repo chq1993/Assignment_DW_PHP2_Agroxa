@@ -12,9 +12,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.admin');
-});
+
 
 Route::get('page',function(){
 	return view('page');
@@ -23,16 +21,22 @@ Route::get('page',function(){
 Route::get('testpage',function(){
 	return view('testpage');
 });
-
-
-Route::get('login','Controller@login');
-
 Route::get('dashboard','Controller@show_dashboard');
 
+
+//Route login
+Route::get('/login', 'UserController@show_login')->name('user.login');
+Route::post('/login','UserController@login')->name('user.check_login');
+
+Route::group(['middleware'=>'check_auth'], function(){
 // Route của user
 Route::get('user/changeStatus', 'UserController@changeStatus')->name('user.changeStatus');
-Route::post('user/ajax-update', 'UserController@ajax_update')->name('user.ajax_update');
 Route::resource('user', 'UserController');
 
-Route::resource('question-manage', 'QuestionManageController');
-Route::resource('form-manage', 'FormManageController');
+Route::get('/dashboard', 'UserController@show_dashboard');
+Route::get('/logout', 'UserController@logout')->name('user.logout');
+
+Route::get('/', function () {
+    return view('layouts.admin');
+});
+});
