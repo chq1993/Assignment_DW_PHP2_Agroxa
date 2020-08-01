@@ -36,9 +36,13 @@ Route::resource('user', 'UserController');
 Route::get('/dashboard', 'UserController@show_dashboard');
 Route::get('/logout', 'UserController@logout')->name('user.logout');
 
+//Route của Quản lý câu hỏi
+Route::resource('question-manage', 'QuestionManageController');
+//Route của Quản lý form
+Route::resource('form-manage', 'FormManageController');
+
 Route::get('/', function () {
     return view('layouts.admin');
 });
 });
-Route::resource('question-manage', 'QuestionManageController');
-Route::resource('form-manage', 'FormManageController');
+
