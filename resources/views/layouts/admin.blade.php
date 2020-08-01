@@ -64,7 +64,7 @@
                                     <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="mdi mdi-settings m-r-5"></i> Cài đặt</a>
                                     <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5"></i> Màn hình khóa</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" href="#"><i class="mdi mdi-power text-danger"></i> Đăng xuất</a>
+                                    <a class="dropdown-item text-danger" href="{{ route('user.logout') }}"><i class="mdi mdi-power text-danger"></i> Đăng xuất</a>
                                 </div>                                                                    
                             </div>
                         </li>

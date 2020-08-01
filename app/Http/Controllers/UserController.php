@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+
 
 class UserController extends Controller
 {
@@ -36,8 +38,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        
         $txtUserName = $request->get("txtUserName");
         $txtFullName = $request->get("txtFullName");
+        $dateBirthday = $request->get("dateBirthday");
         $txtEmail = $request->get("txtEmail");
         $txtAddress = $request->get("txtAddress");
         $txtPhone = $request->get("txtPhone");
@@ -49,26 +53,15 @@ class UserController extends Controller
         $obj= new User([
             'username'=>$txtUserName,
             'fullname'=>$txtFullName,
+            'birthday'=>$dateBirthday,
             'email'=>$txtEmail,
             'address'=>$txtAddress,
             'phone'=>$txtPhone,
             'status'=>1,
             'password'=>bcrypt($txtPassword)
         ]);
-        
-        if ($request->hasFile("txtAnhdd")){
-            if ($request->file("txtAnhdd")->isValid()){
-                $imagePath = $request->file('file');
-                $imageName = $txtUserName.'_'.time().'.'.$request->txtAnhdd->extension();  
-                $request->txtAnhdd->move(public_path('uploads'), $imageName);
-                $path_image = "uploads/".$imageName;
-                $obj->image= $path_image;
-            }
-        }
-
 
         $obj->save();
-        //return view('user.create')->with("message", "Thêm mới thành công");
         return Redirect()->to('user/create')->with('message', 'Thêm mới người dùng thành công!');
 
     }
@@ -94,6 +87,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         return view('user.edit', compact('user'));
+
     }
 
     /**
@@ -109,18 +103,18 @@ class UserController extends Controller
         
         $txtUserName = $request->get("txtUserName");
         $txtFullName = $request->get("txtFullName");
+        $dateBirthday = $request->get("dateBirthday");
         $txtAddress = $request->get("txtAddress");
         $txtEmail = $request->get("txtEmail");
         $txtPhone = $request->get("txtPhone");
-        $txtAnhdd = $request->get("txtAnhdd");
 
         
         $user->username= $txtUserName;
         $user->fullname= $txtFullName;
+        $user->birthday= $dateBirthday;
         $user->address= $txtAddress;
         $user->email= $txtEmail;
         $user->phone= $txtPhone;
-        $user->image= $txtAnhdd;
         
         
         $user->save();
@@ -160,33 +154,26 @@ class UserController extends Controller
             return "-1";
         }
     }
-    public function ajax_update(Request $request){
-        $id = $request->get("id");
-        $user = User::find($id);
+
+    public function show_login(){
+        return view('login');
+    }
+    public function login(Request $request){
+        $username = $request->get('txtUserName');
+        $password = $request->get('txtPassword');
         
-        $txtUserName = $request->get("txtUserName");
-        $txtFullName = $request->get("txtFullName");
-        $txtAddress = $request->get("txtAddress");
-        $txtEmail = $request->get("txtEmail");
-        $txtPhone = $request->get("txtPhone");
-        $txtAnhdd = $request->get("txtAnhdd");
-
-        
-        try {
-            $user->username= $txtUserName;
-            $user->fullname= $txtFullName;
-            $user->address= $txtAddress;
-            $user->email= $txtEmail;
-            $user->phone= $txtPhone;
-            $user->image= $txtAnhdd;
-
-
-            $user->save();
-            return "<div class='alert alert-success'>Sửa thành công</div>";
-        } catch (\Exception $ex){
-            return "<div class='alert alert-danger'>Sửa thất bại</div>";
+        if (Auth::attempt(['username' => $username, 'password' => $password, 'status' => 1])) {
+            return redirect()->to("/dashboard");
+        } else {
+            return view('login')->with("message","Username hoặc Password không đúng");
         }
-        
-        
+    }
+    public function logout(){
+        Auth::logout();
+        return redirect()->to('/login');
+    }
+
+    public function show_dashboard(){
+        return view('dashboard');
     }
 }

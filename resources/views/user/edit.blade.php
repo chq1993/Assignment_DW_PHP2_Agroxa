@@ -10,7 +10,6 @@
                     <h4 class="page-title">Sửa thông tin người dùng</h4>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('user.store') }}">User</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('user.edit') }}">Edit user</a></li>
                         <li class="breadcrumb-item active">Form</li>
                     </ol>
                 </div>
@@ -46,7 +45,7 @@
                                 </div>
                                 @endisset-->
 
-                            <form class="" action="{{ route('user.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+                            <form class="" action="{{ route('user.update', $user->id) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" id="user_id" value="{{ $user->id }}"/>
@@ -57,6 +56,10 @@
                                 <div class="form-group">
                                     <label>Họ và tên</label>
                                     <input type="text" class="form-control" name="txtFullName" id="txtFullName" required placeholder="Nhập họ và tên" value="{{ $user->fullname }}"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Ngày sinh</label>
+                                    <input type="date" class="form-control" name="dateBirthday" id="dateBirthday" required placeholder="Nhập ngày sinh" value="{{ $user->birthday }}"/>
                                 </div>
                                 <div class="form-group">
                                     <label>Địa chỉ</label>
@@ -79,19 +82,12 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="txtAnhdd">Ảnh đại diện</label>
-                                    <input type="file" class="form-control-file" id="txtAnhdd" name="txtAnhdd" placeholder="Ảnh đại diện" value="{{ $user->path_image }}">
-                                  </div>
-                                
-                                
-                                <div class="form-group">
                                     <div>
-                                        <button type="button" class="btn btn-primary waves-effect waves-light" onclick="call_update()">
-                                            Thêm mới
+                                        <button type="submit" class="btn btn-primary waves-effect waves-light" href="{{ route('user.store')}}">
+                                            Cập nhật
                                         </button>
-                                        <button type="button" class="btn btn-secondary waves-effect m-l-5"  href="{{ route('user.index') }}">
-                                            Quay lại
-                                        </button>
+                                        <a href="{{ route('user.store') }}" class="btn btn-secondary">Quay lại</a>
+                                        
                                     </div>
                                 </div>
                             </form>
@@ -110,26 +106,8 @@
 </div> <!-- content -->
 
 <script type="text/javascript">
-    function call_update(){
-        $.ajax({
-            url : '{{ route('user.ajax_update') }}',
-            method: 'POST',
-            data:{
-                _token:$("input[name=_token]").val(),
-                id:$("#user_id").val(),
-                username:$("#txtUserName").val(),
-                fullname:$("#txtFullName").val(),
-                address:$("#txtAddress").val(),
-                email:$("#txtEmail").val(),
-                phone:$("#txtPhone").val(),
-                image:$("#txtAnhdd").val()
-            },
-            success:function(res){
-                  //alert(res);
-                  $("#divalert").html(res);
-            }
-        });
-    }
+    
+    
 </script>
 
 @endsection

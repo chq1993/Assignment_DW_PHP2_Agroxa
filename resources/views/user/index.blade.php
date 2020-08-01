@@ -26,7 +26,7 @@
 
                             <h4 class="mt-0 header-title">Bảng thông tin người dùng</h4>
                             <p class="text-muted m-b-30"></p>
-                        <a href="{{route('user.create')}}" class="btn btn-danger">Thêm mới</a>
+                        <a href="{{route('user.create')}}" style="margin-bottom: 5px;" class="btn btn-danger">Thêm mới</a>
                                 @if(session()->get('message'))
                                 <div class="alert alert-info">
                                     {{ session()->get('message') }}
@@ -40,14 +40,11 @@
                                                 <th>STT</th>
                                                 <th data-priority="1">Tên người dùng</th>
                                                 <th data-priority="1">Họ và tên</th>
+                                                <th data-priority="1">Ngày sinh</th>
                                                 <th data-priority="1">Địa chỉ</th>
                                                 <th data-priority="1">Email</th>
                                                 <th data-priority="1">Số điện thoại</th>
-                                                <th data-priority="1">Password</th>
-                                                <th data-priority="1">Ảnh</th>
                                                 <th data-priority="1">Trạng thái</th>
-                                                <th data-priority="1">Tạo bởi</th>
-                                                <th data-priority="1">Sửa bởi</th>
                                                 <th data-priority="1">Thời gian tạo</th>
                                                 <th data-priority="1">Thời gian sửa</th>
                                                 <th data-priority="1">Sửa</th>
@@ -67,11 +64,11 @@
                                                 <td>{{ $stt }}</td>
                                                 <td>{{ $user->username }}</td>
                                                 <td>{{ $user->fullname }}</td>
+                                                <td>{{ $user->birthday }}</td>
                                                 <td> {{ $user->address }}</td>
                                                 <td> {{ $user->email }}</td>
                                                 <td> {{ $user->phone }}</td>
-                                                <td> {{ $user->password }}</td>
-                                                <td><a href="{{ route('user.show', $user->id) }}"><img src="{{ asset($user->image) }}" style="max-width:30%; "/></a></td>
+                                                
                                                 <td id="td{{ $user->id }}">
                                                     @if ($user->status === 1)
                                                     <a onclick="changeStatus({{ $user->id }})" class="fa fa-thumbs-up" style="color: green; font-size: 24px;" />
@@ -79,12 +76,10 @@
                                                     <a onclick="changeStatus({{ $user->id }}) " class="fa fa-thumbs-down" style="color: red; font-size: 24px;" />
                                                     @endif
                                                 </td>
-                                                <td> {{ $user->created_by }}</td>
-                                                <td> {{ $user->updated_by }}</td>
                                                 <td> {{ $user->created_at }}</td>
                                                 <td> {{ $user->updated_at }}</td>
                                                 <td>
-                                                    <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary">Sửa</a>
+                                                    <a href="{{ route('user.edit', $user -> id) }}" class="btn btn-primary">Sửa</a>
                                                 </td>
                                                 <td>
                                                     <form action="{{ route('user.destroy', $user->id) }}" method="post">

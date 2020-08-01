@@ -19,12 +19,10 @@ class CreateUserTable extends Migration
             $table->string('fullname',100);
             $table->string('address', 200)->nullable();
             $table->string('email', 50)->nullable();
+            $table->date('birthday')->nullable();
             $table->string('phone', 20)->nullable();
             $table->string('password',255);
-            $table->string('image', 500)->nullable();
             $table->integer('status');
-            $table->string('created_by', 50)->nullable();
-            $table->string('updated_by', 50)->nullable();
             $table->timestamps();
         });
     }
