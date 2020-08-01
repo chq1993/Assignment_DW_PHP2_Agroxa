@@ -40,3 +40,5 @@ Route::get('/', function () {
     return view('layouts.admin');
 });
 });
+Route::resource('question-manage', 'QuestionManageController');
+Route::resource('form-manage', 'FormManageController');
