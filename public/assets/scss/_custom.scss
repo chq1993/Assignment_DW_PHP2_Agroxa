@@ -1,0 +1,10 @@
+.cursor {
+    cursor: pointer;
+}
+.btn-hover {
+    transition: 0.3s;
+    &:hover {
+        border: 1px solid #35a989;
+    }
+}
+
