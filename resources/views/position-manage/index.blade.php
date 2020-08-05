@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="page-title-box">
-      <h4><span>Quản lý mẫu phiếu</span>
+      <h4><span>Quản lý chức vụ</span>
         <i class="fas fa-caret-down ml-1"></i></h4>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
@@ -21,7 +21,7 @@
         <div class="card-body">
 
           <h5>
-            <span>Bảng danh sách mẫu phiếu</span>
+            <span>Bảng danh sách chức vụ</span>
             <i class="fas fa-list-alt ml-2"></i>
           </h5>
 
@@ -33,7 +33,7 @@
                 <input type="text" class="form-control" placeholder="Tìm kiếm...">
               </div>
             </form>
-            <a href="{{ route('form-manage.create') }}" style="margin: 19px;" class="btn btn-primary">
+            <a href="{{ route('position-manage.create') }}" style="margin: 19px;" class="btn btn-primary">
               <span>Thêm mới phiếu</span>
               <i class="far fa-question-circle ml-1"></i></a>
           </section>
@@ -56,23 +56,24 @@
                     <td>ID</td>
                     <td>
                       <div class="d-flex justify-content-between align-items-center">
-                        <span>Tên mẫu phiếu</span>
+                        <span>Tên chức vụ</span>
 
                         {{-- tên mẫu phiếu --}}
                         <div class="dropdown">
-                          <button type="button" class="btn btn-sm shadow-none bg-transparent" id="tenMauPhieu"
+                          <button type="button" class="btn btn-sm shadow-none bg-transparent" id="tenChucVu"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="-120,15">
                             <i class="fas fa-search text-white"></i>
                           </button>
 
-                          <div class="dropdown-menu shadow" aria-labelledby="tenMauPhieu">
+                          <div class="dropdown-menu shadow" aria-labelledby="tenChucVu">
                             <div class="p-2">
 
-                              <form role="search-form" class="table-search rounded">
+                              <form role="name-position" class="table-search rounded">
                                 <div class="form-group mb-0">
-                                  {{-- value="{{ $_GET["search-question"] ?? ""}}" --}}
-                                  <input style="height: 34px" id="search-form" type="text" class="form-control"
-                                    name="search-form" placeholder="Tìm kiếm...">
+                                  {{-- value="{{ $_GET["search-question"] ?? ""}}"
+                                  --}}
+                                  <input style="height: 34px" id="name-position" type="text" class="form-control"
+                                    name="name-position" placeholder="Tìm kiếm...">
                                 </div>
                                 <div class="mt-2 d-flex justify-content-between align-items-center">
                                   <button type="submit" class="btn btn-sm btn-primary mr-1 shadow-sm">
@@ -94,16 +95,16 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($forms as $form)
+                  @foreach ($positions as $position)
                   <tr>
-                    <td>{{$form->id}}</td>
-                    <td>{{$form->name_form}}</td>
-                    <td>{{$form->description_form}}</td>
+                    <td>{{$position->id}}</td>
+                    <td>{{$position->name_position}}</td>
+                    <td>{{$position->descrtion_position}}</td>
                     <td>
                       <div class="d-flex">
-                        <a href="{{ route('form-manage.edit', ['form_manage' => $form->id]) }}"
+                        <a href="{{ route('position-manage.edit', ['position_manage' => $position->id]) }}"
                           class="btn btn-primary mr-2"><i class="far fa-edit"></i></a>
-                        <form action="{{ route('form-manage.destroy', $form->id) }}" method="POST">
+                        <form action="{{ route('position-manage.destroy', $position->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
                           <button onclick="return confirm('Bạn có chắc muốn xóa?')" class="btn btn-danger"
@@ -120,7 +121,7 @@
           </div>
 
           <div class="d-flex justify-content-center mt-4">
-            {{$forms -> links()}}
+            {{$positions -> links()}}
           </div>
 
         </div>

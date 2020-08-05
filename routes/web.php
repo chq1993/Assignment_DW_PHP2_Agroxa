@@ -13,21 +13,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.admin');
+	return view('layouts.admin');
 });
 
-Route::get('page',function(){
+Route::get('page', function () {
 	return view('page');
 });
 
-Route::get('testpage',function(){
+Route::get('testpage', function () {
 	return view('testpage');
 });
 
 
-Route::get('login','Controller@login');
+Route::get('login', 'Controller@login');
 
-Route::get('dashboard','Controller@show_dashboard');
+Route::get('dashboard', 'Controller@show_dashboard');
 
 // Route của user
 Route::get('user/changeStatus', 'UserController@changeStatus')->name('user.changeStatus');
@@ -36,3 +36,10 @@ Route::resource('user', 'UserController');
 
 Route::resource('question-manage', 'QuestionManageController');
 Route::resource('form-manage', 'FormManageController');
+Route::resource('answer-manage', 'AnswerManageController');
+Route::resource('division-manage', 'DivisionManageController');
+Route::resource('position-manage', 'PositionManageController');
+Route::resource('plan-manage', 'PlanManageController');
+
+
+

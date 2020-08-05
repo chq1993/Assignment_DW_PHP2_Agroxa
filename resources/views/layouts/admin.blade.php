@@ -172,11 +172,13 @@
             </li>
 
             <li>
-              <a href="{{ route('user.store') }}" class="waves-effect"><i class="fas fa-user-circle"></i><span> Người
-                  dùng <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
+              <a href="{{ route('user.store') }}" class="waves-effect"><i class="fas fa-user-circle"></i><span>Quản lý
+                  danh mục <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
               <ul class="submenu">
-                <li><a href="{{ route('user.store') }}">Danh sách người dùng</a></li>
-                <li><a href="{{ route('user.create') }}">Thêm mới người dùng</a></li>
+                <li><a href="{{ route('user.store') }}">Quản lý người dùng</a></li>
+                <li><a href="{{ route('division-manage.index') }}">Đơn vị công tác</a></li>
+                <li><a href="{{ route('position-manage.index') }}">Chức vụ</a></li>
+                <li><a href="{{ route('plan-manage.index') }}">Kế hoạch đánh giá</a></li>
                 <li><a href="email-compose.html"></a></li>
               </ul>
             </li>
@@ -186,7 +188,8 @@
                   hàng câu hỏi <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
               <ul class="submenu">
                 <li><a href="{{ route('question-manage.index') }}">Quản lý câu hỏi</a></li>
-                <li><a href="{{ route('form-manage.index') }}">Quản lý form</a></li>
+                <li><a href="{{ route('form-manage.index') }}">Quản lý mẫu phiếu</a></li>
+                <li><a href="{{ route('answer-manage.index') }}">Quản lý câu trả lời</a></li>
                 <li><a href="email-compose.html"></a></li>
               </ul>
             </li>

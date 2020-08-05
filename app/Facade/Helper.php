@@ -17,7 +17,9 @@ class Helper
 
     public static $groupTypeQuestion = ["Nhập", "Lựa chọn"];
 
-   
+    public static $groupAnswers = ["Rất kém", "Kém", "Trung bình", "Khá", "Tốt"];
+
+
     public static function groupWorks()
     {
         return self::$groupWorks;
@@ -31,5 +33,10 @@ class Helper
     public static function groupTypeQuestion()
     {
         return self::$groupTypeQuestion;
+    }
+
+    public static function groupAnswers()
+    {
+        return self::$groupAnswers;
     }
 }
