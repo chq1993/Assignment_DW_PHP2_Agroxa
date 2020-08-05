@@ -33,17 +33,21 @@
                     <div class="p-3">
                         <h4 class="text-muted font-18 m-b-5 text-center">Chào mừng đến với bài tập hết môn PHP2</h4>
                         <p class="text-muted text-center">Đăng nhập để thao tác</p>
-
-                        <form class="form-horizontal m-t-30" action="index.html">
-
+                        @isset($message)
+                            <div class="alert alert-danger">
+                                {{ $message }}
+                            </div>
+                        @endisset
+                        <form class="form-horizontal m-t-30" action="{{ route('user.check_login')}}" method="post">
+                        @csrf
                             <div class="form-group">
-                                <label for="username">Tên đăng nhập</label>
-                                <input type="text" class="form-control" id="username" placeholder="Nhập tên người dùng">
+                                <label for="txtUserName">Tên đăng nhập</label>
+                                <input type="text" class="form-control" name="txtUserName" id="txtUserName" placeholder="Nhập tên người dùng">
                             </div>
 
                             <div class="form-group">
-                                <label for="userpassword">Mật khẩu</label>
-                                <input type="password" class="form-control" id="userpassword" placeholder="Nhập mật khẩu">
+                                <label for="txtPassword">Mật khẩu</label>
+                                <input type="password" class="form-control" name="txtPassword" id="txtPassword" placeholder="Nhập mật khẩu">
                             </div>
 
                             <div class="form-group row m-t-20">
@@ -64,7 +68,7 @@
             </div>
 
             <div class="m-t-40 text-center">
-                <p class="text-white-50">Bạn không có tài khoản?<a href="pages-register.html" class="text-white"> Đăng ký ngay </a> </p>
+                <p class="text-white-50">Bạn không có tài khoản?<a href="pages-register.html" class="text-white"> Liên hệ với Admin để được cấp tài khoản! </a> </p>
                 <p class="text-muted">© 2018. Crafted with <i class="mdi mdi-heart text-danger"></i> by BoyLoiChoi</p>
             </div>
 

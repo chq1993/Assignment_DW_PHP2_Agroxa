@@ -15,8 +15,8 @@ class CreateRolesTable extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_person')->unsigned()->nullable();
-            $table->foreign('id_person')->references('id')->on('persons')->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('id_user')->unsigned()->nullable();
+            $table->foreign('id_user')->references('id')->on('user')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('id_position')->unsigned()->nullable();
             $table->foreign('id_position')->references('id')->on('positions')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('id_division')->unsigned()->nullable();
