@@ -15,9 +15,9 @@ class CreateDivisionsTable extends Migration
     {
         Schema::create('divisions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name_division',255);
-            $table->string('description_division',500);
-            $table->integer('kind_division');
+            $table->string('name_division', 255);
+            $table->string('description_division', 500);
+            $table->string('kind_division', 100);
             $table->integer('parent_id_division')->unsigned()->nullable();
             $table->foreign('parent_id_division')->references('id')->on('divisions')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('division_level');

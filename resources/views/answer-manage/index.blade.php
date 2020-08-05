@@ -3,7 +3,7 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="page-title-box">
-      <h4><span>Quản lý mẫu phiếu</span>
+      <h4><span>Quản lý đáp án</span>
         <i class="fas fa-caret-down ml-1"></i></h4>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
@@ -21,7 +21,7 @@
         <div class="card-body">
 
           <h5>
-            <span>Bảng danh sách mẫu phiếu</span>
+            <span> Bảng danh sách đáp án</span>
             <i class="fas fa-list-alt ml-2"></i>
           </h5>
 
@@ -33,8 +33,8 @@
                 <input type="text" class="form-control" placeholder="Tìm kiếm...">
               </div>
             </form>
-            <a href="{{ route('form-manage.create') }}" style="margin: 19px;" class="btn btn-primary">
-              <span>Thêm mới phiếu</span>
+            <a href="{{ route('answer-manage.create') }}" style="margin: 19px;" class="btn btn-primary">
+              <span>Thêm mới đáp án</span>
               <i class="far fa-question-circle ml-1"></i></a>
           </section>
 
@@ -56,31 +56,35 @@
                     <td>ID</td>
                     <td>
                       <div class="d-flex justify-content-between align-items-center">
-                        <span>Tên mẫu phiếu</span>
+                        <span>Đáp án</span>
 
-                        {{-- tên mẫu phiếu --}}
+                        {{-- Đáp án --}}
                         <div class="dropdown">
-                          <button type="button" class="btn btn-sm shadow-none bg-transparent" id="tenMauPhieu"
+                          <button type="button" class="btn btn-sm shadow-none bg-transparent" id="dapAn"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="-120,15">
-                            <i class="fas fa-search text-white"></i>
+                            <i class="fas fa-sort text-white"></i>
                           </button>
 
-                          <div class="dropdown-menu shadow" aria-labelledby="tenMauPhieu">
+                          <div class="dropdown-menu shadow" aria-labelledby="dapAn">
                             <div class="p-2">
 
-                              <form role="search-form" class="table-search rounded">
+                              <form role="search-answer" class="table-search rounded">
                                 <div class="form-group mb-0">
-                                  {{-- value="{{ $_GET["search-question"] ?? ""}}" --}}
-                                  <input style="height: 34px" id="search-form" type="text" class="form-control"
-                                    name="search-form" placeholder="Tìm kiếm...">
+                                  {{-- value="{{ $_GET["search-question"] ?? ""}}"
+                                  --}}
+                                  <select class="form-control" name="search-answer" id="search-answer">
+                                    @foreach ($groupAnswers as $groupAnswer)
+                                    <option value="{{$loop->index + 1}}">{{$groupAnswer}}</option>
+                                    @endforeach
+                                  </select>
                                 </div>
                                 <div class="mt-2 d-flex justify-content-between align-items-center">
                                   <button type="submit" class="btn btn-sm btn-primary mr-1 shadow-sm">
                                     <i class="fas fa-search text-white"></i>
                                     <span>tìm kiếm</span>
                                   </button>
-                                  <button type="reset" class="btn btn-sm w-50 ml-1 shadow-sm btn-hover"><i
-                                      class="fas fa-sync-alt"></i></button>
+                                  <a href="/answer-manage" type="reset" class="btn btn-sm w-50 ml-1 shadow-sm btn-hover"><i
+                                      class="fas fa-sync-alt"></i></a>
                                 </div>
                               </form>
                             </div>
@@ -89,21 +93,21 @@
 
                       </div>
                     </td>
-                    <td>Miêu tả thêm</td>
+                    <td>Nhãn đáp án</td>
                     <td colspan=2>Hành động</td>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($forms as $form)
+                  @foreach ($answers as $answer)
                   <tr>
-                    <td>{{$form->id}}</td>
-                    <td>{{$form->name_form}}</td>
-                    <td>{{$form->description_form}}</td>
+                    <td>{{$answer->id}}</td>
+                    <td>{{$groupAnswers[$answer->value_answer - 1]}}</td>
+                    <td>{{$answer->label}}</td>
                     <td>
                       <div class="d-flex">
-                        <a href="{{ route('form-manage.edit', ['form_manage' => $form->id]) }}"
+                        <a href="{{ route('answer-manage.edit', ['answer_manage' => $answer->id]) }}"
                           class="btn btn-primary mr-2"><i class="far fa-edit"></i></a>
-                        <form action="{{ route('form-manage.destroy', $form->id) }}" method="POST">
+                        <form action="{{ route('answer-manage.destroy', $answer->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
                           <button onclick="return confirm('Bạn có chắc muốn xóa?')" class="btn btn-danger"
@@ -120,7 +124,7 @@
           </div>
 
           <div class="d-flex justify-content-center mt-4">
-            {{$forms -> links()}}
+            {{$answers -> links()}}
           </div>
 
         </div>
