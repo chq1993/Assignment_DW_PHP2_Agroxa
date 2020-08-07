@@ -24,7 +24,9 @@ class CreateRolesTable extends Migration
             $table->boolean('status')->default(true);
             $table->float('percentageOfRole');
             $table->date('start_time');
-            $table->date('end_time');
+            $table->date('end_time')->nullable();
+            $table->string('guard_name', 500)->nullable();
+            $table->timestamps();
         });
     }
 
