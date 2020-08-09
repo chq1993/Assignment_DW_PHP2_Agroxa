@@ -109,6 +109,8 @@
                           <button onclick="return confirm('Bạn có chắc muốn xóa?')" class="btn btn-danger"
                             type="submit"><i class="far fa-trash-alt"></i></button>
                         </form>
+                        <a href="/form-manage/config"
+                          class="btn btn-primary ml-2"><i class="far fa-user"></i></a>
                       </div>
                     </td>
                   </tr>

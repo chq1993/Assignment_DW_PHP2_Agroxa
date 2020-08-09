@@ -49,6 +49,7 @@ Route::resource('answer-manage', 'AnswerManageController');
 Route::resource('division-manage', 'DivisionManageController');
 Route::resource('position-manage', 'PositionManageController');
 Route::resource('plan-manage', 'PlanManageController');
+Route::resource('config-fq', 'ConfigFormController');
 
 
 
