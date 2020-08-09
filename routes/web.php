@@ -52,6 +52,7 @@ Route::resource('plan-manage', 'PlanManageController');
 Route::resource('config-fq', 'ConfigFormController');
 
 
+Route::resource('role-manage', 'RoleController');
 
 Route::get('/', function () {
     return view('layouts.admin');

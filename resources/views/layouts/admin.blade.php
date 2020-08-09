@@ -176,6 +176,7 @@
                   danh mục <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
               <ul class="submenu">
                 <li><a href="{{ route('user.store') }}">Quản lý người dùng</a></li>
+                <li><a href="{{ route('role-manage.store') }}">Phân quyền người dùng</a></li>
                 <li><a href="{{ route('division-manage.index') }}">Đơn vị công tác</a></li>
                 <li><a href="{{ route('position-manage.index') }}">Chức vụ</a></li>
                 <li><a href="{{ route('plan-manage.index') }}">Kế hoạch đánh giá</a></li>
