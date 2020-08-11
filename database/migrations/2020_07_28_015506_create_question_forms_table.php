@@ -19,6 +19,7 @@ class CreateQuestionFormsTable extends Migration
             $table->foreign('id_form')->references('id')->on('forms')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('id_question')->unsigned()->nullable();
             $table->foreign('id_question')->references('id')->on('questions')->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

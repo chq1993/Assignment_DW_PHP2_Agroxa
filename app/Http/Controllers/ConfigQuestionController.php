@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\ConfigForm;
-use App\Form;
+use App\Answer;
+use App\ConfigQuestion;
 use App\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Model;
 
-
-class ConfigFormController extends Controller
+class ConfigQuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,14 +17,16 @@ class ConfigFormController extends Controller
      */
     public function index()
     {
-        $question_forms = DB::table('question_forms')
-            ->join('forms', 'question_forms.id_form', '=', 'forms.id')
-            ->join('questions', 'question_forms.id_question', '=', 'questions.id')
-            ->select('question_forms.id', 'question_forms.created_at', 'question_forms.updated_at', 'forms.name_form', 'questions.question');
 
-        $question_forms = $question_forms->paginate('5')->appends(request()->query());
-        return view('config-fq.index', [
-            'question_forms' => $question_forms
+        $answer_questions = DB::table('answer_questions')
+            ->join('questions', 'answer_questions.id_question', '=', 'questions.id')
+            ->join('answers', 'answer_questions.id_answer', '=', 'answers.id')
+            ->select('answer_questions.id', 'answer_questions.created_at', 'answer_questions.updated_at', 'answers.label', 'answers.value_answer', 'questions.question');
+
+        $answer_questions = $answer_questions->paginate('5')->appends(request()->query());
+
+        return view('config-aq.index', [
+            'answer_questions' => $answer_questions
         ]);
     }
 
@@ -37,16 +37,16 @@ class ConfigFormController extends Controller
      */
     public function create(Request $request)
     {
-        $configFormId = $request->input('config_fq');
-        $configForm = Form::find($configFormId);
+        $configQuestionId = $request->input('config_aq');
+        $configQuestion = Question::find($configQuestionId);
 
         // $question_forms = ConfigForm::all();
-        $forms = Form::all();
         $questions = Question::all();
-        return view('config-fq.create', [
-            'forms' => $forms,
+        $answers = Answer::all();
+        return view('config-aq.create', [
+            'answers' => $answers,
             'questions' => $questions,
-            'configForm' => $configForm
+            'configQuestion' => $configQuestion
         ]);
     }
 
@@ -58,21 +58,20 @@ class ConfigFormController extends Controller
      */
     public function store(Request $request)
     {
-
         //Hiển thị thông báo check với điều kiện ngoài index
         alert()->success('Cấu hình được tạo', 'Thành công');
 
-        $questionChecked = $request->get('qChecked');
-        $dataSet = [];
+        $answerChecked = $request->get('aChecked');
+        $dataQuestionAnswer = [];
 
-        $idForm = $request->get('chooseForm');
+        $idQuestion = $request->get('chooseQuestion');
 
-        if (!empty($idForm)) {
-            ConfigForm::where('id_form', $idForm)->delete();
-            if (!empty($questionChecked)) {
-                foreach ($questionChecked as $idQuestion) {
-                    $dataSet[] = array(
-                        'id_form' => $idForm,
+        if (!empty($idQuestion)) {
+            ConfigQuestion::where('id_question', $idQuestion)->delete();
+            if (!empty($answerChecked)) {
+                foreach ($answerChecked as $idAnswer) {
+                    $dataQuestionAnswer[] = array(
+                        'id_answer' => $idAnswer,
                         'id_question' => $idQuestion,
                         'created_at' => now(),
                         'updated_at' => now()
@@ -82,11 +81,11 @@ class ConfigFormController extends Controller
         }
 
         // dd($dataSet);
-        DB::table('question_forms')->insert($dataSet);
+        DB::table('answer_questions')->insert($dataQuestionAnswer);
 
 
         // $question_forms->save();
-        return redirect('form-manage')->with('create-success', 'Cấu hình thành công!');
+        return redirect('question-manage')->with('create-success', 'Cấu hình thành công!');
     }
 
     /**
@@ -97,7 +96,7 @@ class ConfigFormController extends Controller
      */
     public function show($id)
     {
-        // return view('config-fq.show');
+        //
     }
 
     /**
@@ -134,9 +133,9 @@ class ConfigFormController extends Controller
         //Hiển thị thông báo check với điều kiện ngoài index
         alert()->success('Cấu hình được xóa', 'Thành công');
 
-        $question_forms = ConfigForm::find($id);
-        $question_forms->delete();
+        $answer_questions = ConfigForm::find($id);
+        $answer_questions->delete();
 
-        return redirect('form-manage')->with('delete-success', 'Xóa cấu hình thành công!');
+        return redirect('question-manage')->with('delete-success', 'Xóa cấu hình thành công!');
     }
 }

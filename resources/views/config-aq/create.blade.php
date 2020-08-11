@@ -9,7 +9,7 @@
             </h4>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('form-manage.index') }}">Danh sách</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('question-manage.index') }}">Danh sách</a></li>
                 <li class="breadcrumb-item active">Cấu hình</li>
             </ol>
         </div>
@@ -23,7 +23,7 @@
                 <div class="card-body">
 
                     <h5>
-                        <span>Thông tin cấu hình phiếu và câu hỏi</span>
+                        <span>Cấu hình câu hỏi và đáp án</span>
                         <i class="fas fa-pen-square ml-1"></i>
                     </h5>
                     <p class="text-muted m-b-30 ">Có thể chỉnh sửa được thông tin</p>
@@ -45,50 +45,48 @@
                     </div>
                     @endif
 
-                    <form action="{{ route('config-fq.store') }}" method="POST" id="js-main-form"
-                        style="height: 400px; overflow-y: scroll">
+                    <form style="height: 400px; overflow-y: scroll" action="{{ route('config-aq.store') }}"
+                        method="POST" id="js-main-form" class="vh-100 overflow-auto">
                         @csrf
 
                         <div class="form-row w-100">
-
                             <div class="form-group col-md-8">
                                 <div class="list-group m-b-30">
                                     <span style="position: sticky; top: 0"
                                         class="list-group-item list-group-item-action btn-primary active">
-                                        <input type="checkbox" id="checkAll3" class="check3">
-                                        Danh sách câu hỏi
+                                        Danh Sách Câu Hỏi
                                     </span>
 
-                                    <input type="hidden" value="{{$configForm->question_forms}}" id="json" />
 
                                     @foreach ($questions as $key => $question)
                                     <li class="list-group-item">
                                         <div class="form-check">
-                                            <input type="checkbox" name="qChecked[]" value="{{$question->id}}"
-                                                class="form-check-input select_question check3" id="{{$key}}">
+                                            <input type="radio" name="chooseQuestion" value="{{$question->id}}"
+                                                class="form-check-input select_question radioCheck" id="{{$key}}">
 
                                             <label class="form-check-label"
                                                 for="{{$key}}">{{$question->question}}</label>
                                         </div>
                                     </li>
                                     @endforeach
-
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-4" id="test">
-
+                            <div class="form-group col-md-4">
                                 <div style="position: sticky; top: 0" class="list-group m-b-30">
-                                    <span class="list-group-item list-group-item-action btn-primary active">
-                                        Loại Phiếu
+                                    <span href="#" class="list-group-item list-group-item-action btn-primary active">
+                                        <input type="checkbox" id="checkAll1" class="check1">
+                                        Loại Đánh Giá
                                     </span>
-
-                                    @foreach ($forms as $key => $form)
+                                    <input type="hidden" value="{{$configQuestion->answer_questions}}"
+                                        id="jsonQuestion" />
+                                    @foreach ($answers as $key => $answer)
                                     <li class="list-group-item">
                                         <div class="form-check">
-                                            <input type="radio" name="chooseForm" value="{{$form->id}}"
-                                                class="form-check-input select_question radioCheckForm" id="{{$key}}">
-                                            <label class="form-check-label" for="{{$key}}">{{$form->name_form}}</label>
+                                            <input type="checkbox" name="aChecked[]" value="{{$answer->value_answer}}"
+                                                class="form-check-input select_question check1" id="{{$key}}">
+
+                                            <label class="form-check-label" for="{{$key}}">{{$answer->label}}</label>
                                         </div>
                                     </li>
                                     @endforeach
@@ -96,9 +94,10 @@
                                         class="btn btn-outline-primary waves-effect waves-light">
                                         Lưu
                                     </button>
-                                </div>
-                            </div>
 
+                                </div>
+
+                            </div>
                         </div>
 
                     </form>
@@ -112,67 +111,33 @@
 </div>
 @endsection
 
-{{-- @section('content_script')
-<script type="text/javascript">
-    $(document).ready(function(){
-        const idQuestionInput = $(`[name="id_question"]`);
-
-        $('.select_question').click(function(e){
-            let idQuestionInput__value
-            try {
-                idQuestionInput__value = JSON.parse(idQuestionInput.val());
-            } catch (error) {
-                idQuestionInput__value = [];
-            }
-
-            let indexSelectQuestionId = idQuestionInput__value.indexOf($(this).val());
-
-            if(this.checked){
-                if(indexSelectQuestionId < 0){
-                    idQuestionInput__value.push($(this).val())
-                }
-            }else{
-                if(indexSelectQuestionId >= 0){
-                    idQuestionInput__value.splice(indexSelectQuestionId, 1)
-                }
-            }
-
-            idQuestionInput.val(JSON.stringify(idQuestionInput__value))
-
-        })
-
-    })
-</script>
-@endsection --}}
 
 @section('content_script')
 <script type="text/javascript">
     $(document).ready(function(){
-        let question = JSON.parse($('#json').val())
-        let rCheckForm = document.getElementsByClassName('radioCheckForm')
-        for (let i = 0; i < rCheckForm.length; i++) {
+        let answer = JSON.parse($('#jsonQuestion').val())
+        let rCheck = document.getElementsByClassName('radioCheck')
+        for (let i = 0; i < rCheck.length; i++) {
             try {
-                if (parseInt(rCheckForm[i].value) === question[0].id_form) {
-                    rCheckForm[i].checked = true
+                if (parseInt(rCheck[i].value) === answer[0].id_question) {
+                    rCheck[i].checked = true
                 }
 
             } catch (error) {
 
             }
-        }
 
+        }
         $('.form-check-input').each(function(){
-            if(question.find(it => it.id_question === Number($(this).val()))){
+            if(answer.find(it => it.id_answer === Number($(this).val()))){
                 this.checked = true
             }
         })
 
-        $("#checkAll3").click(function () {
-            $(".check3").prop('checked', $(this).prop('checked'));
+        $("#checkAll1").click(function () {
+            $(".check1").prop('checked', $(this).prop('checked'));
         });
-        $("#checkAll2").click(function () {
-            $(".check2").prop('checked', $(this).prop('checked'));
-        });
+
 
     })
 </script>

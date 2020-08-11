@@ -193,13 +193,13 @@
               </ul>
             </li>
 
-            <li>
+            {{-- <li>
               <a class="waves-effect"><i class="fas fa-university"></i><span>Cấu hình<span
                     class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span></span></a>
               <ul class="submenu">
                 <li><a href="{{ route('config-fq.index') }}">Mẫu phiếu</a></li>
               </ul>
-            </li>
+            </li> --}}
 
           </ul>
 
@@ -225,7 +225,7 @@
       </div>
       <footer class="footer">
         © 2020 <span class="d-none d-sm-inline-block">- Make with <i class="mdi mdi-heart text-danger"></i> by
-          BoyLoiChoi.</span>
+          TeamBoDoi</span>
       </footer>
 
     </div>
@@ -264,6 +264,7 @@
 
   <script src="{{ asset('assets/js/app.js') }}"></script>
 
+  @yield('content_script')
 </body>
 
 </html>

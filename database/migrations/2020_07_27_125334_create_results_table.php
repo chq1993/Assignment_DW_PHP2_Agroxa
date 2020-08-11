@@ -21,6 +21,7 @@ class CreateResultsTable extends Migration
             $table->foreign('id_question')->references('id')->on('questions')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('answer');
             $table->string('noidungdanhgia',255);
+            $table->integer('id_plan');
             $table->timestamps();
         });
     }

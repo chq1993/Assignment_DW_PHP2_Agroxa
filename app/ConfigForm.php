@@ -11,4 +11,13 @@ class ConfigForm extends Model
         'id_form',
         'id_question'
     ];
+
+    public function forms(){
+        return $this->belongsTo(Form::class, 'id_form');
+    }
+
+    public function questions()
+    {
+        return $this->hasOne(Question::class, 'id_question');
+    }
 }
