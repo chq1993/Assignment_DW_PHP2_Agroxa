@@ -180,7 +180,6 @@
                 <li><a href="{{ route('division-manage.index') }}">Đơn vị công tác</a></li>
                 <li><a href="{{ route('position-manage.index') }}">Chức vụ</a></li>
                 <li><a href="{{ route('plan-manage.index') }}">Kế hoạch đánh giá</a></li>
-                <li><a href="email-compose.html"></a></li>
               </ul>
             </li>
 
@@ -191,9 +190,16 @@
                 <li><a href="{{ route('question-manage.index') }}">Quản lý câu hỏi</a></li>
                 <li><a href="{{ route('form-manage.index') }}">Quản lý mẫu phiếu</a></li>
                 <li><a href="{{ route('answer-manage.index') }}">Quản lý câu trả lời</a></li>
-                <li><a href="email-compose.html"></a></li>
               </ul>
             </li>
+
+            {{-- <li>
+              <a class="waves-effect"><i class="fas fa-university"></i><span>Cấu hình<span
+                    class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span></span></a>
+              <ul class="submenu">
+                <li><a href="{{ route('config-fq.index') }}">Mẫu phiếu</a></li>
+              </ul>
+            </li> --}}
 
           </ul>
 
@@ -219,7 +225,7 @@
       </div>
       <footer class="footer">
         © 2020 <span class="d-none d-sm-inline-block">- Make with <i class="mdi mdi-heart text-danger"></i> by
-          BoyLoiChoi.</span>
+          TeamBoDoi</span>
       </footer>
 
     </div>
@@ -258,6 +264,7 @@
 
   <script src="{{ asset('assets/js/app.js') }}"></script>
 
+  @yield('content_script')
 </body>
 
 </html>
