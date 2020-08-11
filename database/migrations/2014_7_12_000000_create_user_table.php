@@ -23,6 +23,7 @@ class CreateUserTable extends Migration
             $table->string('phone', 20)->nullable();
             $table->string('password',255);
             $table->integer('status');
+            $table->integer('user_type');
             $table->timestamps();
         });
     }
