@@ -40,12 +40,19 @@
           <form action="{{ route('position-manage.update', $position->id) }}" method="POST">
             @csrf
             @method('PATCH')
-            <div class="form-group">
-              <label for="name_position">Tên chức vụ</label>
-              <input type="text" class="form-control" name="name_position" id="name_position" value="{{$position->name_position}}"
-                required placeholder="Nhập tên phiếu" />
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="name_position">Tên chức vụ</label>
+                <input type="text" class="form-control" name="name_position" id="name_position" value="{{$position->name_position}}"
+                  required placeholder="Nhập tên phiếu" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="descrtion_position">Cấp độ của chức vụ</label>
+                <div>
+                  <input type="number" name="level_position" id="level_position" class="form-control" value="{{ $position->level_position }}" placeholder="Nhập cấp độ của vai trò" />
+                </div>
+              </div>
             </div>
-
             <div class="form-group">
               <label for="descrtion_position">Miêu tả thêm</label>
               <div>

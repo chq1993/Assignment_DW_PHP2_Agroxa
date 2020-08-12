@@ -80,7 +80,14 @@
                                                 placeholder="Nhập số điện thoại" value="{{ $user->phone }}"/>
                                     </div>
                                 </div>
-
+                                <div class="form-group" >
+                                    <label for="slbUserType">Loại người dùng</label>
+                                    <select name="slbUserType" id="slbUserType" class="form-control">
+                                        <option value="{{ $user->phone }}">User</option>    
+                                        <option value="1">User</option>
+                                        <option value="2">Admin</option>
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <div>
                                         <button type="submit" class="btn btn-primary waves-effect waves-light" href="{{ route('user.store')}}">

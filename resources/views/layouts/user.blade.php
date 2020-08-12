@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-  <title>Agroxa</title>
+  <title>Đánh giá 360º</title>
   <meta content="Đánh giá đối tượng" name="description" />
   <meta content="Themesbrand" name="author" />
   <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
@@ -43,6 +43,7 @@
       <nav class="navbar-custom">
 
         <ul class="navbar-right d-flex list-inline float-right mb-0">
+          
           <li class="dropdown notification-list d-none d-sm-block">
             <form role="search" class="app-search">
               <div class="form-group mb-0">
@@ -53,65 +54,15 @@
           </li>
 
           <li class="dropdown notification-list">
-            <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#"
-              role="button" aria-haspopup="false" aria-expanded="false">
-              <i class="mdi mdi-bell noti-icon"></i>
-              <span class="badge badge-pill badge-info noti-icon-badge">3</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
-              <!-- item-->
-              <h6 class="dropdown-item-text">
-                Notifications (37)
-              </h6>
-              <div class="slimscroll notification-item-list">
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item active">
-                  <div class="notify-icon bg-success"><i class="mdi mdi-cart-outline"></i></div>
-                  <p class="notify-details">Your order is placed<span class="text-muted">Dummy text of the printing and
-                      typesetting industry.</span></p>
-                </a>
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                  <div class="notify-icon bg-warning"><i class="mdi mdi-message"></i></div>
-                  <p class="notify-details">New Message received<span class="text-muted">You have 87 unread
-                      messages</span></p>
-                </a>
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                  <div class="notify-icon bg-info"><i class="mdi mdi-flag"></i></div>
-                  <p class="notify-details">Your item is shipped<span class="text-muted">It is a long established fact
-                      that a reader will</span></p>
-                </a>
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                  <div class="notify-icon bg-primary"><i class="mdi mdi-cart-outline"></i></div>
-                  <p class="notify-details">Your order is placed<span class="text-muted">Dummy text of the printing and
-                      typesetting industry.</span></p>
-                </a>
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                  <div class="notify-icon bg-danger"><i class="mdi mdi-message"></i></div>
-                  <p class="notify-details">New Message received<span class="text-muted">You have 87 unread
-                      messages</span></p>
-                </a>
-              </div>
-              <!-- All-->
-              <a href="javascript:void(0);" class="dropdown-item text-center text-primary">
-                View all <i class="fi-arrow-right"></i>
-              </a>
-            </div>
-          </li>
-
-          <li class="dropdown notification-list">
             <div class="dropdown notification-list nav-pro-img">
               <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user waves-light" data-toggle="dropdown"
                 href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 <img src="{{ asset('assets/images/users/images.png') }}" alt="user" class="rounded-circle">
               </a>
               <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
-                <!-- item-->
-                <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5"></i> Thông tin
-                  cá nhân</a>
+                <!-- Chọn vai trò cho user-->
+                
+                <!--  -->
                 <a class="dropdown-item" href="#"><i class="mdi mdi-wallet m-r-5"></i> Ví tiền</a>
                 <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i
                     class="mdi mdi-settings m-r-5"></i> Cài đặt</a>
@@ -172,11 +123,10 @@
             </li>
 
             <li>
-              <a href="{{ route('user.store') }}" class="waves-effect"><i class="fas fa-user-circle"></i><span>Quản lý
-                  danh mục <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
+              <a href="{{ route('user.store') }}" class="waves-effect"><i class="fas fa-user-circle"></i><span>Danh sách mẫu phiếu <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span> </span></a>
               <ul class="submenu">
-                <li><a href="{{ route('user.index') }}">Quản lý người dùng</a></li>
-                <li><a href="{{ route('role-manage.index') }}">Phân quyền người dùng</a></li>
+                <li><a href="{{ route('user.store') }}">Quản lý người dùng</a></li>
+                <li><a href="{{ route('role-manage.store') }}">Phân quyền người dùng</a></li>
                 <li><a href="{{ route('division-manage.index') }}">Đơn vị công tác</a></li>
                 <li><a href="{{ route('position-manage.index') }}">Chức vụ</a></li>
                 <li><a href="{{ route('plan-manage.index') }}">Kế hoạch đánh giá</a></li>

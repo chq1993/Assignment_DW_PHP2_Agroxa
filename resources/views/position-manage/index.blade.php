@@ -90,6 +90,7 @@
 
                       </div>
                     </td>
+                    <td>Cấp độ</td>
                     <td>Miêu tả thêm</td>
                     <td colspan=2>Hành động</td>
                   </tr>
@@ -99,6 +100,7 @@
                   <tr>
                     <td>{{$position->id}}</td>
                     <td>{{$position->name_position}}</td>
+                    <td>{{$position->level_position}}</td>
                     <td>{{$position->descrtion_position}}</td>
                     <td>
                       <div class="d-flex">

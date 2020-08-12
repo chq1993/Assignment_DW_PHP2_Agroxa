@@ -8,6 +8,7 @@ class Position extends Model
 {
     protected $fillable = [
         'name_position',
-        'descrtion_position'
+        'descrtion_position',
+        'level_position'
     ];
 }

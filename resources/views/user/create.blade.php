@@ -129,7 +129,13 @@
                     <input data-parsley-type="number" type="text" name="txtPhone" id="txtPhone" class="form-control" required placeholder="Nhập số điện thoại" />
                   </div>
                 </div>
-
+                <div class="form-group" >
+                    <label for="slbUserType">Loại người dùng</label>
+                    <select name="slbUserType" id="slbUserType" class="form-control">
+                        <option value="1">User</option>
+                        <option value="2">Admin</option>
+                    </select>
+                </div>
                 <div class="form-group">
                   <label>Mật khẩu</label>
                   <div>

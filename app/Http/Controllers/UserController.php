@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB as DB;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -36,6 +37,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function changerole(Request $request){
+        $slbIdRole = $request->get('slbIdRole');
+        $request->session()->put('id_role', $slbIdRole);
+        return Redirect()->to('/changerole')->with('message', 'Chọn vai trò thành công!');
+    }
+
     public function store(Request $request)
     {
         
@@ -45,10 +52,8 @@ class UserController extends Controller
         $txtEmail = $request->get("txtEmail");
         $txtAddress = $request->get("txtAddress");
         $txtPhone = $request->get("txtPhone");
+        $slbUserType = $request->get("slbUserType");
         $txtPassword = $request->get("txtPassword");
-        
-        
-        $mota = $request->get("mota");
         
         $obj= new User([
             'username'=>$txtUserName,
@@ -58,11 +63,12 @@ class UserController extends Controller
             'address'=>$txtAddress,
             'phone'=>$txtPhone,
             'status'=>1,
+            'user_type'=>$slbUserType,
             'password'=>bcrypt($txtPassword)
         ]);
 
         $obj->save();
-        return Redirect()->to('user/create')->with('message', 'Thêm mới người dùng thành công!');
+        return Redirect()->to('user')->with('message', 'Thêm mới người dùng thành công!');
 
     }
 
@@ -107,6 +113,7 @@ class UserController extends Controller
         $txtAddress = $request->get("txtAddress");
         $txtEmail = $request->get("txtEmail");
         $txtPhone = $request->get("txtPhone");
+        $slbUserType = $request->get("slbUserType");
 
         
         $user->username= $txtUserName;
@@ -115,10 +122,11 @@ class UserController extends Controller
         $user->address= $txtAddress;
         $user->email= $txtEmail;
         $user->phone= $txtPhone;
+        $user->user_type = $slbUserType;
         
         
         $user->save();
-        return redirect()->to('user/'.$id.'/edit')->with("message", "Sửa thông tin người dùng thành công");
+        return redirect()->to('user')->with("message", "Sửa thông tin người dùng thành công");
     }
 
     /**
@@ -163,9 +171,14 @@ class UserController extends Controller
         $password = $request->get('txtPassword');
         
         if (Auth::attempt(['username' => $username, 'password' => $password, 'status' => 1])) {
-            return redirect()->to("/dashboard");
+            $user = Auth::user(); 
+            if ($user->user_type == 1){
+                return redirect()->to("page");
+            } elseif ( $user->user_type ==2 ){
+                return redirect()->to('/');
+            }
         } else {
-            return view('login')->with("message","Username hoặc Password không đúng");
+            return view('logins')->with("message","Username hoặc Password không đúng");
         }
     }
     public function logout(){
@@ -175,5 +188,17 @@ class UserController extends Controller
 
     public function show_dashboard(){
         return view('dashboard');
+    }
+
+    public function choose_role(){
+        $id_user= Auth::user()->id;
+        $role = DB::table('roles')
+        ->join('user', 'roles.id_user', '=', 'user.id')
+        ->join('positions', 'roles.id_position', '=', 'positions.id')
+        ->join('divisions', 'roles.id_division', '=', 'divisions.id')
+        ->select('roles.id','roles.id_user','roles.id_position','roles.id_division','roles.created_at','roles.updated_at','roles.percentageOfRole', 'roles.start_time', 'roles.end_time', 'divisions.name_division', 'positions.name_position', 'user.username', 'user.fullname')
+        ->where('roles.id_user', $id_user)->get();
+
+        return view('user.changerole', compact('role'));
     }
 }
