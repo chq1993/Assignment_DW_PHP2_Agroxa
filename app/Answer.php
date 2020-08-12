@@ -10,4 +10,9 @@ class Answer extends Model
         'value_answer',
         'label',
     ];
+
+    public function answer_questions()
+    {
+        return $this->belongsTo(ConfigQuestion::class, 'id_answer');
+    }
 }

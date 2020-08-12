@@ -20,42 +20,42 @@ class QuestionManageController extends Controller
 
         // search
         if (isset($_GET["search-question"])) {
-            
+
             $questions = $questions->where("question", "like", "%" . $_GET["search-question"] . "%");
         }
-        
+
         // search
         if (isset($_GET["search-group-question"])) {
-            $questions = $questions->where("group_question", "like", "%" . $_GET["search-group-question"] . "%");  
+            $questions = $questions->where("group_question", "like", "%" . $_GET["search-group-question"] . "%");
         }
-        
+
 
         // search
         if (isset($_GET["text-question-type"])) {
-            
+
             $questions = $questions->where("kind_question", "like", "%" . $_GET["text-question-type"] . "%");
-            
+
         }
 
         if (isset($_GET["select-question-type"])) {
-            
+
             $questions = $questions->where("kind_question", "like", "%" . $_GET["select-question-type"] . "%");
-            
+
         }
 
         // search
         if (isset($_GET["required-question"])) {
-            
+
             $questions = $questions->where("required_question", "like", "%" . $_GET["required-question"] . "%");
-            
+
         }
-        
+
         if (isset($_GET["not-required-question"])) {
             $questions = $questions->where("required_question", "like", "%" . $_GET["not-required-question"] . "%");
         }
-      
 
-        $questions = $questions->paginate(5)->appends(request()->query());
+
+        $questions = $questions->paginate(10)->appends(request()->query());
         return view('question-manage.index', [
             'questions' => $questions,
             'groupWorks' => \Helper::groupWorks(),

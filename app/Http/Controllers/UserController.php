@@ -38,7 +38,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
+
+        //Hiển thị thông báo check với điều kiện ngoài index
+        alert()->success('Người dùng được thêm mới', 'Thành công');
+
         $txtUserName = $request->get("txtUserName");
         $txtFullName = $request->get("txtFullName");
         $dateBirthday = $request->get("dateBirthday");
@@ -46,24 +49,23 @@ class UserController extends Controller
         $txtAddress = $request->get("txtAddress");
         $txtPhone = $request->get("txtPhone");
         $txtPassword = $request->get("txtPassword");
-        
-        
+
+
         $mota = $request->get("mota");
-        
-        $obj= new User([
-            'username'=>$txtUserName,
-            'fullname'=>$txtFullName,
-            'birthday'=>$dateBirthday,
-            'email'=>$txtEmail,
-            'address'=>$txtAddress,
-            'phone'=>$txtPhone,
-            'status'=>1,
-            'password'=>bcrypt($txtPassword)
+
+        $obj = new User([
+            'username' => $txtUserName,
+            'fullname' => $txtFullName,
+            'birthday' => $dateBirthday,
+            'email' => $txtEmail,
+            'address' => $txtAddress,
+            'phone' => $txtPhone,
+            'status' => 1,
+            'password' => bcrypt($txtPassword)
         ]);
 
         $obj->save();
-        return Redirect()->to('user/create')->with('message', 'Thêm mới người dùng thành công!');
-
+        return Redirect()->to('user')->with('create-success', 'Thêm mới người dùng thành công!');
     }
 
     /**
@@ -87,7 +89,6 @@ class UserController extends Controller
     {
         $user = User::find($id);
         return view('user.edit', compact('user'));
-
     }
 
     /**
@@ -99,8 +100,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //Hiển thị thông báo check với điều kiện ngoài index
+        alert()->success('Người dùng được cập nhật', 'Thành công');
+
         $user = User::find($id);
-        
+
         $txtUserName = $request->get("txtUserName");
         $txtFullName = $request->get("txtFullName");
         $dateBirthday = $request->get("dateBirthday");
@@ -108,17 +112,17 @@ class UserController extends Controller
         $txtEmail = $request->get("txtEmail");
         $txtPhone = $request->get("txtPhone");
 
-        
-        $user->username= $txtUserName;
-        $user->fullname= $txtFullName;
-        $user->birthday= $dateBirthday;
-        $user->address= $txtAddress;
-        $user->email= $txtEmail;
-        $user->phone= $txtPhone;
-        
-        
+
+        $user->username = $txtUserName;
+        $user->fullname = $txtFullName;
+        $user->birthday = $dateBirthday;
+        $user->address = $txtAddress;
+        $user->email = $txtEmail;
+        $user->phone = $txtPhone;
+
+
         $user->save();
-        return redirect()->to('user/'.$id.'/edit')->with("message", "Sửa thông tin người dùng thành công");
+        return redirect()->to('user')->with("update-success", "Sửa thông tin người dùng thành công");
     }
 
     /**
@@ -129,24 +133,28 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        //Hiển thị thông báo check với điều kiện ngoài index
+        alert()->success('Người dùng đã được xóa', 'Thành công');
+
         User::destroy($id);
-        return redirect()->to('/user')->with('message','Xóa thành công');
+        return redirect()->to('user')->with('delete-success', 'Xóa thành công');
     }
 
-    public function changeStatus(Request $request){
+    public function changeStatus(Request $request)
+    {
         $user_id = $request->get('id');
-        
+
         $user = User::find($user_id);
-        if ($user){
+        if ($user) {
             $result = '';
             // thay doi trang thai cua ban ghi
             $status = $user->status;
-            if ($status == 1){
+            if ($status == 1) {
                 $user->status = 0;
-                $result = '<a class="fa fa-thumbs-down" style="color: red; font-size: 24px;;" onclick="changeStatus('.$user_id.')"/>';
+                $result = '<a class="fa fa-thumbs-down" style="color: red; font-size: 24px;;" onclick="changeStatus(' . $user_id . ')"/>';
             } else {
                 $user->status = 1;
-                $result = '<a class="fa fa-thumbs-up" style="color: green; font-size: 24px;;" onclick="changeStatus('.$user_id.')"/>';
+                $result = '<a class="fa fa-thumbs-up" style="color: green; font-size: 24px;;" onclick="changeStatus(' . $user_id . ')"/>';
             }
             $user->save();
             return $result;
@@ -155,25 +163,29 @@ class UserController extends Controller
         }
     }
 
-    public function show_login(){
+    public function show_login()
+    {
         return view('login');
     }
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $username = $request->get('txtUserName');
         $password = $request->get('txtPassword');
-        
+
         if (Auth::attempt(['username' => $username, 'password' => $password, 'status' => 1])) {
             return redirect()->to("/dashboard");
         } else {
-            return view('login')->with("message","Username hoặc Password không đúng");
+            return view('login')->with("message", "Username hoặc Password không đúng");
         }
     }
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         return redirect()->to('/login');
     }
 
-    public function show_dashboard(){
+    public function show_dashboard()
+    {
         return view('dashboard');
     }
 }
