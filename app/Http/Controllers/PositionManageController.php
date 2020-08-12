@@ -53,7 +53,8 @@ class PositionManageController extends Controller
 
         $position = new Position([
             'name_position' => $request->get('name_position'),
-            'descrtion_position' => $request->get('descrtion_position')
+            'descrtion_position' => $request->get('descrtion_position'),
+            'level_position' => $request->get('level_position')
         ]);
         $position->save();
         return redirect('position-manage')->with('create-success', 'Chức vụ tạo thành công !');
@@ -102,6 +103,7 @@ class PositionManageController extends Controller
         $position = Position::find($id);
         $position->name_position = $request->get('name_position');
         $position->descrtion_position = $request->get('descrtion_position');
+        $position->level_position = $request->get('level_position');
         $position->save();
 
         return redirect('position-manage')->with('update-success', 'Cập nhật chức vụ thành công');

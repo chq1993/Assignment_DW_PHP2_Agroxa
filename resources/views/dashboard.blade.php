@@ -149,9 +149,9 @@
 </div> <!-- content -->
 
 <script>
-  window.onload = function () {
+  window.onload = function() {
     this.doughnutChart();
-    this.lineChart(); 
+    this.lineChart();
   };
 </script>
 @endsection
