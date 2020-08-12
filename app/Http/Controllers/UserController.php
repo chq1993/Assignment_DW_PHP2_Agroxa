@@ -45,7 +45,10 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        
+
+        //Hiển thị thông báo check với điều kiện ngoài index
+        alert()->success('Người dùng được thêm mới', 'Thành công');
+
         $txtUserName = $request->get("txtUserName");
         $txtFullName = $request->get("txtFullName");
         $dateBirthday = $request->get("dateBirthday");
@@ -93,7 +96,6 @@ class UserController extends Controller
     {
         $user = User::find($id);
         return view('user.edit', compact('user'));
-
     }
 
     /**
@@ -105,8 +107,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //Hiển thị thông báo check với điều kiện ngoài index
+        alert()->success('Người dùng được cập nhật', 'Thành công');
+
         $user = User::find($id);
-        
+
         $txtUserName = $request->get("txtUserName");
         $txtFullName = $request->get("txtFullName");
         $dateBirthday = $request->get("dateBirthday");
@@ -137,24 +142,28 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        //Hiển thị thông báo check với điều kiện ngoài index
+        alert()->success('Người dùng đã được xóa', 'Thành công');
+
         User::destroy($id);
-        return redirect()->to('/user')->with('message','Xóa thành công');
+        return redirect()->to('user')->with('delete-success', 'Xóa thành công');
     }
 
-    public function changeStatus(Request $request){
+    public function changeStatus(Request $request)
+    {
         $user_id = $request->get('id');
-        
+
         $user = User::find($user_id);
-        if ($user){
+        if ($user) {
             $result = '';
             // thay doi trang thai cua ban ghi
             $status = $user->status;
-            if ($status == 1){
+            if ($status == 1) {
                 $user->status = 0;
-                $result = '<a class="fa fa-thumbs-down" style="color: red; font-size: 24px;;" onclick="changeStatus('.$user_id.')"/>';
+                $result = '<a class="fa fa-thumbs-down" style="color: red; font-size: 24px;;" onclick="changeStatus(' . $user_id . ')"/>';
             } else {
                 $user->status = 1;
-                $result = '<a class="fa fa-thumbs-up" style="color: green; font-size: 24px;;" onclick="changeStatus('.$user_id.')"/>';
+                $result = '<a class="fa fa-thumbs-up" style="color: green; font-size: 24px;;" onclick="changeStatus(' . $user_id . ')"/>';
             }
             $user->save();
             return $result;
@@ -163,13 +172,15 @@ class UserController extends Controller
         }
     }
 
-    public function show_login(){
+    public function show_login()
+    {
         return view('login');
     }
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $username = $request->get('txtUserName');
         $password = $request->get('txtPassword');
-        
+
         if (Auth::attempt(['username' => $username, 'password' => $password, 'status' => 1])) {
             $user = Auth::user(); 
             if ($user->user_type == 1){
@@ -178,15 +189,17 @@ class UserController extends Controller
                 return redirect()->to('/');
             }
         } else {
-            return view('logins')->with("message","Username hoặc Password không đúng");
+            return view('login')->with("message", "Username hoặc Password không đúng");
         }
     }
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         return redirect()->to('/login');
     }
 
-    public function show_dashboard(){
+    public function show_dashboard()
+    {
         return view('dashboard');
     }
 

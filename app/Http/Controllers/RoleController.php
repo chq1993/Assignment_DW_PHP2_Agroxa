@@ -21,8 +21,13 @@ class RoleController extends Controller
     public function index()
     {
         // $role = Role::with('position','division','user')->get();
-        $role = DB::table('roles')->join('user', 'roles.id_user', '=', 'user.id')->join('positions', 'roles.id_position', '=', 'positions.id')->join('divisions', 'roles.id_division', '=', 'divisions.id')->select('roles.id','roles.created_at','roles.updated_at','roles.percentageOfRole', 'roles.start_time', 'roles.end_time', 'divisions.name_division', 'positions.name_position', 'user.username', 'user.fullname')->get();
-      
+        $role = DB::table('roles')
+            ->join('user', 'roles.id_user', '=', 'user.id')
+            ->join('positions', 'roles.id_position', '=', 'positions.id')
+            ->join('divisions', 'roles.id_division', '=', 'divisions.id')
+            ->select('roles.id', 'roles.created_at', 'roles.updated_at', 'roles.percentageOfRole', 'roles.start_time', 'roles.end_time', 'divisions.name_division', 'positions.name_position', 'user.username', 'user.fullname')
+            ->get();
+
         return view('role-manage.index', compact('role'));
     }
 
@@ -37,7 +42,7 @@ class RoleController extends Controller
         $user = User::all();
         $division = Division::all();
         $position = Position::all();
-        return view('role-manage.create', compact('user','division', 'position'));
+        return view('role-manage.create', compact('user', 'division', 'position'));
     }
 
     /**
@@ -48,25 +53,27 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        //Hiển thị thông báo check với điều kiện ngoài index
+        alert()->success('Cấu hình người dùng', 'Thành công');
+
         $slbUser = $request->get("slbUser");
         $slbDivision = $request->get("slbDivision");
         $slbPosition = $request->get("slbPosition");
         $txtPercentageOfRole = $request->get("txtPercentageOfRole");
         $dateStartTime = $request->get("dateStartTime");
         $dateEndTime = $request->get("dateEndTime");
-        
-        $obj= new Role([
-            'id_user'=>$slbUser,
-            'id_position'=>$slbDivision,
-            'id_division'=>$slbPosition,
-            'percentageOfRole'=>$txtPercentageOfRole,
-            'start_time'=>$dateStartTime,
-            'end_time'=>$dateEndTime,
+
+        $obj = new Role([
+            'id_user' => $slbUser,
+            'id_position' => $slbDivision,
+            'id_division' => $slbPosition,
+            'percentageOfRole' => $txtPercentageOfRole,
+            'start_time' => $dateStartTime,
+            'end_time' => $dateEndTime,
         ]);
 
         $obj->save();
-        return Redirect()->to('role-manage/create')->with('message', 'Thêm mới vai trò cho người dùng thành công!');
-
+        return Redirect('role-manage')->with('create-success', 'Thêm mới vai trò cho người dùng thành công!');
     }
 
     /**
@@ -134,7 +141,12 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        Role::destroy($id);
-        return redirect()->to('/role-manage')->with('message','Xóa thành công');
+        //Hiển thị thông báo check với điều kiện ngoài index
+        alert()->success('Cấu hình được xóa', 'Thành công');
+
+        $role = Role::find($id);
+        $role->delete();
+
+        return redirect('role-manage')->with('delete-success', 'Xóa cấu hình người dùng thành công!');
     }
 }

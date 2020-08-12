@@ -34,7 +34,7 @@
                 <input type="text" class="form-control" placeholder="Tìm kiếm...">
               </div>
             </form>
-            <a href="{{ route('division-manage.create') }}" style="margin: 19px;" class="btn btn-primary">
+            <a href="{{ route('division-manage.create') }}" style="margin: 19px;" class="btn btn-primary waves-effect waves-light">
               <span>Thêm mới đơn vị</span>
               <i class="far fa-question-circle ml-1"></i></a>
           </section>
@@ -51,7 +51,7 @@
 
           <div class="table-rep-plugin">
             <div class="table-responsive b-0" data-pattern="priority-columns">
-              <table id="tech-companies-1" class="table table-bordered ">
+              <table id="tech-companies-1" class="table table-bordered table-striped">
                 <thead>
                   <tr style="background-color: #35a989" class="shadow-sm text-white">
                     <td>ID</td>
@@ -170,16 +170,16 @@
                     <td>{{$division->id}}</td>
                     <td>{{$division->name_division}}</td>
                     <td>{{$division->kind_division}}</td>
-                    <td>{{$division->division_level}}</td>
+                    <td>Cấp {{$division->division_level}}</td>
                     <td>{{$division->description_division}}</td>
                     <td>
                       <div class="d-flex">
                         <a href="{{ route('division-manage.edit', ['division_manage' => $division->id]) }}"
-                          class="btn btn-primary mr-2"><i class="far fa-edit"></i></a>
+                          class="btn btn-outline-primary waves-effect waves-light mr-2"><i class="far fa-edit"></i></a>
                         <form action="{{ route('division-manage.destroy', $division->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
-                          <button onclick="return confirm('Bạn có chắc muốn xóa?')" class="btn btn-danger"
+                          <button onclick="return confirm('Bạn có chắc muốn xóa?')" class="btn btn-outline-danger waves-effect waves-light"
                             type="submit"><i class="far fa-trash-alt"></i></button>
                         </form>
                       </div>

@@ -10,4 +10,8 @@ class Form extends Model
         'name_form',
         'description_form'
     ];
+
+    public function question_forms(){
+        return $this->hasMany(ConfigForm::class, 'id_form');
+    }
 }

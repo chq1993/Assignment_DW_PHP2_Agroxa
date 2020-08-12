@@ -19,6 +19,8 @@ class CreatePlanRolesTable extends Migration
             $table->foreign('id_plan')->references('id')->on('plans')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('id_role')->unsigned()->nullable();
             $table->foreign('id_role')->references('id')->on('roles')->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
+
         });
     }
 

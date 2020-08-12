@@ -19,6 +19,8 @@ class CreatePositionFormsTable extends Migration
             $table->foreign('id_position')->references('id')->on('positions')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('id_form')->unsigned()->nullable();
             $table->foreign('id_form')->references('id')->on('forms')->onUpdate('cascade')->onDelete('cascade');
+            $table->timestamps();
+
         });
     }
 
