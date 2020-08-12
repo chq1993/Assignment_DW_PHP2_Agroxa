@@ -25,12 +25,10 @@ Route::get('page', function () {
     return view('page');
 });
 
-Route::get('dashboard','Controller@show_dashboard');
 
 
 Route::get('login', 'Controller@login');
 
-Route::get('dashboard', 'Controller@show_dashboard');
 //Route login
 Route::get('/login', 'UserController@show_login')->name('user.login');
 Route::post('/login','UserController@login')->name('user.check_login');
@@ -40,6 +38,12 @@ Route::group(['middleware'=>'check_auth'], function(){
 // Route của user
 Route::get('/logout', 'UserController@logout')->name('user.logout');
 Route::get('/dashboard', 'UserController@show_dashboard');
+// public
+//copy k sửa a
+Route::resource('peer-assessment', 'PeerAssessmentController');
+// Route::resource('subordinate-assessment', 'ConfigQuestionController');
+// Route::resource('superior-assessment', 'ConfigQuestionController');
+
 Route::get('/', function () {
     return view('layouts.admin');
 });
@@ -48,14 +52,6 @@ Route::get('/', function () {
 	Route::group(['middleware'=>'check_usertype'], function(){
 		Route::get('user/changeStatus', 'UserController@changeStatus')->name('user.changeStatus');
 		
-		Route::get('/changerole','UserController@choose_role')->name('user.changerole');
-		Route::get('/user','UserController@index')->name('user');
-		Route::get('/user/index','UserController@index')->name('user.index');
-		Route::post('/user/create','UserController@create')->name('user.create');
-		Route::post('/user/store','UserController@store')->name('user.store');
-		Route::get('/user/edit','UserController@edit')->name('user.edit');
-		Route::post('/user/update','UserController@update')->name('user.update');
-		Route::post('/user/destroy','UserController@destroy')->name('user.destroy');
 		//Route của Quản lý câu hỏi
 		Route::resource('question-manage', 'QuestionManageController');
 		//Route của Quản lý form
@@ -65,13 +61,14 @@ Route::get('/', function () {
 		Route::resource('position-manage', 'PositionManageController');
 		Route::resource('plan-manage', 'PlanManageController');
 		Route::resource('role-manage', 'RoleController');
+		Route::resource('config-fq', 'ConfigFormController');
+		Route::resource('config-aq', 'ConfigQuestionController');
+		
+
 		Route::get('/', function () {
 			return view('layouts.admin');
 		});
 	});
 
 });
-
-
-
-
+Route::resource('user', 'UserController');

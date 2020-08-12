@@ -78,7 +78,7 @@
                                                 <td>{{ $item->fullname}}</td>
                                                 <td>{{ $item->name_position}}</td>
                                                 <td>{{ $item->name_division}}</td>
-                                                <td>{{ $item->percentageOfRole }} %</td>
+                                                <td>{{ $item->percentageOfRole }}%</td>
                                                 <td> {{ $item->start_time }}</td>
                                                 <td> {{ $item->end_time }}</td>
                                                 <td> {{ $item->updated_at }}</td>

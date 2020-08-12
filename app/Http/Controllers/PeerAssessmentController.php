@@ -26,23 +26,23 @@ class PeerAssessmentController extends Controller
     public function create()
     {
 
-        $user = auth()->user();
-        $role = Role::select('roles.*')->where('id_user', $user->id)->first();
-        $id_positionLogin = $role->id_position;
-        $id_divisionLogin = $role->id_division;
-        $listRoleReview = Role::where([
-            ['id_position', '=', $id_positionLogin],
-            ['id_division', '=', $id_divisionLogin]
-        ])
-            ->get();
+        // $user = auth()->user();
+        // $role = Role::select('roles.*')->where('id_user', $user->id)->first();
+        // $id_positionLogin = $role->id_position;
+        // $id_divisionLogin = $role->id_division;
+        // $listRoleReview = Role::where([
+        //     ['id_position', '=', $id_positionLogin],
+        //     ['id_division', '=', $id_divisionLogin]
+        // ])
+        //     ->get();
 
-        $listUser = [];
-        for ($i = 0; $i < count($listRoleReview); $i++) {
-            $listUser[] = User::where([
-                ['id', '=', $listRoleReview[$i]->id_user]
-            ])
-                ->get();
-        }
+        // $listUser = [];
+        // for ($i = 0; $i < count($listRoleReview); $i++) {
+        //     $listUser[] = User::where([
+        //         ['id', '=', $listRoleReview[$i]->id_user]
+        //     ])
+        //         ->get();
+        // }
 
         // dd($listUser);
 
