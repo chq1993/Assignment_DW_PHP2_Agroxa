@@ -95,7 +95,12 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        // $role = Role::find($id);
+        $role = DB::table('roles')->join('user', 'roles.id_user', '=', 'user.id')->join('positions', 'roles.id_position', '=', 'positions.id')->join('divisions', 'roles.id_division', '=', 'divisions.id')->select('roles.id','roles.id_user','roles.id_position','roles.id_division','roles.created_at','roles.updated_at','roles.percentageOfRole', 'roles.start_time', 'roles.end_time', 'divisions.name_division', 'positions.name_position', 'user.username', 'user.fullname')->where('roles.id', $id)->first();
+        $user = User::all();
+        $division = Division::all();
+        $position = Position::all();
+        return view('role-manage.edit', compact('role', 'user', 'division','position'));
     }
 
     /**
@@ -107,7 +112,25 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $role = Role::find($id);
+        
+        $slbUser = $request->get("slbUser");
+        $slbDivision = $request->get("slbDivision");
+        $slbPosition = $request->get("slbPosition");
+        $txtPercentageOfRole = $request->get("txtPercentageOfRole");
+        $dateStartTime = $request->get("dateStartTime");
+        $dateEndTime = $request->get("dateEndTime");
+
+        $role->id_user= $slbUser;
+        $role->id_division= $slbDivision;
+        $role->id_position= $slbPosition;
+        $role->percentageOfRole= $txtPercentageOfRole;
+        $role->start_time= $dateStartTime;
+        $role->end_time= $dateEndTime;
+        
+        
+        $role->save();
+        return redirect()->to('role-manage')->with("message", "Sửa thông tin người dùng thành công");
     }
 
     /**

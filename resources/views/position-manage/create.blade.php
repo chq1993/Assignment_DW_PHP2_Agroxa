@@ -41,19 +41,26 @@
 
           <form action="{{ route('position-manage.store') }}" method="POST">
             @csrf
-            <div class="form-group">
-              <label for="name_position">Tên chức vụ</label>
-              <input type="text" class="form-control" name="name_position" id="name_position" required
-                placeholder="Nhập tên chức vụ" />
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="name_position">Tên chức vụ</label>
+                <input type="text" class="form-control" name="name_position" id="name_position" required
+                  placeholder="Nhập tên chức vụ" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="descrtion_position">Cấp độ của chức vụ</label>
+                <div>
+                  <input type="number" name="level_position" id="level_position" class="form-control" placeholder="Nhập cấp độ của vai trò" />
+                </div>
+              </div>
             </div>
-
             <div class="form-group">
               <label for="descrtion_position">Miêu tả thêm</label>
               <div>
                 <input type="text" name="descrtion_position" id="descrtion_position" class="form-control" placeholder="Nhập thông tin thêm" />
               </div>
             </div>
-
+            
             <div class="form-group">
               <div>
                 <button type="submit" class="btn btn-primary waves-effect waves-light">
