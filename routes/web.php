@@ -51,7 +51,8 @@ Route::get('/', function () {
 	//-------------------------GROUP CHECK_USERTYPE----------------------------
 	Route::group(['middleware'=>'check_usertype'], function(){
 		Route::get('user/changeStatus', 'UserController@changeStatus')->name('user.changeStatus');
-		
+		Route::resource('user', 'UserController');
+
 		//Route của Quản lý câu hỏi
 		Route::resource('question-manage', 'QuestionManageController');
 		//Route của Quản lý form
@@ -63,7 +64,7 @@ Route::get('/', function () {
 		Route::resource('role-manage', 'RoleController');
 		Route::resource('config-fq', 'ConfigFormController');
 		Route::resource('config-aq', 'ConfigQuestionController');
-		
+
 
 		Route::get('/', function () {
 			return view('layouts.admin');
@@ -71,4 +72,3 @@ Route::get('/', function () {
 	});
 
 });
-Route::resource('user', 'UserController');
