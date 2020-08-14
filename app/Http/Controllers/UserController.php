@@ -214,10 +214,10 @@ class UserController extends Controller
         return redirect()->to('/login');
     }
 
-    public function show_dashboard_user()
-    {
-        return view('dashboard_user');
-    }
+    // public function show_dashboard_user()
+    // {
+    //     return view('dashboard_user');
+    // }
 
     public function show_dashboard()
     {
