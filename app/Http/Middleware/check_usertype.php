@@ -20,7 +20,7 @@ class check_usertype
 
             return $next($request);
         }else{
-            return redirect('page');
+            return redirect('dashboard_user');
         }
     }
 }

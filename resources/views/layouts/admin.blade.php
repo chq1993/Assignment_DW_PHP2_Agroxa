@@ -89,7 +89,7 @@
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <div class="notify-icon bg-primary"><i class="mdi mdi-cart-outline"></i></div>
                                     <p class="notify-details">Your order is placed<span class="text-muted">Dummy text of
-                                            the printing and
+                                    the printing and
                                             typesetting industry.</span></p>
                                 </a>
                                 <!-- item-->
@@ -117,8 +117,8 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                                 <!-- item-->
-                                <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5"></i> Thông tin
-                                    cá nhân</a>
+                                <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5"></i>{{ Auth::user()->fullname }}</a>
+                                <a class="dropdown-item" href="user.changerole"><i class="mdi mdi mdi mdi mdi-account-switch m-r-5"></i>Đổi vai trò</a>
                                 <a class="dropdown-item" href="#"><i class="mdi mdi-wallet m-r-5"></i> Ví tiền</a>
                                 <a class="dropdown-item d-block" href="#"><span
                                         class="badge badge-success float-right">11</span><i
@@ -178,39 +178,51 @@
                                 <span> Tổng quan </span>
                             </a>
                         </li>
+                        @if ( Auth::user()->user_type === 2)
+                            <li>
+                                <a href="{{ route('user.store') }}" class="waves-effect"><i
+                                        class="fas fa-user-circle"></i><span>Quản lý
+                                        danh mục <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span>
+                                    </span></a>
+                                <ul class="submenu">
+                                    <li><a href="{{ route('user.index') }}">Quản lý người dùng</a></li>
+                                    <li><a href="{{ route('role-manage.store') }}">Phân quyền người dùng</a></li>
+                                    <li><a href="{{ route('division-manage.index') }}">Đơn vị công tác</a></li>
+                                    <li><a href="{{ route('position-manage.index') }}">Chức vụ</a></li>
+                                    <li><a href="{{ route('plan-manage.index') }}">Kế hoạch đánh giá</a></li>
+                                </ul>
+                            </li>
 
-                        <li>
-                            <a href="{{ route('user.store') }}" class="waves-effect"><i
-                                    class="fas fa-user-circle"></i><span>Quản lý
-                                    danh mục <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span>
-                                </span></a>
-                            <ul class="submenu">
-                                <li><a href="{{ route('user.store') }}">Quản lý người dùng</a></li>
-                                <li><a href="{{ route('role-manage.store') }}">Phân quyền người dùng</a></li>
-                                <li><a href="{{ route('division-manage.index') }}">Đơn vị công tác</a></li>
-                                <li><a href="{{ route('position-manage.index') }}">Chức vụ</a></li>
-                                <li><a href="{{ route('plan-manage.index') }}">Kế hoạch đánh giá</a></li>
-                            </ul>
-                        </li>
+                            <li>
+                                <a class="waves-effect"><i class="fas fa-university"></i><span> Ngân
+                                        hàng câu hỏi <span class="float-right menu-arrow"><i
+                                                class="mdi mdi-plus"></i></span> </span></a>
+                                <ul class="submenu">
+                                    <li><a href="{{ route('question-manage.index') }}">Quản lý câu hỏi</a></li>
+                                    <li><a href="{{ route('form-manage.index') }}">Quản lý mẫu phiếu</a></li>
+                                    <li><a href="{{ route('answer-manage.index') }}">Quản lý câu trả lời</a></li>
+                                </ul>
+                            </li>
 
-                        <li>
-                            <a class="waves-effect"><i class="fas fa-university"></i><span> Ngân
-                                    hàng câu hỏi <span class="float-right menu-arrow"><i
-                                            class="mdi mdi-plus"></i></span> </span></a>
-                            <ul class="submenu">
-                                <li><a href="{{ route('question-manage.index') }}">Quản lý câu hỏi</a></li>
-                                <li><a href="{{ route('form-manage.index') }}">Quản lý mẫu phiếu</a></li>
-                                <li><a href="{{ route('answer-manage.index') }}">Quản lý câu trả lời</a></li>
-                            </ul>
-                        </li>
+                            <li>
+                                <a class="waves-effect"><i class="fas fa-chalkboard-teacher"></i><span> Đánh giá<span
+                                            class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span></span></a>
+                                <ul class="submenu">
+                                    <li><a href="{{ route('peer-assessment.create') }}">Đánh giá đồng cấp</a></li>
+                                </ul>
+                            </li>                      
+                            @else
+                            <li>
+                                <a class="waves-effect"><i class="fas fa-chalkboard-teacher"></i><span> Đánh giá<span
+                                            class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span></span></a>
+                                <ul class="submenu">
+                                    <li><a href="{{ route('peer-assessment.create') }}">Đánh giá đồng cấp</a></li>
+                                </ul>
+                            </li>
+                        @endif
+                        
 
-                        <li>
-                            <a class="waves-effect"><i class="fas fa-chalkboard-teacher"></i><span> Đánh giá<span
-                                        class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span></span></a>
-                            <ul class="submenu">
-                                <li><a href="{{ route('peer-assessment.create') }}">Đánh giá đồng cấp</a></li>
-                            </ul>
-                        </li>
+                        
 
                     </ul>
 

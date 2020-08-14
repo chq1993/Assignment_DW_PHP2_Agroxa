@@ -21,9 +21,7 @@ Route::get('user/layouts', function () {
 	return view('layouts.user');
 });
 
-Route::get('page', function () {
-    return view('page');
-});
+
 
 
 
@@ -35,22 +33,25 @@ Route::post('/login','UserController@login')->name('user.check_login');
 
 //-------------------------GROUP CHECK_AUTH----------------------------
 Route::group(['middleware'=>'check_auth'], function(){
-// Route của user
-Route::get('/logout', 'UserController@logout')->name('user.logout');
-Route::get('/dashboard', 'UserController@show_dashboard');
-// public
-//copy k sửa a
-Route::resource('peer-assessment', 'PeerAssessmentController');
-// Route::resource('subordinate-assessment', 'ConfigQuestionController');
-// Route::resource('superior-assessment', 'ConfigQuestionController');
-
-Route::get('/', function () {
-    return view('layouts.admin');
-});
+	Route::get('page', function () {
+		return view('page');
+	});
+	// Route của user
+	Route::get('/logout', 'UserController@logout')->name('user.logout');
+	Route::get('/dashboard_user', 'UserController@show_dashboard_user');
+	Route::get('/changerole', 'UserController@changerole')->name('user.changerole');
+	Route::resource('user', 'UserController');
+	// public
+	//copy k sửa a
+	Route::resource('peer-assessment', 'PeerAssessmentController');
+	// Route::resource('subordinate-assessment', 'ConfigQuestionController');
+	// Route::resource('superior-assessment', 'ConfigQuestionController');
+	Route::get('/', function () {return view('layouts.admin');});
 
 	//-------------------------GROUP CHECK_USERTYPE----------------------------
 	Route::group(['middleware'=>'check_usertype'], function(){
 		Route::get('user/changeStatus', 'UserController@changeStatus')->name('user.changeStatus');
+		Route::get('/dashboard', 'UserController@show_dashboard');
 		
 		//Route của Quản lý câu hỏi
 		Route::resource('question-manage', 'QuestionManageController');
@@ -65,10 +66,8 @@ Route::get('/', function () {
 		Route::resource('config-aq', 'ConfigQuestionController');
 		
 
-		Route::get('/', function () {
-			return view('layouts.admin');
-		});
+		Route::get('/', function () {return view('layouts.admin');});
 	});
 
 });
-Route::resource('user', 'UserController');
+

@@ -37,12 +37,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function changerole(Request $request){
-        $slbIdRole = $request->get('slbIdRole');
-        $request->session()->put('id_role', $slbIdRole);
-        return Redirect()->to('/changerole')->with('message', 'Chọn vai trò thành công!');
-    }
-
+    
     public function store(Request $request)
     {
 
@@ -119,6 +114,7 @@ class UserController extends Controller
         $txtEmail = $request->get("txtEmail");
         $txtPhone = $request->get("txtPhone");
         $slbUserType = $request->get("slbUserType");
+        $txtPassword = $request->get("txtPassword");
 
         
         $user->username= $txtUserName;
@@ -128,6 +124,7 @@ class UserController extends Controller
         $user->email= $txtEmail;
         $user->phone= $txtPhone;
         $user->user_type = $slbUserType;
+        $user->password = bcrypt($txtPassword);
         
         
         $user->save();
@@ -184,9 +181,9 @@ class UserController extends Controller
         if (Auth::attempt(['username' => $username, 'password' => $password, 'status' => 1])) {
             $user = Auth::user(); 
             if ($user->user_type == 1){
-                return redirect()->to("page");
+                return redirect()->to("dashboard_user");
             } elseif ( $user->user_type ==2 ){
-                return redirect()->to('/');
+                return redirect()->to('dashboard');
             }
         } else {
             return view('login')->with("message", "Username hoặc Password không đúng");
@@ -198,12 +195,17 @@ class UserController extends Controller
         return redirect()->to('/login');
     }
 
+    public function show_dashboard_user()
+    {
+        return view('dashboard_user');
+    }
+
     public function show_dashboard()
     {
         return view('dashboard');
     }
 
-    public function choose_role(){
+    public function changerole(){
         $id_user= Auth::user()->id;
         $role = DB::table('roles')
         ->join('user', 'roles.id_user', '=', 'user.id')
