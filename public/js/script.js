@@ -16,6 +16,24 @@ function doughnutChart() {
     });
 }
 
+function doughnutChartUser() {
+
+    let doughnutChartUser = document.getElementById('doughnutChartUser')
+
+    new Chart(doughnutChartUser, {
+        "type": "pie",
+        "data": {
+            "labels": ["Công việc hoàn thành", "Công việc chưa hoàn thành"],
+            "datasets": [{
+                "label": "Biểu đồ đánh giá tiến độ công việc",
+                // thang điểm = 5
+                "data": [70, 30],
+                "backgroundColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)"]
+            }]
+        }
+    });
+}
+
 function lineChart() {
 
     let lineChart = document.getElementById('lineChart')
