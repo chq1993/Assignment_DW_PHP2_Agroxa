@@ -113,7 +113,7 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $role = Role::find($id);
-        
+
         $slbUser = $request->get("slbUser");
         $slbDivision = $request->get("slbDivision");
         $slbPosition = $request->get("slbPosition");
@@ -127,8 +127,8 @@ class RoleController extends Controller
         $role->percentageOfRole= $txtPercentageOfRole;
         $role->start_time= $dateStartTime;
         $role->end_time= $dateEndTime;
-        
-        
+
+
         $role->save();
         return redirect()->to('role-manage')->with("message", "Sửa thông tin người dùng thành công");
     }

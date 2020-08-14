@@ -48,11 +48,11 @@ class USER extends Authenticatable
     }
 
     public function positions(){
-        return $this->belongsToMany(Position::class, 'roles');
+        return $this->belongsToMany(Position::class, 'roles', 'id_user', 'id_position');
     }
 
     public function divisions(){
-        return $this->belongsToMany(Division::class, 'roles');
+        return $this->belongsToMany(Division::class, 'roles', 'id_user', 'id_division');
     }
 
 }

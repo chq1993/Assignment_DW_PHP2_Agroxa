@@ -22,4 +22,14 @@ class Question extends Model
     public function answer_questions(){
         return $this->hasMany(ConfigQuestion::class, 'id_question');
     }
+    //test
+    // public static function getQuestion($idQuestion){
+    //     // thằng laravel này nó sao ý a... em đặt trung với class nó tạo ra bảng thì nó thêm "s" phía sau
+    //    // umk
+    //     $question = Question::select('questions.question')
+    //     //đợi a, sai
+    //         ->join('question_forms','question_forms.id_question','=','questions.id')
+    //         ->where('questions.id',$idQuestion)
+    //         ->first();
+    // }
 }

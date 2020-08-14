@@ -95,7 +95,7 @@
                                 <div class="form-group" >
                                     <label for="slbUserType">Loại người dùng</label>
                                     <select name="slbUserType" id="slbUserType" class="form-control">
-                                        <option value="{{ $user->phone }}">User</option>    
+                                        <option value="">--- Chọn quyền ---</option>
                                         <option value="1">User</option>
                                         <option value="2">Admin</option>
                                     </select>
@@ -135,3 +135,4 @@
 </script>
 
 @endsection
+
