@@ -90,7 +90,7 @@
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <div class="notify-icon bg-primary"><i class="mdi mdi-cart-outline"></i></div>
                                     <p class="notify-details">Your order is placed<span class="text-muted">Dummy text of
-                                            the printing and
+                                    the printing and
                                             typesetting industry.</span></p>
                                 </a>
                                 <!-- item-->

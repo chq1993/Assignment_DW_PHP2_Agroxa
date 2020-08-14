@@ -121,6 +121,7 @@ class UserController extends Controller
         $txtEmail = $request->get("txtEmail");
         $txtPhone = $request->get("txtPhone");
         $slbUserType = $request->get("slbUserType");
+        $txtPassword = $request->get("txtPassword");
 
 
         $user->username = $txtUserName;
@@ -130,6 +131,7 @@ class UserController extends Controller
         $user->email = $txtEmail;
         $user->phone = $txtPhone;
         $user->user_type = $slbUserType;
+        $user->password = bcrypt($txtPassword);
 
 
         $user->save();
@@ -196,7 +198,7 @@ class UserController extends Controller
         if (Auth::attempt(['username' => $username, 'password' => $password, 'status' => 1])) {
             $user = Auth::user();
             if ($user->user_type == 1) {
-                alert()->success('Chào mừng bạn đã chở lại', 'Thành công');
+                alert()->success('Chào mừng bạn đã trở lại', 'Thành công');
                 return redirect()->to("/dashboard")->with('login-success', 'Xóa thành công');
             } elseif ($user->user_type == 2) {
                 alert()->success('Chào mừng bạn đã trở lại', 'Thành công');
@@ -210,6 +212,11 @@ class UserController extends Controller
     {
         Auth::logout();
         return redirect()->to('/login');
+    }
+
+    public function show_dashboard_user()
+    {
+        return view('dashboard_user');
     }
 
     public function show_dashboard()

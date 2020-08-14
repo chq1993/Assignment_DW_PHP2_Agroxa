@@ -65,8 +65,8 @@ class RoleController extends Controller
 
         $obj = new Role([
             'id_user' => $slbUser,
-            'id_position' => $slbDivision,
-            'id_division' => $slbPosition,
+            'id_division' => $slbDivision,
+            'id_position' => $slbPosition,
             'percentageOfRole' => $txtPercentageOfRole,
             'start_time' => $dateStartTime,
             'end_time' => $dateEndTime,

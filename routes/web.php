@@ -21,9 +21,7 @@ Route::get('user/layouts', function () {
     return view('layouts.user');
 });
 
-Route::get('page', function () {
-    return view('page');
-});
+
 
 
 
