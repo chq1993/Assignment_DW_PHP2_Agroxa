@@ -26,7 +26,28 @@ class PeerAssessmentController extends Controller
     public function create()
     {
 
-        // $user = auth()->user();
+        $user = auth()->user();
+
+        $userDb = User::find($user->id);
+
+        $other = User::with('positions', 'divisions')
+            ->where('id', '!=', $user->id)
+            ->get();
+
+        // var_dump($userDb->positions()->pluck('level_position')[0]);
+
+        $other = array_filter($other->toArray(), function ($item) use ($userDb) {
+            return $userDb->positions()->pluck('level_position')[0] == $item['positions'][0]['level_position'] &&
+                $item['divisions'][0]['id']  == $userDb->divisions()->pluck('id_division')[0];
+        });
+
+        // foreach($other as $item){
+        //     var_dump($item);
+        // }
+        var_dump($other);
+
+        return;
+
         // $role = Role::select('roles.*')->where('id_user', $user->id)->first();
         // $id_positionLogin = $role->id_position;
         // $id_divisionLogin = $role->id_division;
@@ -46,7 +67,10 @@ class PeerAssessmentController extends Controller
 
         // dd($listUser);
 
-        return view('peer-assessment.create');
+        return view('peer-assessment.create', [
+            'user' => $userDb,
+            'other' => $other
+        ]);
     }
 
     /**

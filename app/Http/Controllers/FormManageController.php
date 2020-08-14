@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Form;
+use App\Question;
+use League\CommonMark\Extension\SmartPunct\Quote;
 
 class FormManageController extends Controller
 {
@@ -15,15 +17,17 @@ class FormManageController extends Controller
      */
     public function index()
     {
-
+        // $question = Question::getQuestion(28);
+        // dd($question);
         $forms = DB::table('forms');
-
-        if(isset($_GET['search-form'])){
+        if (isset($_GET['search-form'])) {
             $forms = $forms->where("name_form", "like", "%" . $_GET["search-form"] . "%");
         }
 
         $forms = $forms->paginate(5)->appends(request()->query());
-        return view('form-manage.index', ['forms' => $forms]);
+        return view('form-manage.index', [
+            'forms' => $forms
+        ]);
     }
 
     /**

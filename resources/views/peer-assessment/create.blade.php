@@ -43,19 +43,16 @@
                     <form action="{{ route('peer-assessment.store') }}" method="POST">
                         @csrf
 
+
                         <div class="form-group">
                             <label for="value_answer">Đánh giá ai</label>
                             <select class="custom-select mr-sm-2" name="value_answer" id="value_answer">
-                                <option value="1" selected>-- chọn người đánh giá --</option>
-                                {{-- giờ anh lấy được người cần đánh giá ra đi rồi bỏ vào vòng lặp thôi --}}
-                                {{-- @foreach ($collection as $item)
-                                <option value="{{}}">{{}}</option>
+                                {{-- <option value="1" selected>-- chọn người đánh giá --</option> --}}
+                                {{-- @foreach ($other as $item)
+                                <option value="{{$userReview->id}}">{{$userReview->fullname}}</option>
                                 @endforeach --}}
-                                {{-- hiện tại chưa có dữ liệu nên em đóng lại, giờ lấy được danh sách user cần đánh giá đã  --}}
                             </select>
                         </div>
-                         {{-- // h e muốn đánh gia s e phải lấy ra được 1 là người đánh giá và một người bị đánh giá
-                         // người dùng hiện tại e đăng nhập: là người đánh giá, ông này chọn đánh giá ai là việc anh lấy user theo điều kiện đó --}}
                         <div>
                             <p>mẫu form đánh giá</p>
                         </div>

@@ -8,3 +8,30 @@
     }
 }
 
+.card {
+    .avatar-img{
+        position: absolute;
+        top: 120px;
+        width: 100%;
+        img{
+            width: 100px;
+            height: 100px;
+        }
+    }
+    .cus-img{
+        opacity: 0.8 !important;
+    }
+}
+.social-network-custom{
+    font-size: 22px;
+}
+.border-vertical-bricks{
+    border-right: 1px solid #ebebeb;
+}
+.border-top-user{
+    border-top: 1px solid #ebebeb;
+}
+.cus-badge{
+    padding: 4px 8px;
+    font-size: 12px;
+}

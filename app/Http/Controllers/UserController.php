@@ -37,12 +37,17 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    
+    public function changerole(Request $request)
+    {
+        $slbIdRole = $request->get('slbIdRole');
+        $request->session()->put('id_role', $slbIdRole);
+        return Redirect()->to('/changerole')->with('message', 'Chọn vai trò thành công!');
+    }
+
     public function store(Request $request)
     {
 
-        //Hiển thị thông báo check với điều kiện ngoài index
-        alert()->success('Người dùng được thêm mới', 'Thành công');
+
 
         $txtUserName = $request->get("txtUserName");
         $txtFullName = $request->get("txtFullName");
@@ -52,22 +57,25 @@ class UserController extends Controller
         $txtPhone = $request->get("txtPhone");
         $slbUserType = $request->get("slbUserType");
         $txtPassword = $request->get("txtPassword");
-        
-        $obj= new User([
-            'username'=>$txtUserName,
-            'fullname'=>$txtFullName,
-            'birthday'=>$dateBirthday,
-            'email'=>$txtEmail,
-            'address'=>$txtAddress,
-            'phone'=>$txtPhone,
-            'status'=>1,
-            'user_type'=>$slbUserType,
-            'password'=>bcrypt($txtPassword)
+
+        $obj = new User([
+            'username' => $txtUserName,
+            'fullname' => $txtFullName,
+            'birthday' => $dateBirthday,
+            'email' => $txtEmail,
+            'address' => $txtAddress,
+            'phone' => $txtPhone,
+            'status' => 1,
+            'user_type' => $slbUserType,
+            'password' => bcrypt($txtPassword)
         ]);
 
         $obj->save();
-        return Redirect()->to('user')->with('message', 'Thêm mới người dùng thành công!');
-
+        if ($obj->save()) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Người dùng được thêm mới', 'Thành công');
+        }
+        return Redirect()->to('user')->with('create-success', 'Thêm mới người dùng thành công!');
     }
 
     /**
@@ -78,7 +86,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('user.show');
     }
 
     /**
@@ -102,8 +110,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //Hiển thị thông báo check với điều kiện ngoài index
-        alert()->success('Người dùng được cập nhật', 'Thành công');
+
 
         $user = User::find($id);
 
@@ -116,19 +123,27 @@ class UserController extends Controller
         $slbUserType = $request->get("slbUserType");
         $txtPassword = $request->get("txtPassword");
 
-        
-        $user->username= $txtUserName;
-        $user->fullname= $txtFullName;
-        $user->birthday= $dateBirthday;
-        $user->address= $txtAddress;
-        $user->email= $txtEmail;
-        $user->phone= $txtPhone;
+
+        $user->username = $txtUserName;
+        $user->fullname = $txtFullName;
+        $user->birthday = $dateBirthday;
+        $user->address = $txtAddress;
+        $user->email = $txtEmail;
+        $user->phone = $txtPhone;
         $user->user_type = $slbUserType;
         $user->password = bcrypt($txtPassword);
-        
-        
+
+
         $user->save();
-        return redirect()->to('user')->with("message", "Sửa thông tin người dùng thành công");
+        if ($user->save()) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Người dùng được cập nhật', 'Thành công');
+        }
+        if (Auth::user()->id == $user->id) {
+            return redirect()->route('user.show', ['user' => Auth::user()->id])->with("update-success", "Sửa thông tin người dùng thành công");
+        } else {
+            return redirect('user')->with("update-success", "Sửa thông tin người dùng thành công");
+        }
     }
 
     /**
@@ -139,10 +154,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //Hiển thị thông báo check với điều kiện ngoài index
-        alert()->success('Người dùng đã được xóa', 'Thành công');
 
         User::destroy($id);
+        if (User::destroy($id)) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Người dùng đã được xóa', 'Thành công');
+        }
         return redirect()->to('user')->with('delete-success', 'Xóa thành công');
     }
 
@@ -179,11 +196,13 @@ class UserController extends Controller
         $password = $request->get('txtPassword');
 
         if (Auth::attempt(['username' => $username, 'password' => $password, 'status' => 1])) {
-            $user = Auth::user(); 
-            if ($user->user_type == 1){
-                return redirect()->to("dashboard_user");
-            } elseif ( $user->user_type ==2 ){
-                return redirect()->to('dashboard');
+            $user = Auth::user();
+            if ($user->user_type == 1) {
+                alert()->success('Chào mừng bạn đã trở lại', 'Thành công');
+                return redirect()->to("/dashboard")->with('login-success', 'Xóa thành công');
+            } elseif ($user->user_type == 2) {
+                alert()->success('Chào mừng bạn đã trở lại', 'Thành công');
+                return redirect()->to('/dashboard')->with('login-success', 'Xóa thành công');
             }
         } else {
             return view('login')->with("message", "Username hoặc Password không đúng");
@@ -205,14 +224,15 @@ class UserController extends Controller
         return view('dashboard');
     }
 
-    public function changerole(){
-        $id_user= Auth::user()->id;
+    public function choose_role()
+    {
+        $id_user = Auth::user()->id;
         $role = DB::table('roles')
-        ->join('user', 'roles.id_user', '=', 'user.id')
-        ->join('positions', 'roles.id_position', '=', 'positions.id')
-        ->join('divisions', 'roles.id_division', '=', 'divisions.id')
-        ->select('roles.id','roles.id_user','roles.id_position','roles.id_division','roles.created_at','roles.updated_at','roles.percentageOfRole', 'roles.start_time', 'roles.end_time', 'divisions.name_division', 'positions.name_position', 'user.username', 'user.fullname')
-        ->where('roles.id_user', $id_user)->get();
+            ->join('user', 'roles.id_user', '=', 'user.id')
+            ->join('positions', 'roles.id_position', '=', 'positions.id')
+            ->join('divisions', 'roles.id_division', '=', 'divisions.id')
+            ->select('roles.id', 'roles.id_user', 'roles.id_position', 'roles.id_division', 'roles.created_at', 'roles.updated_at', 'roles.percentageOfRole', 'roles.start_time', 'roles.end_time', 'divisions.name_division', 'positions.name_position', 'user.username', 'user.fullname')
+            ->where('roles.id_user', $id_user)->get();
 
         return view('user.changerole', compact('role'));
     }

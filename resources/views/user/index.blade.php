@@ -96,10 +96,10 @@
                                                     @endif
                                                 </td>
                                                 <td> @if ($user->user_type === 1)
-                                                      User
-                                                      @else
-                                                      Admin
-                                                      @endif
+                                                    User
+                                                    @else
+                                                    Admin
+                                                    @endif
                                                 </td>
                                                 <td> {{ $user->created_at }}</td>
                                                 <td> {{ $user->updated_at }}</td>

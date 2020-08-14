@@ -5,10 +5,10 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <title>Agroxa</title>
+    <title>Atlantic</title>
     <meta content="Đánh giá đối tượng" name="description" />
     <meta content="Themesbrand" name="author" />
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/images/atlantic-ico.ico') }}">
 
     <!--Chartist Chart CSS -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/chartist/css/chartist.min.css') }}">
@@ -32,10 +32,11 @@
             <div class="topbar-left">
                 <a href="/dashboard" class="logo">
                     <span>
-                        <img src="{{asset('assets/images/logo.png')}}" alt="" height="24">
+                        <img src="{{asset('assets/images/atlantic.png')}}" alt="" height="24">
+                        tlantic
                     </span>
                     <i>
-                        <img src="{{asset('assets/images/logo-sm.png')}}" alt="" height="22">
+                        <img src="{{asset('assets/images/atlantic.png')}}" alt="" height="22">
                     </i>
                 </a>
             </div>
@@ -112,21 +113,35 @@
                             <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user waves-light"
                                 data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
                                 aria-expanded="false">
-                                <img src="{{ asset('assets/images/users/images.png') }}" alt="user"
+                                <img src="https://kenh14cdn.com/2016/4-1473151037257.jpg" alt="user"
                                     class="rounded-circle">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                                @php
+                                $fullname = Auth::user()->fullname;
+                                $arrName = explode(" ", $fullname);
+
+                                $firstName = array_shift($arrName);
+                                $lastName = array_pop($arrName);
+                                $middleName = implode(" ", $arrName);
+                                @endphp
                                 <!-- item-->
-                                <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5"></i>{{ Auth::user()->fullname }}</a>
-                                <a class="dropdown-item" href="user.changerole"><i class="mdi mdi mdi mdi mdi-account-switch m-r-5"></i>Đổi vai trò</a>
+                                <a class="dropdown-item" href="{{ route('user.show', ['user'=>Auth::user()->id]) }}">
+                                    <i class="mdi mdi-account-circle m-r-5"></i>
+                                    <span>{{$firstName}} {{$lastName}}</span>
+                                    </br>
+                                    <small class="text-muted">Xem thông tin cá nhân </small>
+                                </a>
                                 <a class="dropdown-item" href="#"><i class="mdi mdi-wallet m-r-5"></i> Ví tiền</a>
-                                <a class="dropdown-item d-block" href="#"><span
-                                        class="badge badge-success float-right">11</span><i
-                                        class="mdi mdi-settings m-r-5"></i> Cài đặt</a>
+                                <a class="dropdown-item d-block" href="#">
+                                    <i class="mdi mdi-settings m-r-5"></i> Cài đặt
+                                    <span class="badge badge-success ml-2 text-center">11</span>
+                                </a>
                                 <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5"></i> Màn
                                     hình khóa</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-danger" href="{{ route('user.logout') }}"><i class="mdi mdi-power text-danger"></i>
+                                <a class="dropdown-item text-danger" href="{{ route('user.logout') }}"><i
+                                        class="mdi mdi-power text-danger"></i>
                                     Đăng xuất</a>
                             </div>
                         </div>
@@ -178,51 +193,43 @@
                                 <span> Tổng quan </span>
                             </a>
                         </li>
-                        @if ( Auth::user()->user_type === 2)
-                            <li>
-                                <a href="{{ route('user.store') }}" class="waves-effect"><i
-                                        class="fas fa-user-circle"></i><span>Quản lý
-                                        danh mục <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span>
-                                    </span></a>
-                                <ul class="submenu">
-                                    <li><a href="{{ route('user.index') }}">Quản lý người dùng</a></li>
-                                    <li><a href="{{ route('role-manage.store') }}">Phân quyền người dùng</a></li>
-                                    <li><a href="{{ route('division-manage.index') }}">Đơn vị công tác</a></li>
-                                    <li><a href="{{ route('position-manage.index') }}">Chức vụ</a></li>
-                                    <li><a href="{{ route('plan-manage.index') }}">Kế hoạch đánh giá</a></li>
-                                </ul>
-                            </li>
 
-                            <li>
-                                <a class="waves-effect"><i class="fas fa-university"></i><span> Ngân
-                                        hàng câu hỏi <span class="float-right menu-arrow"><i
-                                                class="mdi mdi-plus"></i></span> </span></a>
-                                <ul class="submenu">
-                                    <li><a href="{{ route('question-manage.index') }}">Quản lý câu hỏi</a></li>
-                                    <li><a href="{{ route('form-manage.index') }}">Quản lý mẫu phiếu</a></li>
-                                    <li><a href="{{ route('answer-manage.index') }}">Quản lý câu trả lời</a></li>
-                                </ul>
-                            </li>
-
-                            <li>
-                                <a class="waves-effect"><i class="fas fa-chalkboard-teacher"></i><span> Đánh giá<span
-                                            class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span></span></a>
-                                <ul class="submenu">
-                                    <li><a href="{{ route('peer-assessment.create') }}">Đánh giá đồng cấp</a></li>
-                                </ul>
-                            </li>                      
-                            @else
-                            <li>
-                                <a class="waves-effect"><i class="fas fa-chalkboard-teacher"></i><span> Đánh giá<span
-                                            class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span></span></a>
-                                <ul class="submenu">
-                                    <li><a href="{{ route('peer-assessment.create') }}">Đánh giá đồng cấp</a></li>
-                                </ul>
-                            </li>
+                        @if ((Auth::user()->user_type == 2))
+                        <li>
+                            <a href="{{ route('user.store') }}" class="waves-effect"><i
+                                    class="fas fa-user-circle"></i><span>Quản lý
+                                    danh mục <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span>
+                                </span></a>
+                            <ul class="submenu">
+                                <li><a href="{{ route('user.store') }}">Quản lý người dùng</a></li>
+                                <li><a href="{{ route('role-manage.store') }}">Phân quyền người dùng</a></li>
+                                <li><a href="{{ route('division-manage.index') }}">Đơn vị công tác</a></li>
+                                <li><a href="{{ route('position-manage.index') }}">Chức vụ</a></li>
+                                <li><a href="{{ route('plan-manage.index') }}">Kế hoạch đánh giá</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="waves-effect"><i class="fas fa-university"></i><span> Ngân
+                                    hàng câu hỏi <span class="float-right menu-arrow"><i
+                                            class="mdi mdi-plus"></i></span> </span></a>
+                            <ul class="submenu">
+                                <li><a href="{{ route('question-manage.index') }}">Quản lý câu hỏi</a></li>
+                                <li><a href="{{ route('form-manage.index') }}">Quản lý mẫu phiếu</a></li>
+                                <li><a href="{{ route('answer-manage.index') }}">Quản lý câu trả lời</a></li>
+                            </ul>
+                        </li>
+                        @else
+                        <li>
+                            <a class="waves-effect"><i class="fas fa-chalkboard-teacher"></i><span> Đánh giá<span
+                                        class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span></span></a>
+                            <ul class="submenu">
+                                <li><a href="{{ route('peer-assessment.create') }}">Đánh giá đồng cấp</a></li>
+                            </ul>
+                        </li>
                         @endif
-                        
 
-                        
+
+
 
                     </ul>
 
