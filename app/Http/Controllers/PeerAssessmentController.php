@@ -28,26 +28,68 @@ class PeerAssessmentController extends Controller
 
         $user = auth()->user();
 
-        $userDb = User::find($user->id);
-
-        $other = User::with('positions', 'divisions')
-            ->where('id', '!=', $user->id)
+        $lvPositionUserCurrent = DB::table('roles')
+            ->join('positions', 'roles.id_position', '=', 'positions.id')
+            ->select('positions.level_position')
+            ->where('id_user', '=', $user->id)
             ->get();
+        // dd($lvPositionUserCurrent[0]->level_position);
+        $role = Role::select('roles.*')->where('id_user', $user->id)->first();
+
+        /*-------------------- Phiếu đánh giá đồng cấp ---------------------*/
+        /* Lấy tất cả role được đánh giá  */
+        $listPeer = DB::table('roles')
+            ->join('positions', 'roles.id_position', '=', 'positions.id')
+            ->join('divisions', 'roles.id_division', '=', 'divisions.id')
+            ->join('user', 'roles.id_user', '=', 'user.id')
+            ->select('roles.id as roleId', 'user.fullname', 'positions.name_position', 'positions.level_position', 'positions.id as positionId', 'divisions.name_division', 'divisions.id as divisionId')
+            ->where([
+                ['id_division', '=', $role->id_division],
+                ['level_position', '=', $lvPositionUserCurrent[0]->level_position],
+                ['id_user', '!=', $user->id]
+            ])
+            ->get();
+        // dd($listPeer[0]->roleId);
+
+        /* Lấy tất cả plan được đánh giá  */
+
+
+
+
+
+
+
+        // dd($other);
+
+        // $userDb = User::find($user->id);
+        // $listRole = Role::where([
+        //         ['id_division', '=', $role->id_division],
+        //         ['id_user','!=',$user->id]
+        //     ])
+        //     ->get();
+
 
         // var_dump($userDb->positions()->pluck('level_position')[0]);
-
-        $other = array_filter($other->toArray(), function ($item) use ($userDb) {
-            return $userDb->positions()->pluck('level_position')[0] == $item['positions'][0]['level_position'] &&
-                $item['divisions'][0]['id']  == $userDb->divisions()->pluck('id_division')[0];
-        });
-
+        /*
+                    $other = array_filter($other->toArray(), function ($item) use ($userDb) {
+                        return $userDb->positions()->pluck('level_position')[0] == $item['positions'][0]['level_position'] &&
+                        $item['divisions'][0]['id']  == $userDb->divisions()->pluck('id_division')[0];
+                    });
+                    */
+        /*
+                    echo "<pre>";
+                    var_dump($other);
+                    echo "</pre>";
+        */
         // foreach($other as $item){
         //     var_dump($item);
         // }
-        var_dump($other);
+        // dd($other);
 
-        return;
-
+        /*lấy người danh sách user != user login */
+        // $other = User::with('positions', 'divisions')
+        //     ->where('id', '!=', $user->id)
+        //     ->get();
         // $role = Role::select('roles.*')->where('id_user', $user->id)->first();
         // $id_positionLogin = $role->id_position;
         // $id_divisionLogin = $role->id_division;
@@ -68,8 +110,7 @@ class PeerAssessmentController extends Controller
         // dd($listUser);
 
         return view('peer-assessment.create', [
-            'user' => $userDb,
-            'other' => $other
+            'listPeer' => $listPeer
         ]);
     }
 
