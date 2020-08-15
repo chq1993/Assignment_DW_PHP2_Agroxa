@@ -41,7 +41,7 @@ Route::group(['middleware' => 'check_auth'], function () {
     Route::resource('peer-assessment', 'PeerAssessmentController');
     // Route::resource('subordinate-assessment', 'ConfigQuestionController');
     // Route::resource('superior-assessment', 'ConfigQuestionController');
-
+    Route::post('user/updaterole', 'UserController@updaterole')->name('user.updaterole');
     Route::get('/', function () {
         return view('layouts.admin');
     });
@@ -50,7 +50,7 @@ Route::group(['middleware' => 'check_auth'], function () {
     Route::group(['middleware' => 'check_usertype'], function () {
         Route::get('user/changeStatus', 'UserController@changeStatus')->name('user.changeStatus');
         Route::resource('user', 'UserController');
-
+        Route::get('user/changeRole', 'UserController@choose_role')->name('user.changerole');
         //Route của Quản lý câu hỏi
         Route::resource('question-manage', 'QuestionManageController');
         //Route của Quản lý form

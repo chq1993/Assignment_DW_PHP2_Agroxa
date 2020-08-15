@@ -86,7 +86,16 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return view('user.show');
+        $id_user = Auth::user()->id;
+        $role = DB::table('roles')
+            ->join('user', 'roles.id_user', '=', 'user.id')
+            ->join('positions', 'roles.id_position', '=', 'positions.id')
+            ->join('divisions', 'roles.id_division', '=', 'divisions.id')
+            ->select('roles.id', 'roles.id_user', 'roles.id_position', 'roles.id_division', 'roles.created_at', 'roles.updated_at', 'roles.percentageOfRole', 'roles.start_time', 'roles.end_time', 'divisions.name_division', 'positions.name_position', 'user.username', 'user.fullname')
+            ->where('roles.id_user', $id_user)->get();
+
+        return view('user.show', compact('role'));
+        // return view('user.show');
     }
 
     /**
@@ -146,6 +155,22 @@ class UserController extends Controller
         }
     }
 
+    public function updaterole(Request $request)
+    {
+
+        $slbIdRole = $request->get("slbIdRole");
+        $id = Auth::user()->id;
+
+        $affected = DB::table('user')
+            ->where('id', $id)
+            ->update(['current_role' => $slbIdRole]);
+
+        if ($affected) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Vai trò được chọn', 'Thành công');
+            return redirect()->route('user.show', ['user' => Auth::user()->id])->with("chooseRole-success", "Chọn vai trò thành công");
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -234,6 +259,6 @@ class UserController extends Controller
             ->select('roles.id', 'roles.id_user', 'roles.id_position', 'roles.id_division', 'roles.created_at', 'roles.updated_at', 'roles.percentageOfRole', 'roles.start_time', 'roles.end_time', 'divisions.name_division', 'positions.name_position', 'user.username', 'user.fullname')
             ->where('roles.id_user', $id_user)->get();
 
-        return view('user.changerole', compact('role'));
+        return view('user.show', compact('role'));
     }
 }
