@@ -16,11 +16,11 @@ class check_usertype
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check()&&Auth::user()->user_type == 2){
+        if (Auth::check() && Auth::user()->user_type == 2) {
 
             return $next($request);
-        }else{
-            return redirect('dashboard_user');
+        } else {
+            return $next($request);
         }
     }
 }
