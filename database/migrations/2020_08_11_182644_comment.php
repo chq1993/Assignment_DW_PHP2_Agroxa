@@ -15,8 +15,9 @@ class Comment extends Migration
     {
         Schema::create('comment', function (Blueprint $table){
             $table->increments('id');
-            $table->integer('comment')->unsigned()->nullable();
-            $table->foreign('comment')->references('id')->on('comment')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('label_comment', 255);
+            $table->string('content_comment', 5000);
+            $table->timestamps();
         });
     }
 
