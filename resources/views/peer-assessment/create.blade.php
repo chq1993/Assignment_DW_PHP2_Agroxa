@@ -47,28 +47,18 @@
                         <div class="form-group">
                             <label for="value_answer">Đánh giá ai</label>
                             <select class="custom-select mr-sm-2" name="value_answer" id="value_answer">
-                                {{-- <option value="1" selected>-- chọn người đánh giá --</option> --}}
-                                {{-- @foreach ($other as $item)
-                                <option value="{{$userReview->id}}">{{$userReview->fullname}}</option>
-                                @endforeach --}}
+                                <option value="1" selected>-- chọn người đánh giá --</option>
+                                @foreach ($listPeer as $item)
+                                <option value="{{$item->roleId}}">{{$item->fullname}} - {{$item->name_position}} -
+                                    {{$item->name_division}}</option>
+                                @endforeach
+
                             </select>
                         </div>
                         <div>
-                            <p>mẫu form đánh giá</p>
+                            <p>form</p>
                         </div>
-                        {{-- <div class="form-row">
-              <div class="form-group col-md-6">
-                <label class="mr-sm-2" for="kind_division">Loại đơn vị</label>
-                <input type="text" class="form-control" name="kind_division" id="kind_division" required
-                  placeholder="Nhập loại đơn vị" />
-              </div>
 
-              <div class="form-group col-md-6">
-                <label for="division_level">Cấp đơn vị</label>
-                <input type="number" class="form-control" name="division_level" id="division_level" required
-                  placeholder="Nhập cấp đơn vị" />
-              </div>
-            </div> --}}
 
                         <div class="form-group">
                             <div>
