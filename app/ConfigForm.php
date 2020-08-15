@@ -20,4 +20,5 @@ class ConfigForm extends Model
     {
         return $this->hasOne(Question::class, 'id_question');
     }
+
 }

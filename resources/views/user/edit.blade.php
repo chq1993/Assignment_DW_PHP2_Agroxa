@@ -92,7 +92,14 @@
                                             value="{{ $user->phone }}" />
                                     </div>
                                 </div>
-
+                                <div class="form-group" >
+                                    <label for="slbUserType">Loại người dùng</label>
+                                    <select name="slbUserType" id="slbUserType" class="form-control">
+                                        <option value="">--- Chọn quyền ---</option>
+                                        <option value="1">User</option>
+                                        <option value="2">Admin</option>
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <label>Địa chỉ</label>
                                     <input type="text" class="form-control" name="txtAddress" id="txtAddress" required
@@ -128,3 +135,4 @@
 </script>
 
 @endsection
+

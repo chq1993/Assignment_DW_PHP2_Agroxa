@@ -34,7 +34,7 @@ class DivisionManageController extends Controller
             $divisions = $divisions->where("division_level", "like", "%" . $_GET["level-division"] . "%");
         }
 
-        $divisions = $divisions->paginate(5)->appends(request()->query());
+        $divisions = $divisions->paginate(10)->appends(request()->query());
         return view('division-manage.index', [
             'divisions' => $divisions
         ]);

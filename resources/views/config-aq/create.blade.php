@@ -61,8 +61,15 @@
                                     @foreach ($questions as $key => $question)
                                     <li class="list-group-item">
                                         <div class="form-check">
+                                            @if ($configQuestion->id == $question->id)
                                             <input type="radio" name="chooseQuestion" value="{{$question->id}}"
-                                                class="form-check-input select_question radioCheck" id="{{$key}}">
+                                                class="form-check-input radioCheck" id="{{$key}}"
+                                                checked="{{$configQuestion->id == $question->id}}">
+                                            @else
+                                            <input type="radio" name="chooseQuestion" value="{{$question->id}}"
+                                                class="form-check-input radioCheck" id="{{$key}}">
+                                            @endif
+
 
                                             <label class="form-check-label"
                                                 for="{{$key}}">{{$question->question}}</label>
@@ -84,7 +91,7 @@
                                     <li class="list-group-item">
                                         <div class="form-check">
                                             <input type="checkbox" name="aChecked[]" value="{{$answer->value_answer}}"
-                                                class="form-check-input select_question check1" id="{{$key}}">
+                                                class="form-check-input select_answer check1" id="{{$key}}">
 
                                             <label class="form-check-label" for="{{$key}}">{{$answer->label}}</label>
                                         </div>
@@ -121,6 +128,8 @@
             try {
                 if (parseInt(rCheck[i].value) === answer[0].id_question) {
                     rCheck[i].checked = true
+                }else{
+                    rCheck[i].disabled = true
                 }
 
             } catch (error) {
@@ -128,7 +137,7 @@
             }
 
         }
-        $('.form-check-input').each(function(){
+        $('.select_answer').each(function(){
             if(answer.find(it => it.id_answer === Number($(this).val()))){
                 this.checked = true
             }

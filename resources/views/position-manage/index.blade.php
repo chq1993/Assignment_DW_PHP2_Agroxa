@@ -33,7 +33,8 @@
                                 <input type="text" class="form-control" placeholder="Tìm kiếm...">
                             </div>
                         </form>
-                        <a href="{{ route('position-manage.create') }}" style="margin: 19px;" class="btn btn-primary waves-effect waves-light">
+                        <a href="{{ route('position-manage.create') }}" style="margin: 19px;"
+                            class="btn btn-primary waves-effect waves-light">
                             <span>Thêm mới phiếu</span>
                             <i class="far fa-question-circle ml-1"></i></a>
                     </section>
@@ -95,6 +96,7 @@
 
                                             </div>
                                         </td>
+                                        <td>Cấp độ</td>
                                         <td>Miêu tả thêm</td>
                                         <td colspan=2>Hành động</td>
                                     </tr>
@@ -104,18 +106,19 @@
                                     <tr>
                                         <td>{{$position->id}}</td>
                                         <td>{{$position->name_position}}</td>
+                                        <td>{{$position->level_position}}</td>
                                         <td>{{$position->descrtion_position}}</td>
                                         <td>
                                             <div class="d-flex">
                                                 <a href="{{ route('position-manage.edit', ['position_manage' => $position->id]) }}"
-                                                    class="btn btn-outline-primary waves-effect waves-light"><i
+                                                    class="btn btn-outline-primary waves-effect waves-light mr-2"><i
                                                         class="far fa-edit"></i></a>
                                                 <form action="{{ route('position-manage.destroy', $position->id) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button onclick="return confirm('Bạn có chắc muốn xóa?')"
-                                                        class="btn btn-outline-danger waves-effect waves-light ml-2"
+                                                        class="btn btn-outline-danger waves-effect waves-light"
                                                         type="submit"><i class="far fa-trash-alt"></i></button>
                                                 </form>
                                             </div>

@@ -61,6 +61,7 @@
                                                 <th data-priority="1">Email</th>
                                                 <th data-priority="1">Số điện thoại</th>
                                                 <th data-priority="1">Trạng thái</th>
+                                                <th data-priority="1">Loại người dùng</th>
                                                 <th data-priority="1">Thời gian tạo</th>
                                                 <th data-priority="1">Thời gian sửa</th>
                                                 <th data-priority="1" colspan=2>Hành động</th>
@@ -92,6 +93,12 @@
                                                     <a onclick="changeStatus({{ $user->id }}) "
                                                         class="fa fa-thumbs-down"
                                                         style="color: red; font-size: 24px;" />
+                                                    @endif
+                                                </td>
+                                                <td> @if ($user->user_type === 1)
+                                                    User
+                                                    @else
+                                                    Admin
                                                     @endif
                                                 </td>
                                                 <td> {{ $user->created_at }}</td>

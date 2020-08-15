@@ -15,7 +15,7 @@
 .dropdown-item {
   background-color: $white;
   padding: .55rem 1.5rem;
-  
+
   &:active,&:hover {
     background-color: $gray-100;
     color: $dark;
@@ -30,7 +30,7 @@
 .breadcrumb>li+li:before {
   padding: 0 5px;
   color: $muted;
-  content: "\f105" !important;
+//   content: "\f105" !important;
   font-family: FontAwesome;
 }
 
