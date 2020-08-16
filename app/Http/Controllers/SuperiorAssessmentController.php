@@ -7,7 +7,7 @@ use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PeerAssessmentController extends Controller
+class SuperiorAssessmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -39,7 +39,7 @@ class PeerAssessmentController extends Controller
 
         /*-------------------- Phiếu đánh giá đồng cấp ---------------------*/
         /* Lấy tất cả role được đánh giá  */
-        $listPeer = DB::table('roles')
+        $listSuperior = DB::table('roles')
             ->join('positions', 'roles.id_position', '=', 'positions.id')
             ->join('divisions', 'roles.id_division', '=', 'divisions.id')
             ->join('user', 'roles.id_user', '=', 'user.id')
@@ -55,8 +55,7 @@ class PeerAssessmentController extends Controller
             )
             ->where([
                 ['id_division', '=', $role->id_division],
-                ['level_position', '=', $levelPositionUserDef[0]->level_position],
-                ['id_user', '!=', $user->id]
+                ['level_position', '<', $levelPositionUserDef[0]->level_position],
             ])
             ->get();
 
@@ -79,7 +78,7 @@ class PeerAssessmentController extends Controller
                 'questions.description_question',
             )
             ->where([
-                ['question_forms.id_form', '=', 1]
+                ['question_forms.id_form', '=', 2]
             ])
             ->get();
         // dd($listQuestion);
@@ -97,7 +96,7 @@ class PeerAssessmentController extends Controller
                 'answer_questions.id as AQId'
             )
             ->where([
-                ['question_forms.id_form', '=', 1]
+                ['question_forms.id_form', '=', 2]
             ])
             ->get();
         // dd('list answer: ',$listAnswer,'list question: ', $listQuestion);
@@ -117,8 +116,8 @@ class PeerAssessmentController extends Controller
 
 
 
-        return view('peer-assessment.create', [
-            'listPeer' => $listPeer,
+        return view('superior-assessment.create', [
+            'listSuperior' => $listSuperior,
             'listQuestion' => $listQuestion,
             'listAnswer' => $listAnswer,
             'listPlan' => $listPlan
@@ -145,7 +144,7 @@ class PeerAssessmentController extends Controller
                 'questions.description_question',
             )
             ->where([
-                ['question_forms.id_form', '=', 1]
+                ['question_forms.id_form', '=', 2]
             ])
             ->get();
         // dd($listQuestion);
@@ -163,7 +162,7 @@ class PeerAssessmentController extends Controller
                 'answer_questions.id as AQId'
             )
             ->where([
-                ['question_forms.id_form', '=', 1]
+                ['question_forms.id_form', '=', 2]
             ])
             ->get();
         // dd($listAnswer);
