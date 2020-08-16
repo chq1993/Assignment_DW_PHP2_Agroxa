@@ -42,28 +42,71 @@
 
                     <form action="{{ route('peer-assessment.store') }}" method="POST">
                         @csrf
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="plan_assessment">Kế hoạch đánh giá</label>
+                                <select class="custom-select mr-sm-2" name="id_plan" id="plan_assessment" required>
+                                    <option value="" selected>--- Chọn kế hoạch ---</option>
+                                    @foreach ($listPlan as $key => $item)
+                                    <option class="checkId" value="{{$item->id}}">{{$item->name_plan}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
+                            <div class="form-group col-md-6">
+                                <label for="person_assessed">Người được đánh giá</label>
+                                <select class="custom-select mr-sm-2" name="id_role_beassessed" id="person_assessed"
+                                    required>
+                                    <option value="" selected>--- Chọn đối tượng ---</option>
+                                    @foreach ($listPeer as $item)
+                                    <option class="checkValue" value="{{$item->roleId}}">{{$item->fullname}} -
+                                        {{$item->name_position}} -
+                                        {{$item->name_division}}</option>
+                                    @endforeach
+                                    {{$listPeer}}
+                                </select>
+                            </div>
+                        </div>
+                        @php
+                        foreach ($listPlan as $item){
+                        if ($item->id == 1) {
+                        $currentDesPlan = $item->description_plan;
+                        }
+                        }
+                        @endphp
+
+                        <p class="font-italic mt-3">{{$currentDesPlan}}</p>
 
                         <div class="form-group">
-                            <label for="value_answer">Đánh giá ai</label>
-                            <select class="custom-select mr-sm-2" name="value_answer" id="value_answer">
-                                <option value="1" selected>-- chọn người đánh giá --</option>
-                                @foreach ($listPeer as $item)
-                                <option value="{{$item->roleId}}">{{$item->fullname}} - {{$item->name_position}} -
-                                    {{$item->name_division}}</option>
+                            @foreach ($listQuestion as $key => $item)
+                            <div class="mb-4">
+                                <p style="font-size: 1rem" class="font-weight-bold">{{$key+1}}. {{$item -> question}}
+                                </p>
+
+                                @foreach ($listAnswer as $key => $answer)
+                                @if ($answer -> questionId == $item -> questionId)
+                                <div class="form-check form-check-block ml-4">
+                                    <input class="form-check-input" type="radio" name="id_answer_questions[]"
+                                        id="id_answer_questions_{{$item -> questionId}}_{{$answer->answerId}}"
+                                        value="{{$answer->AQId}}" required>
+                                    <label class="form-check-label mb-2"
+                                        for="id_answer_questions_{{$item -> questionId}}_{{$answer->answerId}}">{{$answer -> label}}</label>
+                                </div>
+                                @endif
                                 @endforeach
-
-                            </select>
-                        </div>
-                        <div>
-                            <p>form</p>
+                            </div>
+                            @endforeach
                         </div>
 
+                        <p style="font-size: 1rem" class="font-italic">Nếu bạn có đánh giá bổ sung vui lòng nhập
+                            thêm thông tin ở đây (Không bắt buộc).</p>
+                        <textarea name="description_assessment" rows="3" class="form-control" aria-label="With textarea"
+                            placeholder="Thông tin thêm"></textarea>
 
-                        <div class="form-group">
+                        <div class="form-group mt-4">
                             <div>
                                 <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                    Thêm mới
+                                    Gửi đánh giá
                                 </button>
                                 <button type="reset" class="btn btn-secondary waves-effect m-l-5">
                                     Xóa thông tin
@@ -79,4 +122,12 @@
 
     </div> <!-- end row -->
 </div>
+@endsection
+
+@section('content_script')
+<script type="text/javascript">
+    $(document).ready(function(){
+
+    })
+</script>
 @endsection
