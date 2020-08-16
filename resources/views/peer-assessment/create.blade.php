@@ -81,7 +81,7 @@
                             @foreach ($listQuestion as $key => $item)
                             <div class="mb-4">
                                 {{-- <input class="d-none checkValue" name="id_question_forms_{{$item -> questionId}}"
-                                    value="{{$item->QFId}}"> --}}
+                                value="{{$item->QFId}}"> --}}
                                 <p style="font-size: 1rem" class="font-weight-bold">{{$key+1}}. {{$item -> question}}
                                 </p>
 
@@ -92,7 +92,7 @@
                                     <input class="form-check-input" type="radio"
                                         name="id_answer_questions_{{$item -> questionId}}[]"
                                         id="id_answer_questions_{{$item -> questionId}}_{{$answer->answerId}}"
-                                        value="{{$item->QFId}}-{{$answer->AQId}}" required>
+                                        value="{{$answer->AQId}}" required>
 
                                     <label class="form-check-label mb-2"
                                         for="id_answer_questions_{{$item -> questionId}}_{{$answer->answerId}}">{{$answer -> label}}</label>
