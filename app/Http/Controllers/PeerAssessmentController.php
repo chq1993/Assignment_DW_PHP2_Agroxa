@@ -28,12 +28,13 @@ class PeerAssessmentController extends Controller
 
         $user = auth()->user();
 
-        $lvPositionUserCurrent = DB::table('roles')
+        $levelPositionUserDef = DB::table('roles')
             ->join('positions', 'roles.id_position', '=', 'positions.id')
             ->select('positions.level_position')
             ->where('id_user', '=', $user->id)
             ->get();
-        // dd($lvPositionUserCurrent[0]->level_position);
+        // dd($levelPositionUserDef);
+
         $role = Role::select('roles.*')->where('id_user', $user->id)->first();
 
         /*-------------------- Phiếu đánh giá đồng cấp ---------------------*/
@@ -42,21 +43,77 @@ class PeerAssessmentController extends Controller
             ->join('positions', 'roles.id_position', '=', 'positions.id')
             ->join('divisions', 'roles.id_division', '=', 'divisions.id')
             ->join('user', 'roles.id_user', '=', 'user.id')
-            ->select('roles.id as roleId', 'user.fullname', 'positions.name_position', 'positions.level_position', 'positions.id as positionId', 'divisions.name_division', 'divisions.id as divisionId')
+
+            ->select(
+                'roles.id as roleId',
+                'user.fullname',
+                'positions.name_position',
+                'positions.level_position',
+                'positions.id as positionId',
+                'divisions.name_division',
+                'divisions.id as divisionId'
+            )
             ->where([
                 ['id_division', '=', $role->id_division],
-                ['level_position', '=', $lvPositionUserCurrent[0]->level_position],
+                ['level_position', '=', $levelPositionUserDef[0]->level_position],
                 ['id_user', '!=', $user->id]
             ])
             ->get();
-        // dd($listPeer[0]->roleId);
 
-        /* Lấy tất cả plan được đánh giá  */
+        // dd($listPeer);
+        // foreach ($listPeer as $key => $value) {
+        //     $newArray[$listPeer[$key]->planId] = $value;
+        // }
+        // dd($newArray);
 
+        /* Lấy tất cả câu hỏi và đáp án được đánh giá  */
+        $listQuestion = DB::table('question_forms')
+            ->join('questions', 'question_forms.id_question', '=', 'questions.id')
+            ->join('forms', 'question_forms.id_form', '=', 'forms.id')
+            ->select(
+                'question_forms.id as QFId',
+                'questions.id as questionId',
+                'question_forms.id_form',
+                'forms.description_form',
+                'questions.question',
+                'questions.description_question',
+            )
+            ->where([
+                ['question_forms.id_form', '=', 1]
+            ])
+            ->get();
+        // dd($listQuestion);
+        /*Lấy câu trả lời theo câu hỏi*/
+        $listAnswer = DB::table('question_forms')
+            ->join('questions', 'question_forms.id_question', '=', 'questions.id')
+            ->join('answer_questions', 'question_forms.id_question', '=', 'answer_questions.id_question')
+            ->join('answers', 'answer_questions.id_answer', '=', 'answers.id')
 
+            ->select(
+                'questions.id as questionId',
+                'question_forms.id_form',
+                'answers.id as answerId',
+                'answers.label',
+                'answer_questions.id as AQId'
+            )
+            ->where([
+                ['question_forms.id_form', '=', 1]
+            ])
+            ->get();
+        // dd('list answer: ',$listAnswer,'list question: ', $listQuestion);
 
-
-
+        /*
+        ->join('answer_questions', 'question_forms.id_question', '=', 'answer_questions.id_question')
+        ->join('answers', 'answer_questions.id_answer', '=', 'answers.id')
+        'answers.id as answerId',
+        'answers.label',
+        'answer_questions.id as AQId'
+        */
+        // dd($listAnswer);
+        /* Lấy tất cả kế hoạch đánh giá  */
+        $listPlan = DB::table('plans')
+            ->get();
+        // dd($listPlan);
 
 
         // dd($other);
@@ -110,7 +167,10 @@ class PeerAssessmentController extends Controller
         // dd($listUser);
 
         return view('peer-assessment.create', [
-            'listPeer' => $listPeer
+            'listPeer' => $listPeer,
+            'listQuestion' => $listQuestion,
+            'listAnswer' => $listAnswer,
+            'listPlan' => $listPlan
         ]);
     }
 
