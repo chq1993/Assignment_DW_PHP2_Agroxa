@@ -116,55 +116,6 @@ class PeerAssessmentController extends Controller
         // dd($listPlan);
 
 
-        // dd($other);
-
-        // $userDb = User::find($user->id);
-        // $listRole = Role::where([
-        //         ['id_division', '=', $role->id_division],
-        //         ['id_user','!=',$user->id]
-        //     ])
-        //     ->get();
-
-
-        // var_dump($userDb->positions()->pluck('level_position')[0]);
-        /*
-                    $other = array_filter($other->toArray(), function ($item) use ($userDb) {
-                        return $userDb->positions()->pluck('level_position')[0] == $item['positions'][0]['level_position'] &&
-                        $item['divisions'][0]['id']  == $userDb->divisions()->pluck('id_division')[0];
-                    });
-                    */
-        /*
-                    echo "<pre>";
-                    var_dump($other);
-                    echo "</pre>";
-        */
-        // foreach($other as $item){
-        //     var_dump($item);
-        // }
-        // dd($other);
-
-        /*lấy người danh sách user != user login */
-        // $other = User::with('positions', 'divisions')
-        //     ->where('id', '!=', $user->id)
-        //     ->get();
-        // $role = Role::select('roles.*')->where('id_user', $user->id)->first();
-        // $id_positionLogin = $role->id_position;
-        // $id_divisionLogin = $role->id_division;
-        // $listRoleReview = Role::where([
-        //     ['id_position', '=', $id_positionLogin],
-        //     ['id_division', '=', $id_divisionLogin]
-        // ])
-        //     ->get();
-
-        // $listUser = [];
-        // for ($i = 0; $i < count($listRoleReview); $i++) {
-        //     $listUser[] = User::where([
-        //         ['id', '=', $listRoleReview[$i]->id_user]
-        //     ])
-        //         ->get();
-        // }
-
-        // dd($listUser);
 
         return view('peer-assessment.create', [
             'listPeer' => $listPeer,
@@ -215,43 +166,43 @@ class PeerAssessmentController extends Controller
                 ['question_forms.id_form', '=', 1]
             ])
             ->get();
+        // dd($listAnswer);
+
+
+
+
 
         $currentRole = auth()->user()->current_role;
         $resultData = [];
         $result = DB::table('result_assessments')
             ->get();
 
-        foreach ($listQuestion as $item) {
-            //     foreach ($listAnswer as $key => $answer) {
-            //         if ($answer->questionId == $item->questionId) {
 
+
+
+        $checkIdPlan = $request->get('id_plan');
+        // echo "id_plan=".$checkIdPlan;
+        $checkIdRoleAssess = $currentRole;
+        $checkIdRoleBeassessed = $request->get('id_role_beassessed');
+
+        foreach ($listQuestion as $item) {
             //id_answer_questions
             $idAnswerQuestions = $request->get('id_answer_questions_' . $item->questionId);
-            //id_plan
-            $checkIdPlan = $request->get('id_plan');
-            //id_role_assess
-            $checkIdRoleAssess = $currentRole;
-            //id_question_forms
-            // $checkIdQuestionForms = $request->get('id_question_forms_' . $item->questionId);
-            //id_role người được đánh giá
-            $checkIdRoleBeassessed = $request->get('id_role_beassessed');
-            var_dump($idAnswerQuestions);
-            // foreach ($idAnswerQuestions as $key => $value) {
+            foreach ($idAnswerQuestions as $answer) {
+                var_dump($answer);
 
-            //     $listArr = explode("-", $idAnswerQuestions[$key]);
-
-            //     $resultData[] = array(
-            //         'id_plan' => $checkIdPlan,
-            //         'id_role_beassessed' => $checkIdRoleBeassessed,
-            //         'id_role_assess' => $checkIdRoleAssess,
-            //         'id_answer_questions' => $listArr[1],
-            //         'id_question_forms' => $listArr[0],
-            //         'created_at' => now(),
-            //         'updated_at' => now()
-            //     );
-            //     DB::table('result_assessments')->insert($resultData);
-            // }
+                $resultData[] = array(
+                    'id_plan' => $checkIdPlan,
+                    'id_role_beassessed' => $checkIdRoleBeassessed,
+                    'id_role_assess' => $checkIdRoleAssess,
+                    'id_answer_questions' => $answer,
+                    'id_question_forms' => $item->questionId,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                );
+            }
         }
+        DB::table('result_assessments')->insert($resultData);
     }
 
     /**

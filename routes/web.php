@@ -63,13 +63,11 @@ Route::group(['middleware' => 'check_auth'], function () {
         Route::resource('config-fq', 'ConfigFormController');
         Route::resource('config-aq', 'ConfigQuestionController');
 
-Route::resource('role-manage', 'RoleController');
-Route::resource('comment-manage', 'CommentManageController');
+        Route::resource('role-manage', 'RoleController');
+        Route::resource('comment-manage', 'CommentManageController');
 
         Route::get('/', function () {
             return view('layouts.admin');
         });
     });
 });
-
-
