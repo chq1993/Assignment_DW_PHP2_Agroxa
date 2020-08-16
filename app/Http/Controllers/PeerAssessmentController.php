@@ -173,7 +173,6 @@ class PeerAssessmentController extends Controller
             'listPlan' => $listPlan
         ]);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -182,7 +181,77 @@ class PeerAssessmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /* Lấy tất cả câu hỏi và đáp án được đánh giá  */
+        $listQuestion = DB::table('question_forms')
+            ->join('questions', 'question_forms.id_question', '=', 'questions.id')
+            ->join('forms', 'question_forms.id_form', '=', 'forms.id')
+            ->select(
+                'question_forms.id as QFId',
+                'questions.id as questionId',
+                'question_forms.id_form',
+                'forms.description_form',
+                'questions.question',
+                'questions.description_question',
+            )
+            ->where([
+                ['question_forms.id_form', '=', 1]
+            ])
+            ->get();
+        // dd($listQuestion);
+        /*Lấy câu trả lời theo câu hỏi*/
+        $listAnswer = DB::table('question_forms')
+            ->join('questions', 'question_forms.id_question', '=', 'questions.id')
+            ->join('answer_questions', 'question_forms.id_question', '=', 'answer_questions.id_question')
+            ->join('answers', 'answer_questions.id_answer', '=', 'answers.id')
+
+            ->select(
+                'questions.id as questionId',
+                'question_forms.id_form',
+                'answers.id as answerId',
+                'answers.label',
+                'answer_questions.id as AQId'
+            )
+            ->where([
+                ['question_forms.id_form', '=', 1]
+            ])
+            ->get();
+
+        $currentRole = auth()->user()->current_role;
+        $resultData = [];
+        $result = DB::table('result_assessments')
+            ->get();
+
+        foreach ($listQuestion as $item) {
+            //     foreach ($listAnswer as $key => $answer) {
+            //         if ($answer->questionId == $item->questionId) {
+
+            //id_answer_questions
+            $idAnswerQuestions = $request->get('id_answer_questions_' . $item->questionId);
+            //id_plan
+            $checkIdPlan = $request->get('id_plan');
+            //id_role_assess
+            $checkIdRoleAssess = $currentRole;
+            //id_question_forms
+            // $checkIdQuestionForms = $request->get('id_question_forms_' . $item->questionId);
+            //id_role người được đánh giá
+            $checkIdRoleBeassessed = $request->get('id_role_beassessed');
+            var_dump($idAnswerQuestions);
+            // foreach ($idAnswerQuestions as $key => $value) {
+
+            //     $listArr = explode("-", $idAnswerQuestions[$key]);
+
+            //     $resultData[] = array(
+            //         'id_plan' => $checkIdPlan,
+            //         'id_role_beassessed' => $checkIdRoleBeassessed,
+            //         'id_role_assess' => $checkIdRoleAssess,
+            //         'id_answer_questions' => $listArr[1],
+            //         'id_question_forms' => $listArr[0],
+            //         'created_at' => now(),
+            //         'updated_at' => now()
+            //     );
+            //     DB::table('result_assessments')->insert($resultData);
+            // }
+        }
     }
 
     /**
