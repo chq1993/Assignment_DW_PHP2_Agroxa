@@ -59,7 +59,7 @@
                                     required>
                                     <option value="" selected>--- Chọn đối tượng ---</option>
                                     @foreach ($listPeer as $item)
-                                    <option class="checkValue" value="{{$item->roleId}}">{{$item->fullname}} -
+                                    <option value="{{$item->roleId}}">{{$item->fullname}} -
                                         {{$item->name_position}} -
                                         {{$item->name_division}}</option>
                                     @endforeach
@@ -80,15 +80,20 @@
                         <div class="form-group">
                             @foreach ($listQuestion as $key => $item)
                             <div class="mb-4">
+                                {{-- <input class="d-none checkValue" name="id_question_forms_{{$item -> questionId}}"
+                                    value="{{$item->QFId}}"> --}}
                                 <p style="font-size: 1rem" class="font-weight-bold">{{$key+1}}. {{$item -> question}}
                                 </p>
 
                                 @foreach ($listAnswer as $key => $answer)
                                 @if ($answer -> questionId == $item -> questionId)
+
                                 <div class="form-check form-check-block ml-4">
-                                    <input class="form-check-input" type="radio" name="id_answer_questions[]"
+                                    <input class="form-check-input" type="radio"
+                                        name="id_answer_questions_{{$item -> questionId}}[]"
                                         id="id_answer_questions_{{$item -> questionId}}_{{$answer->answerId}}"
-                                        value="{{$answer->AQId}}" required>
+                                        value="{{$item->QFId}}-{{$answer->AQId}}" required>
+
                                     <label class="form-check-label mb-2"
                                         for="id_answer_questions_{{$item -> questionId}}_{{$answer->answerId}}">{{$answer -> label}}</label>
                                 </div>
@@ -127,7 +132,10 @@
 @section('content_script')
 <script type="text/javascript">
     $(document).ready(function(){
-
+        let check_value  = document.getElementsByClassName('checkValue')
+        for (let i = 0; i < check_value.length; i++) {
+            console.log(check_value[i].value);
+        }
     })
 </script>
 @endsection

@@ -25,7 +25,8 @@ class CreateResultAssessmentsTable extends Migration
             $table->foreign('id_plan')->references('id')->on('plans')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('id_answer_questions')->unsigned()->nullable();
             $table->foreign('id_answer_questions')->references('id')->on('answer_questions')->onUpdate('cascade')->onDelete('cascade');
-            $table->timestamps();	
+            $table->string('description_assessment',500)->nullable();
+            $table->timestamps();
         });
     }
 
