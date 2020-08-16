@@ -224,6 +224,8 @@
                                         class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span></span></a>
                             <ul class="submenu">
                                 <li><a href="{{ route('peer-assessment.create') }}">Đánh giá đồng cấp</a></li>
+                                <li><a href="{{ route('subordinate-assessment.create') }}">Đánh giá cấp dưới</a></li>
+                                <li><a href="{{ route('superior-assessment.create') }}">Đánh giá cấp trên</a></li>
                             </ul>
                         </li>
                         @endif
