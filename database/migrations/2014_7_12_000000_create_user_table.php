@@ -24,7 +24,7 @@ class CreateUserTable extends Migration
             $table->string('password',255);
             $table->integer('status');
             $table->integer('user_type');
-            $table->integer('current_role');
+            $table->integer('current_role')->nullable();
             $table->timestamps();
         });
     }
