@@ -7,7 +7,10 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="page-title-box">
-                    <h4 class="page-title">Bảng danh sách Vai trò người dùng</h4>
+                    <h4>
+                        <span>Quản lý phân quyền</span>
+                        <i class="fas fa-caret-down ml-1"></i>
+                    </h4>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
                         <li class="breadcrumb-item active">Danh sách</li>
@@ -23,12 +26,16 @@
                     <div class="card m-b-20">
                         <div class="card-body">
 
-                            <h4 class="mt-0 header-title">Bảng thông tin vai trò người dùng</h4>
+                            <h5>
+                                <span>Bảng danh sách người dùng đã phân quyền</span>
+                                <i class="fas fa-list-alt ml-2"></i>
+                            </h5>
                             <p class="text-muted m-b-30"></p>
                             <section class="d-flex justify-content-between">
-                                <form role="table-search" class="table-search rounded w-25 py-3">
+                                <form role="fullnameAtRoleTop" class="table-search rounded w-25 py-3">
                                     <div class="form-group mb-0">
-                                        <input type="text" class="form-control" placeholder="Tìm kiếm...">
+                                        <input type="text" class="form-control" id="fullnameAtRoleTop"
+                                            name="fullnameAtRole" placeholder="Tìm kiếm...">
                                     </div>
                                 </form>
                                 <a href="{{route('role-manage.create')}}" style="margin: 19px;"

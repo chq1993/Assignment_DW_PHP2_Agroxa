@@ -34,20 +34,17 @@ class QuestionManageController extends Controller
         if (isset($_GET["text-question-type"])) {
 
             $questions = $questions->where("kind_question", "like", "%" . $_GET["text-question-type"] . "%");
-
         }
 
         if (isset($_GET["select-question-type"])) {
 
             $questions = $questions->where("kind_question", "like", "%" . $_GET["select-question-type"] . "%");
-
         }
 
         // search
         if (isset($_GET["required-question"])) {
 
             $questions = $questions->where("required_question", "like", "%" . $_GET["required-question"] . "%");
-
         }
 
         if (isset($_GET["not-required-question"])) {
@@ -60,7 +57,7 @@ class QuestionManageController extends Controller
             'questions' => $questions,
             'groupWorks' => \Helper::groupWorks(),
             'groupRequests' => \Helper::groupRequests(),
-            'groupTypeQuestion'=> \Helper::groupTypeQuestion()
+            'groupTypeQuestion' => \Helper::groupTypeQuestion()
         ]);
         // return view('question-manage.index', compact('questions'));
     }
@@ -83,8 +80,7 @@ class QuestionManageController extends Controller
      */
     public function store(Request $request)
     {
-        //Hiển thị thông báo check với điều kiện ngoài index
-        alert()->success('Câu hỏi được thêm mới', 'Thành công');
+
 
         $request->validate([
             'question' => 'required|max:500',
@@ -98,8 +94,12 @@ class QuestionManageController extends Controller
             'required_question' => $request->get('required_question'),
             'description_question' => $request->get('description_question'),
         ]);
-        $question->save();
-        return redirect('question-manage')->with('create-success', 'Thêm mới câu hỏi thành công !');
+
+        if ($question->save()) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Câu hỏi được thêm mới', 'Thành công');
+            return redirect('question-manage')->with('create-success', 'Thêm mới câu hỏi thành công !');
+        }
     }
 
     /**
@@ -134,8 +134,6 @@ class QuestionManageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //Hiển thị thông báo check với điều kiện ngoài index
-        alert()->success('Câu hỏi được cập nhật', 'Thành công');
 
         $request->validate([
             'question' => 'required|max:500',
@@ -148,8 +146,12 @@ class QuestionManageController extends Controller
         $question->kind_question = $request->get('kind_question');
         $question->required_question = $request->get('required_question');
         $question->description_question = $request->get('description_question');
-        $question->save();
-        return redirect('/question-manage')->with('update-success', 'Cập nhật câu hỏi thành công!');
+
+        if ($question->save()) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Câu hỏi được cập nhật', 'Thành công');
+            return redirect('/question-manage')->with('update-success', 'Cập nhật câu hỏi thành công!');
+        }
     }
 
     /**
@@ -160,12 +162,15 @@ class QuestionManageController extends Controller
      */
     public function destroy($id)
     {
-        //Hiển thị thông báo check với điều kiện ngoài index
-        alert()->success('Câu hỏi được xóa', 'Thành công');
+
 
         $question = Question::find($id);
-        $question->delete();
 
-        return redirect('/question-manage')->with('delete-success', 'Xóa câu hỏi thành công!');
+
+        if ($question->delete()) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Câu hỏi được xóa', 'Thành công');
+            return redirect('/question-manage')->with('delete-success', 'Xóa câu hỏi thành công!');
+        }
     }
 }

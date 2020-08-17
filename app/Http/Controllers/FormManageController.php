@@ -48,8 +48,7 @@ class FormManageController extends Controller
      */
     public function store(Request $request)
     {
-        //Hiển thị thông báo check với điều kiện ngoài index
-        alert()->success('Mẫu phiếu được thêm mới', 'Thành công');
+
 
         $request->validate([
             'name_form' => 'required|max:255',
@@ -60,8 +59,12 @@ class FormManageController extends Controller
             'name_form' => $request->get('name_form'),
             'description_form' => $request->get('description_form')
         ]);
-        $form->save();
-        return redirect('form-manage')->with('create-success', 'Phiếu tạo thành công !');
+
+        if ($form->save()) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Mẫu phiếu được thêm mới', 'Thành công');
+            return redirect('form-manage')->with('create-success', 'Phiếu tạo thành công !');
+        }
     }
 
     /**
@@ -96,8 +99,7 @@ class FormManageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //Hiển thị thông báo check với điều kiện ngoài index
-        alert()->success('Mẫu phiếu được cập nhật', 'Thành công');
+
 
         $request->validate([
             'name_form' => 'required|max:255',
@@ -106,9 +108,13 @@ class FormManageController extends Controller
         $form = Form::find($id);
         $form->name_form = $request->get('name_form');
         $form->description_form = $request->get('description_form');
-        $form->save();
 
-        return redirect('form-manage')->with('update-success', 'Cập nhật mẫu phiếu thành công');
+
+        if ($form->save()) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Mẫu phiếu được cập nhật', 'Thành công');
+            return redirect('form-manage')->with('update-success', 'Cập nhật mẫu phiếu thành công');
+        }
     }
 
     /**
@@ -119,11 +125,14 @@ class FormManageController extends Controller
      */
     public function destroy($id)
     {
-        //Hiển thị thông báo check với điều kiện ngoài index
-        alert()->success('Mẫu phiếu được xóa', 'Thành công');
+
 
         $form = Form::find($id);
-        $form->delete();
-        return redirect('form-manage')->with('delete-success', 'Xóa mẫu phiếu thành công !');
+
+        if ($form->delete()) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Mẫu phiếu được xóa', 'Thành công');
+            return redirect('form-manage')->with('delete-success', 'Xóa mẫu phiếu thành công !');
+        }
     }
 }

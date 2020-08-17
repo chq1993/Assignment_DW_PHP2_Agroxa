@@ -17,8 +17,18 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-        return view('user.index', compact('user'));
+
+        $user = DB::table('user');
+        // search fullname
+        if (isset($_GET["fullnameUser"])) {
+
+            $user = $user->where("fullname", "like", "%" . $_GET["fullnameUser"] . "%");
+        }
+
+        $user = $user->paginate(10)->appends(request()->query());
+        return view('user.index', [
+            'user' => $user
+        ]);
     }
 
     /**
@@ -47,8 +57,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-
-
         $txtUserName = $request->get("txtUserName");
         $txtFullName = $request->get("txtFullName");
         $dateBirthday = $request->get("dateBirthday");
@@ -70,12 +78,11 @@ class UserController extends Controller
             'password' => bcrypt($txtPassword)
         ]);
 
-        $obj->save();
         if ($obj->save()) {
             //Hiển thị thông báo check với điều kiện ngoài index
             alert()->success('Người dùng được thêm mới', 'Thành công');
+            return Redirect()->to('user')->with('create-success', 'Thêm mới người dùng thành công!');
         }
-        return Redirect()->to('user')->with('create-success', 'Thêm mới người dùng thành công!');
     }
 
     /**
@@ -91,10 +98,25 @@ class UserController extends Controller
             ->join('user', 'roles.id_user', '=', 'user.id')
             ->join('positions', 'roles.id_position', '=', 'positions.id')
             ->join('divisions', 'roles.id_division', '=', 'divisions.id')
-            ->select('roles.id', 'roles.id_user', 'roles.id_position', 'roles.id_division', 'roles.created_at', 'roles.updated_at', 'roles.percentageOfRole', 'roles.start_time', 'roles.end_time', 'divisions.name_division', 'positions.name_position', 'user.username', 'user.fullname')
+            ->select(
+                'roles.id',
+                'roles.id_user',
+                'roles.id_position',
+                'roles.id_division',
+                'roles.created_at',
+                'roles.updated_at',
+                'roles.percentageOfRole',
+                'roles.start_time',
+                'roles.end_time',
+                'divisions.name_division',
+                'positions.name_position',
+                'user.username',
+                'user.fullname'
+            )
             ->where('roles.id_user', $id_user)->get();
 
-        return view('user.show', compact('role'));
+        alert()->success('Cập nhật tài khoản', 'Thành công');
+        return view('user.show', compact('role'))->with('update-success', 'Cập nhật tài khoản thành công');
         // return view('user.show');
     }
 
@@ -143,15 +165,15 @@ class UserController extends Controller
         $user->password = bcrypt($txtPassword);
 
 
-        $user->save();
         if ($user->save()) {
             //Hiển thị thông báo check với điều kiện ngoài index
             alert()->success('Người dùng được cập nhật', 'Thành công');
-        }
-        if (Auth::user()->id == $user->id) {
-            return redirect()->route('user.show', ['user' => Auth::user()->id])->with("update-success", "Sửa thông tin người dùng thành công");
-        } else {
-            return redirect('user')->with("update-success", "Sửa thông tin người dùng thành công");
+            if (Auth::user()->id == $user->id) {
+                return redirect()->route('user.show', ['user' => Auth::user()->id])->with("update-success", "Sửa thông tin người dùng thành công");
+                // } else {
+                //     return redirect('user')->with("update-success", "Sửa thông tin người dùng thành công");
+                // }
+            }
         }
     }
 
@@ -160,14 +182,17 @@ class UserController extends Controller
 
         $slbIdRole = $request->get("slbIdRole");
         $id = Auth::user()->id;
+        if (empty(Auth::user()->current_role)) {
+            $affected = DB::table('user')
+                ->where('id', $id)
+                ->update(['current_role' => $slbIdRole]);
 
-        $affected = DB::table('user')
-            ->where('id', $id)
-            ->update(['current_role' => $slbIdRole]);
-
-        if ($affected) {
-            //Hiển thị thông báo check với điều kiện ngoài index
-            alert()->success('Vai trò được chọn', 'Thành công');
+            if ($affected) {
+                //Hiển thị thông báo check với điều kiện ngoài index
+                alert()->success('Vai trò được chọn', 'Thành công');
+                return redirect()->route('user.show', ['user' => Auth::user()->id])->with("chooseRole-success", "Chọn vai trò thành công");
+            }
+        } else {
             return redirect()->route('user.show', ['user' => Auth::user()->id])->with("chooseRole-success", "Chọn vai trò thành công");
         }
     }
@@ -179,13 +204,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
-        User::destroy($id);
         if (User::destroy($id)) {
             //Hiển thị thông báo check với điều kiện ngoài index
             alert()->success('Người dùng đã được xóa', 'Thành công');
+            return redirect()->to('user')->with('delete-success', 'Xóa thành công');
         }
-        return redirect()->to('user')->with('delete-success', 'Xóa thành công');
     }
 
     public function changeStatus(Request $request)

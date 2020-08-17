@@ -179,7 +179,6 @@ class PeerAssessmentController extends Controller
 
 
 
-
         $checkIdPlan = $request->get('id_plan');
         // echo "id_plan=".$checkIdPlan;
         $checkIdRoleAssess = $currentRole;
@@ -189,7 +188,6 @@ class PeerAssessmentController extends Controller
             //id_answer_questions
             $idAnswerQuestions = $request->get('id_answer_questions_' . $item->questionId);
             foreach ($idAnswerQuestions as $answer) {
-                var_dump($answer);
 
                 $resultData[] = array(
                     'id_plan' => $checkIdPlan,
@@ -197,12 +195,34 @@ class PeerAssessmentController extends Controller
                     'id_role_assess' => $checkIdRoleAssess,
                     'id_answer_questions' => $answer,
                     'id_question_forms' => $item->questionId,
+                    'description_assessment' => $request->get('description_assessment'),
                     'created_at' => now(),
                     'updated_at' => now()
                 );
             }
         }
+
+        //chưa check được
+        alert()->success('Đã đánh giá', 'Thành công');
         DB::table('result_assessments')->insert($resultData);
+        return redirect()->to('peer-assessment/create')->with('assessment-success', 'Đánh giá thành công');
+
+        // foreach ($result as $resultValue) {
+        //     if (
+        //         $resultValue->id_role_assess == $checkIdRoleAssess
+        //         && $resultValue->id_role_beassessed == $checkIdRoleBeassessed
+        //         && $resultValue->id_plan == $checkIdPlan
+        //         && $resultValue->id_question_forms == $listQuestion[0]->questionId
+        //     ) {
+        //         alert()->success('Đã đánh giá', 'Thành công');
+        //         return redirect()->to('peer-assessment/create')->with('assessment-success', 'Đánh giá thành công');
+        //     } else {
+        //         alert()->warning('Người dùng này bạn đã đánh giá', 'Vui lòng đánh giá người khác');
+        //         DB::table('result_assessments')->insert($resultData);
+        //         return redirect()->to('peer-assessment/create')->with('submit-failed', 'Bạn đã đánh giá người này');
+        //     }
+        // }
+
     }
 
     /**

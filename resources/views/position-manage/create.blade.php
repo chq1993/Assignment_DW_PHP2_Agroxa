@@ -50,17 +50,17 @@
               <div class="form-group col-md-6">
                 <label for="descrtion_position">Cấp độ của chức vụ</label>
                 <div>
-                  <input type="number" name="level_position" id="level_position" class="form-control" placeholder="Nhập cấp độ của vai trò" />
+                  <input type="number" name="level_position" id="level_position" class="form-control" placeholder="Nhập cấp độ của vai trò" required/>
                 </div>
               </div>
             </div>
             <div class="form-group">
               <label for="descrtion_position">Miêu tả thêm</label>
               <div>
-                <input type="text" name="descrtion_position" id="descrtion_position" class="form-control" placeholder="Nhập thông tin thêm" />
+                <input type="text" name="descrtion_position" id="descrtion_position" class="form-control" placeholder="Nhập thông tin thêm" required/>
               </div>
             </div>
-            
+
             <div class="form-group">
               <div>
                 <button type="submit" class="btn btn-primary waves-effect waves-light">
