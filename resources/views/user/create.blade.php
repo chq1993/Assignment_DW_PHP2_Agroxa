@@ -124,7 +124,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4"><label for="slbUserType">Loại người dùng</label>
-                                        <select name="slbUserType" id="slbUserType" class="form-control">
+                                        <select name="slbUserType" id="slbUserType" class="form-control" required>
                                             <option value="">--- Chọn quyền ---</option>
                                             <option value="1">User</option>
                                             <option value="2">Admin</option>

@@ -58,8 +58,7 @@ class DivisionManageController extends Controller
      */
     public function store(Request $request)
     {
-        //Hiển thị thông báo check với điều kiện ngoài index
-        alert()->success('Đơn vị được thêm mới', 'Thành công');
+
 
         $request->validate([
             'name_division' => 'required|max:255',
@@ -74,8 +73,11 @@ class DivisionManageController extends Controller
             'kind_division' => $request->get('kind_division'),
             'division_level' => $request->get('division_level')
         ]);
-        $division->save();
-        return redirect('division-manage')->with('create-success', 'Thêm mới đơn vị thành công !');
+        if ($division->save()) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Đơn vị được thêm mới', 'Thành công');
+            return redirect('division-manage')->with('create-success', 'Thêm mới đơn vị thành công !');
+        }
     }
 
     /**
@@ -110,8 +112,7 @@ class DivisionManageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //Hiển thị thông báo check với điều kiện ngoài index
-        alert()->success('Câu hỏi được cập nhật', 'Thành công');
+
 
         $request->validate([
             'name_division' => 'required|max:255',
@@ -126,7 +127,12 @@ class DivisionManageController extends Controller
         $division->kind_division = $request->get('kind_division');
         $division->division_level = $request->get('division_level');
         $division->save();
-        return redirect('division-manage')->with('update-success', 'Cập nhật đơn vị thành công!');
+
+        if ($division->save()) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Đơn vị được cập nhật', 'Thành công');
+            return redirect('division-manage')->with('update-success', 'Cập nhật đơn vị thành công!');
+        }
     }
 
     /**
@@ -137,12 +143,14 @@ class DivisionManageController extends Controller
      */
     public function destroy($id)
     {
-        //Hiển thị thông báo check với điều kiện ngoài index
-        alert()->success('Câu hỏi được xóa', 'Thành công');
 
         $division = Division::find($id);
-        $division->delete();
 
-        return redirect('division-manage')->with('delete-success', 'Xóa đơn vị thành công!');
+
+        if ($division->delete()) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Đơn vị được xóa', 'Thành công');
+            return redirect('division-manage')->with('delete-success', 'Xóa đơn vị thành công!');
+        }
     }
 }

@@ -28,7 +28,7 @@ function doughnutChartUser() {
                 "label": "Biểu đồ đánh giá tiến độ công việc",
                 // thang điểm = 5
                 "data": [70, 30],
-                "backgroundColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)"]
+                "backgroundColor": ["rgb(16, 150, 24)", "rgb(220, 57, 18)"]
             }]
         }
     });
@@ -64,6 +64,55 @@ function lineChart() {
                     "pointBorderColor": "#fff",
                     "pointHoverBackgroundColor": "#fff",
                     "pointHoverBorderColor": "rgb(54, 162, 235)"
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                // text: 'Chart.js Doughnut Chart'
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        }
+    });
+}
+function lineChartUser() {
+
+    let lineChartUser = document.getElementById('lineChartUser')
+
+    new Chart(lineChartUser, {
+        type: 'radar',
+        data: {
+            labels: ["Quán lý", "Phân tích", "Đưa ra ý kiến", "Logic", "Giao tiếp"],
+            datasets: [
+                {
+                    "label": "Năng lực 1",
+                    "data": [65, 59, 100, 81, 56],
+                    "fill": true,
+                    "backgroundColor": "rgba(16, 150, 24, 0.2)",
+                    "borderColor": "rgb(16, 150, 24)",
+                    "pointBackgroundColor": "rgb(16, 150, 24)",
+                    "pointBorderColor": "#fff",
+                    "pointHoverBackgroundColor": "#fff",
+                    "pointHoverBorderColor": "rgb(16, 150, 24)"
+                },
+                {
+                    "label": "Năng lực 2",
+                    "data": [28, 48, 40, 19, 96],
+                    "fill": true,
+                    "backgroundColor": "rgba(220, 57, 18, 0.2)",
+                    "borderColor": "rgb(220, 57, 18)",
+                    "pointBackgroundColor": "rgb(220, 57, 18)",
+                    "pointBorderColor": "#fff",
+                    "pointHoverBackgroundColor": "#fff",
+                    "pointHoverBorderColor": "rgb(220, 57, 18)"
                 }
             ]
         },

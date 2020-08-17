@@ -16,6 +16,53 @@ class SuperiorAssessmentController extends Controller
      */
     public function index()
     {
+        $result_assessments = DB::table('result_assessments');
+
+
+        $result_assessments = $result_assessments->paginate(10);
+
+        $user = auth()->user();
+
+        $resultBeassessed = DB::table('result_assessments')
+            ->join('roles', 'result_assessments.id_role_beassessed', '=', 'roles.id')
+            ->join('positions', 'roles.id_position', '=', 'positions.id')
+            ->join('divisions', 'roles.id_division', '=', 'divisions.id')
+            ->join('user', 'roles.id_user', '=', 'user.id')
+            ->select(
+                'divisions.name_division',
+                'positions.name_position',
+                'user.id',
+                'user.fullname'
+            )
+            ->where([
+                ['result_assessments.id_role_beassessed', '!=', $user->id]
+            ])
+            ->get();
+        // dd($resultBeassessed);
+        $resultAssess = DB::table('result_assessments')
+            ->join('roles', 'result_assessments.id_role_assess', '=', 'roles.id')
+            ->join('divisions', 'roles.id_division', '=', 'divisions.id')
+            ->join('positions', 'roles.id_position', '=', 'positions.id')
+            ->join('user', 'roles.id_user', '=', 'user.id')
+            ->select(
+                'divisions.name_division',
+                'positions.name_position',
+                'user.id',
+                'user.fullname'
+            )
+            ->where([
+                ['result_assessments.id_role_assess', '!=', $user->id]
+            ])
+            ->get();
+        // dd(array_unique($resultAssess));
+
+
+
+        return view('superior-assessment.index', [
+            'resultAssess' => $resultAssess,
+            'resultBeassessed' => $resultBeassessed,
+            'result_assessments' => $result_assessments
+        ]);
     }
 
     /**
@@ -212,7 +259,42 @@ class SuperiorAssessmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $resultBeassessed = DB::table('result_assessments')
+            ->join('roles', 'result_assessments.id_role_beassessed', '=', 'roles.id')
+            ->join('positions', 'roles.id_position', '=', 'positions.id')
+            ->join('divisions', 'roles.id_division', '=', 'divisions.id')
+            ->join('user', 'roles.id_user', '=', 'user.id')
+            ->select(
+                'divisions.name_division',
+                'positions.name_position',
+                'user.id',
+                'user.fullname'
+            )
+            ->where('result_assessments.id_role_beassessed', '=', 'user.id')
+            ->get();
+
+        $resultAssess = DB::table('result_assessments')
+            ->join('roles', 'result_assessments.id_role_assess', '=', 'roles.id')
+            ->join('positions', 'roles.id_position', '=', 'positions.id')
+            ->join('divisions', 'roles.id_division', '=', 'divisions.id')
+            ->join('user', 'roles.id_user', '=', 'user.id')
+            ->select(
+                'divisions.name_division',
+                'positions.name_position',
+                'user.id',
+                'user.fullname'
+            )
+            ->where('result_assessments.id_role_assess', '=', 'user.id')
+            ->get();
+
+
+
+
+        // $result = $result->paginate(10)->appends(request()->query());
+        return view('superior-assessment.show', [
+            'resultAssess' => $resultAssess,
+            'resultBeassessed' => $resultBeassessed
+        ]);
     }
 
     /**

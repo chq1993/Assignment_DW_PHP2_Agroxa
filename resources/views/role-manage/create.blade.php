@@ -5,7 +5,7 @@
     <div class="col-sm-12">
         <div class="page-title-box">
             <h4>
-                <span>Thêm mới vai trò cho người dùng</span>
+                <span>Quản lý cấu hình</span>
                 <i class="fas fa-caret-down ml-1"></i>
             </h4>
             <ol class="breadcrumb">
@@ -47,7 +47,7 @@
                             <!-- Bắt đầu div form-row !-->
                             <div class="form-group col-md-4">
                                 <label for="slbUser">Chọn người dùng</label>
-                                <select name="slbUser" id="slbUser" class="form-control">
+                                <select name="slbUser" id="slbUser" class="form-control" required>
                                     <option value="">--Chọn người dùng--</option>
                                     @foreach($user as $user)
                                     <option value="{{ $user->id }}">{{ $user->fullname }}</option>
@@ -57,7 +57,7 @@
 
                             <div class="form-group col-md-4">
                                 <label for="slbDivision">Chọn đơn vị</label>
-                                <select name="slbDivision" id="slbDivision" class="form-control">
+                                <select name="slbDivision" id="slbDivision" class="form-control" required>
                                     <option value="">--Chọn đơn vị--</option>
                                     @foreach($division as $division)
                                     <option value="{{ $division->id }}">{{ $division->name_division }}</option>
@@ -65,8 +65,8 @@
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="slbPosition">Chọn đơn vị</label>
-                                <select name="slbPosition" id="slbPosition" class="form-control">
+                                <label for="slbPosition">Chọn chức vụ</label>
+                                <select name="slbPosition" id="slbPosition" class="form-control" required>
                                     <option value="">--Chọn chức vụ--</option>
                                     @foreach($position as $position)
                                     <option value="{{ $position->id }}">{{ $position->name_position }}</option>
@@ -81,8 +81,7 @@
                                 <label>Vai trò này chiếm số % công việc:</label>
                                 <div>
                                     <input data-parsley-type="number" type="text" name="txtPercentageOfRole"
-                                        id="txtPercentageOfRole" class="form-control" required
-                                        placeholder="Nhập số phần trăm" />
+                                        id="txtPercentageOfRole" class="form-control" required placeholder="vd: 65.5" />
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
@@ -93,7 +92,7 @@
                             <div class="form-group col-md-4">
                                 <label>Ngày kết thúc vai trò này</label>
                                 <input type="date" class="form-control" name="dateEndTime" id="dateEndTime"
-                                    placeholder="Nhập ngày kết thúc vai trò này nếu vẫn đang làm thì bỏ trống" />
+                                    placeholder="Nhập ngày kết thúc vai trò này nếu vẫn đang làm thì bỏ trống" required/>
                             </div>
                         </div> <!-- Kết thúc div form-row !-->
                         <div class="form-group">
