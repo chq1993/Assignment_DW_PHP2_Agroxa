@@ -16,6 +16,54 @@ class PeerAssessmentController extends Controller
      */
     public function index()
     {
+        $result_assessments = DB::table('result_assessments');
+
+
+        $result_assessments = $result_assessments->paginate(10);
+
+        $user = auth()->user();
+
+
+        $resultBeassessed = DB::table('result_assessments')
+            ->join('roles', 'result_assessments.id_role_beassessed', '=', 'roles.id')
+            ->join('positions', 'roles.id_position', '=', 'positions.id')
+            ->join('divisions', 'roles.id_division', '=', 'divisions.id')
+            ->join('user', 'roles.id_user', '=', 'user.id')
+            ->select(
+                'divisions.name_division',
+                'positions.name_position',
+                'user.id',
+                'user.fullname'
+            )
+            ->where([
+                ['result_assessments.id_role_beassessed', '!=', $user->id]
+            ])
+            ->get();
+        // dd($resultBeassessed);
+        $resultAssess = DB::table('result_assessments')
+            ->join('roles', 'result_assessments.id_role_assess', '=', 'roles.id')
+            ->join('divisions', 'roles.id_division', '=', 'divisions.id')
+            ->join('positions', 'roles.id_position', '=', 'positions.id')
+            ->join('user', 'roles.id_user', '=', 'user.id')
+            ->select(
+                'divisions.name_division',
+                'positions.name_position',
+                'user.id',
+                'user.fullname'
+            )
+            ->where([
+                ['result_assessments.id_role_assess', '!=', $user->id]
+            ])
+            ->get();
+        // dd(array_unique($resultAssess));
+
+
+
+        return view('peer-assessment.index', [
+            'resultAssess' => $resultAssess,
+            'resultBeassessed' => $resultBeassessed,
+            'result_assessments' => $result_assessments
+        ]);
     }
 
     /**
@@ -132,6 +180,7 @@ class PeerAssessmentController extends Controller
      */
     public function store(Request $request)
     {
+
         /* Lấy tất cả câu hỏi và đáp án được đánh giá  */
         $listQuestion = DB::table('question_forms')
             ->join('questions', 'question_forms.id_question', '=', 'questions.id')
@@ -187,8 +236,8 @@ class PeerAssessmentController extends Controller
         foreach ($listQuestion as $item) {
             //id_answer_questions
             $idAnswerQuestions = $request->get('id_answer_questions_' . $item->questionId);
-            foreach ($idAnswerQuestions as $answer) {
 
+            foreach ($idAnswerQuestions as $answer) {
                 $resultData[] = array(
                     'id_plan' => $checkIdPlan,
                     'id_role_beassessed' => $checkIdRoleBeassessed,
@@ -202,7 +251,18 @@ class PeerAssessmentController extends Controller
             }
         }
 
-        //chưa check được
+        foreach ($result as  $item) {
+            if (
+                $item->id_role_assess == $checkIdRoleAssess
+                && $item->id_role_beassessed == $checkIdRoleBeassessed
+                && $item->id_plan == $checkIdPlan
+                && $item->id_question_forms == $listQuestion[0]->questionId
+            ) {
+                DB::table('result_assessments')->where('id_role_assess', $checkIdRoleAssess)->delete();
+            }
+        }
+
+        // mới check để xóa bản ghi trùng chưa hiển thị người dùng biết
         alert()->success('Đã đánh giá', 'Thành công');
         DB::table('result_assessments')->insert($resultData);
         return redirect()->to('peer-assessment/create')->with('assessment-success', 'Đánh giá thành công');
@@ -233,7 +293,42 @@ class PeerAssessmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $resultBeassessed = DB::table('result_assessments')
+            ->join('roles', 'result_assessments.id_role_beassessed', '=', 'roles.id')
+            ->join('positions', 'roles.id_position', '=', 'positions.id')
+            ->join('divisions', 'roles.id_division', '=', 'divisions.id')
+            ->join('user', 'roles.id_user', '=', 'user.id')
+            ->select(
+                'divisions.name_division',
+                'positions.name_position',
+                'user.id',
+                'user.fullname'
+            )
+            ->where('result_assessments.id_role_beassessed', '=', 'user.id')
+            ->get();
+
+        $resultAssess = DB::table('result_assessments')
+            ->join('roles', 'result_assessments.id_role_assess', '=', 'roles.id')
+            ->join('positions', 'roles.id_position', '=', 'positions.id')
+            ->join('divisions', 'roles.id_division', '=', 'divisions.id')
+            ->join('user', 'roles.id_user', '=', 'user.id')
+            ->select(
+                'divisions.name_division',
+                'positions.name_position',
+                'user.id',
+                'user.fullname'
+            )
+            ->where('result_assessments.id_role_assess', '=', 'user.id')
+            ->get();
+
+
+
+
+        // $result = $result->paginate(10)->appends(request()->query());
+        return view('peer-assessment.show', [
+            'resultAssess' => $resultAssess,
+            'resultBeassessed' => $resultBeassessed
+        ]);
     }
 
     /**
@@ -267,6 +362,13 @@ class PeerAssessmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // $resultAssessment = DB::table('result_assessments')
+        //     ->select('id', $id)
+        //     ->get();
+        // if ($resultAssessment->delete()) {
+
+        //     alert()->success('Đánh giá được xóa', 'Thành công');
+        //     return redirect('peer-assessment')->with('delete-success', 'Xóa đánh giá thành công!');
+        // }
     }
 }

@@ -90,7 +90,7 @@
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <div class="notify-icon bg-primary"><i class="mdi mdi-cart-outline"></i></div>
                                     <p class="notify-details">Your order is placed<span class="text-muted">Dummy text of
-                                    the printing and
+                                            the printing and
                                             typesetting industry.</span></p>
                                 </a>
                                 <!-- item-->
@@ -216,6 +216,19 @@
                                 <li><a href="{{ route('question-manage.index') }}">Quản lý câu hỏi</a></li>
                                 <li><a href="{{ route('form-manage.index') }}">Quản lý mẫu phiếu</a></li>
                                 <li><a href="{{ route('answer-manage.index') }}">Quản lý câu trả lời</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="waves-effect"><i class="fas fa-folder-open"></i>
+                                <span>Quản lý đánh giá
+                                    <span class="float-right menu-arrow"><i class="mdi mdi-plus"></i></span>
+                                </span>
+                            </a>
+                            <ul class="submenu">
+                                <li><a href="{{ route('peer-assessment.index') }}">Đánh giá đồng cấp</a></li>
+                                <li><a href="{{ route('subordinate-assessment.index') }}">Đánh giá cấp dưới</a></li>
+                                <li><a href="{{ route('superior-assessment.index') }}">Đánh giá cấp trên</a></li>
+
                             </ul>
                         </li>
                         @else
