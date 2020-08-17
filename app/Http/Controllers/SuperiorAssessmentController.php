@@ -112,7 +112,7 @@ class SuperiorAssessmentController extends Controller
         /* Lấy tất cả kế hoạch đánh giá  */
         $listPlan = DB::table('plans')
             ->get();
-        // dd($listPlan);
+        // dd($listPlan);xam
 
 
 
