@@ -69,7 +69,7 @@
                                         <label>Tên đăng nhập</label>
                                         <input type="text" class="form-control" name="txtUserName"
                                             value="{{ $user->username }}" id="txtUserName" required
-                                            placeholder="Nhập tên đăng nhập" />
+                                            placeholder="Nhập tên đăng nhập" required/>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label>Mật khẩu</label>
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="form-group" >
                                     <label for="slbUserType">Loại người dùng</label>
-                                    <select name="slbUserType" id="slbUserType" class="form-control">
+                                    <select name="slbUserType" id="slbUserType" class="form-control" required>
                                         <option value="">--- Chọn quyền ---</option>
                                         <option value="1">User</option>
                                         <option value="2">Admin</option>
@@ -108,7 +108,7 @@
 
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary waves-effect waves-light"
-                                        style="margin-top: 15px;">Thêm mới</button>
+                                        style="margin-top: 15px;">Lưu</button>
                                     <button type="reset" class="btn btn-secondary waves-effect m-l-5"
                                         style="margin-top: 15px;">
                                         Xóa thông tin

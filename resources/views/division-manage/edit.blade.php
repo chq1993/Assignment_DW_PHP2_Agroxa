@@ -74,7 +74,7 @@
             <div class="form-group">
               <div>
                 <button type="submit" class="btn btn-primary waves-effect waves-light">
-                  Thêm mới
+                  Lưu
                 </button>
                 <button type="reset" class="btn btn-secondary waves-effect m-l-5">
                   Xóa thông tin

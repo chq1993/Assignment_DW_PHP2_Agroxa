@@ -43,8 +43,7 @@ class PositionManageController extends Controller
      */
     public function store(Request $request)
     {
-        //Hiển thị thông báo check với điều kiện ngoài index
-        alert()->success('Chức vụ được thêm mới', 'Thành công');
+
 
         $request->validate([
             'name_position' => 'required|max:255',
@@ -56,8 +55,11 @@ class PositionManageController extends Controller
             'descrtion_position' => $request->get('descrtion_position'),
             'level_position' => $request->get('level_position')
         ]);
-        $position->save();
-        return redirect('position-manage')->with('create-success', 'Chức vụ tạo thành công !');
+
+        if ($position->save()) {
+            alert()->success('Chức vụ được thêm mới', 'Thành công');
+            return redirect('position-manage')->with('create-success', 'Chức vụ tạo thành công !');
+        }
     }
 
     /**
@@ -104,9 +106,11 @@ class PositionManageController extends Controller
         $position->name_position = $request->get('name_position');
         $position->descrtion_position = $request->get('descrtion_position');
         $position->level_position = $request->get('level_position');
-        $position->save();
 
-        return redirect('position-manage')->with('update-success', 'Cập nhật chức vụ thành công');
+
+        if ($position->save()) {
+            return redirect('position-manage')->with('update-success', 'Cập nhật chức vụ thành công');
+        }
     }
 
     /**
@@ -121,7 +125,9 @@ class PositionManageController extends Controller
         alert()->success('Mẫu phiếu được xóa', 'Thành công');
 
         $position = Position::find($id);
-        $position->delete();
-        return redirect('position-manage')->with('delete-success', 'Xóa chức vụ thành công !');
+
+        if ($position->delete()) {
+            return redirect('position-manage')->with('delete-success', 'Xóa chức vụ thành công !');
+        }
     }
 }

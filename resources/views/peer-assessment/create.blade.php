@@ -9,7 +9,7 @@
                 <i class="fas fa-caret-down ml-1"></i>
             </h4>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="/dashboard">Trang chủ</a></li>
                 {{-- <li class="breadcrumb-item"><a href="{{ route('division-manage.index') }}">Mẫu đánh giá</a></li>
                 --}}
                 <li class="breadcrumb-item active">Mẫu đánh giá</li>
@@ -38,6 +38,13 @@
                             @endforeach
                         </ul>
                     </div>
+                    @endif
+
+                    @if (session()->get('assessment-success'))
+                    @include('sweetalert::alert')
+                    @endif
+                    @if (session()->get('submit-failed'))
+                    @include('sweetalert::alert')
                     @endif
 
                     <form action="{{ route('peer-assessment.store') }}" method="POST">

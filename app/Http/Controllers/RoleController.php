@@ -25,10 +25,23 @@ class RoleController extends Controller
             ->join('user', 'roles.id_user', '=', 'user.id')
             ->join('positions', 'roles.id_position', '=', 'positions.id')
             ->join('divisions', 'roles.id_division', '=', 'divisions.id')
-            ->select('roles.id', 'roles.created_at', 'roles.updated_at', 'roles.percentageOfRole', 'roles.start_time', 'roles.end_time', 'divisions.name_division', 'positions.name_position', 'user.username', 'user.fullname')
+            ->select(
+                'roles.id',
+                'roles.created_at',
+                'roles.updated_at',
+                'roles.percentageOfRole',
+                'roles.start_time',
+                'roles.end_time',
+                'divisions.name_division',
+                'positions.name_position',
+                'user.username',
+                'user.fullname'
+            )
             ->get();
 
-        return view('role-manage.index', compact('role'));
+        return view('role-manage.index', [
+            'role' => $role
+        ]);
     }
 
     /**
@@ -53,8 +66,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //Hiển thị thông báo check với điều kiện ngoài index
-        alert()->success('Cấu hình người dùng', 'Thành công');
+
 
         $slbUser = $request->get("slbUser");
         $slbDivision = $request->get("slbDivision");
@@ -72,8 +84,11 @@ class RoleController extends Controller
             'end_time' => $dateEndTime,
         ]);
 
-        $obj->save();
-        return Redirect('role-manage')->with('create-success', 'Thêm mới vai trò cho người dùng thành công!');
+        if ($obj->save()) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Cấu hình người dùng', 'Thành công');
+            return Redirect('role-manage')->with('create-success', 'Thêm mới vai trò cho người dùng thành công!');
+        }
     }
 
     /**
@@ -96,11 +111,11 @@ class RoleController extends Controller
     public function edit($id)
     {
         // $role = Role::find($id);
-        $role = DB::table('roles')->join('user', 'roles.id_user', '=', 'user.id')->join('positions', 'roles.id_position', '=', 'positions.id')->join('divisions', 'roles.id_division', '=', 'divisions.id')->select('roles.id','roles.id_user','roles.id_position','roles.id_division','roles.created_at','roles.updated_at','roles.percentageOfRole', 'roles.start_time', 'roles.end_time', 'divisions.name_division', 'positions.name_position', 'user.username', 'user.fullname')->where('roles.id', $id)->first();
+        $role = DB::table('roles')->join('user', 'roles.id_user', '=', 'user.id')->join('positions', 'roles.id_position', '=', 'positions.id')->join('divisions', 'roles.id_division', '=', 'divisions.id')->select('roles.id', 'roles.id_user', 'roles.id_position', 'roles.id_division', 'roles.created_at', 'roles.updated_at', 'roles.percentageOfRole', 'roles.start_time', 'roles.end_time', 'divisions.name_division', 'positions.name_position', 'user.username', 'user.fullname')->where('roles.id', $id)->first();
         $user = User::all();
         $division = Division::all();
         $position = Position::all();
-        return view('role-manage.edit', compact('role', 'user', 'division','position'));
+        return view('role-manage.edit', compact('role', 'user', 'division', 'position'));
     }
 
     /**
@@ -121,16 +136,19 @@ class RoleController extends Controller
         $dateStartTime = $request->get("dateStartTime");
         $dateEndTime = $request->get("dateEndTime");
 
-        $role->id_user= $slbUser;
-        $role->id_division= $slbDivision;
-        $role->id_position= $slbPosition;
-        $role->percentageOfRole= $txtPercentageOfRole;
-        $role->start_time= $dateStartTime;
-        $role->end_time= $dateEndTime;
+        $role->id_user = $slbUser;
+        $role->id_division = $slbDivision;
+        $role->id_position = $slbPosition;
+        $role->percentageOfRole = $txtPercentageOfRole;
+        $role->start_time = $dateStartTime;
+        $role->end_time = $dateEndTime;
 
 
-        $role->save();
-        return redirect()->to('role-manage')->with("message", "Sửa thông tin người dùng thành công");
+        if ($role->save()) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Cấu hình người dùng cập nhật', 'Thành công');
+            return redirect()->to('role-manage')->with("update-success", "Cấu hình người dùng cập nhật thành công");
+        }
     }
 
     /**
@@ -141,12 +159,14 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //Hiển thị thông báo check với điều kiện ngoài index
-        alert()->success('Cấu hình được xóa', 'Thành công');
+
 
         $role = Role::find($id);
-        $role->delete();
 
-        return redirect('role-manage')->with('delete-success', 'Xóa cấu hình người dùng thành công!');
+        if ($role->delete()) {
+            //Hiển thị thông báo check với điều kiện ngoài index
+            alert()->success('Cấu hình đã xóa', 'Thành công');
+            return redirect('role-manage')->with('delete-success', 'Xóa cấu hình người dùng thành công!');
+        }
     }
 }

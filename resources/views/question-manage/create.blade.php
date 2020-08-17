@@ -49,7 +49,7 @@
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label class="mr-sm-2" for="group_question">Nhóm câu hỏi</label>
-                <select class="custom-select mr-sm-2" name="group_question" id="group_question">
+                <select class="custom-select mr-sm-2" name="group_question" id="group_question" required>
                   <option value="1" selected>Giải quyết vấn đề</option>
                   <option value="2">Làm việc nhóm</option>
                   <option value="3">Giao tiếp</option>
@@ -62,7 +62,7 @@
 
               <div class="form-group col-md-4">
                 <label for="kind_question">Loại câu hỏi</label>
-                <select class="custom-select mr-sm-2" name="kind_question" id="kind_question">
+                <select class="custom-select mr-sm-2" name="kind_question" id="kind_question" required>
                   <option value="0" selected>Nhập</option>
                   <option value="1">Lựa chọn</option>
                 </select>
@@ -70,7 +70,7 @@
 
               <div class="form-group col-md-4">
                 <label class="mr-sm-2" for="required_question">Câu hỏi bắt buộc</label>
-                <select class="custom-select mr-sm-2" name="required_question" id="required_question">
+                <select class="custom-select mr-sm-2" name="required_question" id="required_question" required>
                   <option value="1" selected>Bắt buộc</option>
                   <option value="0">Không bắt buộc</option>
                 </select>

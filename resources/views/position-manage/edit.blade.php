@@ -49,7 +49,7 @@
               <div class="form-group col-md-6">
                 <label for="descrtion_position">Cấp độ của chức vụ</label>
                 <div>
-                  <input type="number" name="level_position" id="level_position" class="form-control" value="{{ $position->level_position }}" placeholder="Nhập cấp độ của vai trò" />
+                  <input type="number" name="level_position" id="level_position" class="form-control" value="{{ $position->level_position }}" placeholder="Nhập cấp độ của vai trò" required/>
                 </div>
               </div>
             </div>

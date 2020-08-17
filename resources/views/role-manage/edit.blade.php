@@ -59,30 +59,37 @@
                         <div class="form-row">
                             <!-- Bắt đầu div form-row !-->
                             <div class="form-group col-md-4">
-                                <label for="slbUser">Chọn người dùng</label>
-                                <select name="slbUser" id="slbUser" class="form-control">
+                                <label for="slbUser">Tên người dùng</label>
+                                <select name="slbUser" id="slbUser" class="form-control" required>
                                     <option value="{{ $role->id_user }}">{{ $role->fullname }}</option>
-                                    @foreach($user as $user)
-                                    <option value="{{ $user->id }}">{{ $user->fullname }}</option>
-                                    @endforeach
                                 </select>
                             </div>
 
                             <div class="form-group col-md-4">
                                 <label for="slbDivision">Chọn đơn vị</label>
                                 <select name="slbDivision" id="slbDivision" class="form-control">
-                                    <option value="{{ $role->id_division }}">{{ $role->name_division }}</option>
-                                    @foreach($division as $division)
-                                    <option value="{{ $division->id }}">{{ $division->name_division }}</option>
+                                    @foreach($division as $item)
+                                    @if ($role->id_division == $item->id)
+                                    <option value="{{ $item->id }}" selected={{$role->id_division == $item->id}}>
+                                        {{ $item->name_division }}</option>
+                                    @else
+                                    <option value="{{ $item->id }}">{{ $item->name_division }}</option>
+                                    @endif
                                     @endforeach
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="slbPosition">Chọn đơn vị</label>
                                 <select name="slbPosition" id="slbPosition" class="form-control">
-                                    <option value="{{ $role->id_position }}">{{ $role->name_position }}</option>
-                                    @foreach($position as $position)
-                                    <option value="{{ $position->id }}">{{ $position->name_position }}</option>
+                                    @foreach($position as $item)
+                                    @if ($role->id_position == $item->id)
+                                    <option value="{{ $item->id }}" selected={{$role->id_position == $item->id}}>
+                                        {{ $item->name_position }}
+                                    </option>
+                                    @else
+                                    <option value="{{ $item->id }}">{{ $item->name_position }}</option>
+                                    @endif
+
                                     @endforeach
                                 </select>
                             </div>
