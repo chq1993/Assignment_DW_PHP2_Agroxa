@@ -39,6 +39,8 @@ Route::group(['middleware' => 'check_auth'], function () {
     // public
     //copy k sửa a
     Route::resource('peer-assessment', 'PeerAssessmentController');
+    Route::resource('subordinate-assessment', 'SubordinateAssessmentController');
+    Route::resource('superior-assessment', 'SuperiorAssessmentController');
     // Route::resource('subordinate-assessment', 'ConfigQuestionController');
     // Route::resource('superior-assessment', 'ConfigQuestionController');
     Route::post('user/updaterole', 'UserController@updaterole')->name('user.updaterole');
