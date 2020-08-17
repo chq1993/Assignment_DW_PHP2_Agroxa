@@ -42,6 +42,7 @@
                     @if (session()->get('update-success'))
                     @include('sweetalert::alert')
                     @endif
+
                     @if (session()->get('delete-success'))
                     @include('sweetalert::alert')
                     @endif --}}
@@ -52,49 +53,13 @@
                                 <thead>
                                     <tr style="background-color: #35a989" class="shadow-sm text-white">
                                         <td>ID</td>
-                                        <td>Đơn vị</td>
-                                        <td>Chức vụ</td>
                                         <td>Người đánh giá</td>
                                         <td>Người được đánh giá</td>
-                                        <td>Thời gian đánh giá</td>
-                                        <td colspan=2>Hành động</td>
+                                        <td>Mẫu phiếu</td>
                                     </tr>
                                 </thead>
-                                {{-- @php
-                                $array = json_decode(json_encode($resultAssess), true);
-                                foreach ($array as $key => $arrayResultAssess) {
-                                $resultAssess_unique = array_unique($arrayResultAssess);
-                                dd($resultAssess_unique);
-                                }
-                                @endphp --}}
                                 <tbody>
-                                    @foreach ($result_assessments as $key => $item)
-                                    <tr>
-                                        <td>{{$key+1}}</td>
-                                        {{-- @foreach ($resultAssess as $item) --}}
-                                        {{-- <td>{{$item->name_division}}</td> --}}
-                                        {{-- @endforeach --}}
-                                        <td>Trạm y tế</td>
-                                        <td>Chuyên viên</td>
-                                        <td>Nguyễn A</td>
-                                        <td>Nguyễn B</td>
-                                        <td>2020</td>
-                                        <td>
-                                            <div class="d-flex">
-                                                <a href="{{ route('peer-assessment.show', ['peer_assessment' => $item->id]) }}"
-                                                    class="btn btn-outline-primary waves-effect waves-light mr-2"><i
-                                                        class="far fa-edit"></i></a>
-                                                <form action="{{ route('peer-assessment.destroy', $item->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-outline-danger waves-effect waves-light"
-                                                        type="submit"><i class="far fa-trash-alt"></i></button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach
+
                                 </tbody>
                             </table>
                         </div>
@@ -102,7 +67,7 @@
                     </div>
 
                     <div class="d-flex justify-content-center mt-4">
-                        {{$result_assessments -> links()}}
+
                     </div>
 
                 </div>
