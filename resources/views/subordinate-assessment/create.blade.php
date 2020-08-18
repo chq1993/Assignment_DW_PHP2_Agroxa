@@ -38,6 +38,13 @@
                             @endforeach
                         </ul>
                     </div>
+
+                    @endif
+                    @if (session()->get('assessment-success'))
+                    @include('sweetalert::alert')
+                    @endif
+                    @if (session()->get('submit-failed'))
+                    @include('sweetalert::alert')
                     @endif
 
                     <form action="{{ route('subordinate-assessment.store') }}" method="POST">
