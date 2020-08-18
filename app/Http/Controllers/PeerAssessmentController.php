@@ -236,7 +236,12 @@ class PeerAssessmentController extends Controller
         foreach ($listQuestion as $item) {
             //id_answer_questions
             $idAnswerQuestions = $request->get('id_answer_questions_' . $item->questionId);
-
+            DB::table('result_assessments')->where([
+                ['id_plan', '=', $checkIdPlan],
+                ['id_role_beassessed', '=', $checkIdRoleBeassessed],
+                ['id_role_assess', '=', $checkIdRoleAssess],
+                ['id_question_forms', '=', $item->questionId]
+            ])->delete();
             foreach ($idAnswerQuestions as $answer) {
                 $resultData[] = array(
                     'id_plan' => $checkIdPlan,
@@ -248,17 +253,6 @@ class PeerAssessmentController extends Controller
                     'created_at' => now(),
                     'updated_at' => now()
                 );
-            }
-        }
-
-        foreach ($result as  $item) {
-            if (
-                $item->id_role_assess == $checkIdRoleAssess
-                && $item->id_role_beassessed == $checkIdRoleBeassessed
-                && $item->id_plan == $checkIdPlan
-                && $item->id_question_forms == $listQuestion[0]->questionId
-            ) {
-                DB::table('result_assessments')->where('id_role_assess', $checkIdRoleAssess)->delete();
             }
         }
 

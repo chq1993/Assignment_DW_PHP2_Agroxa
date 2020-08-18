@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <title>Atlantic</title>
+    <title>Assessment</title>
     <meta content="Đánh giá đối tượng" name="description" />
     <meta content="Themesbrand" name="author" />
     <link rel="shortcut icon" href="{{ asset('assets/images/atlantic-ico.ico') }}">
@@ -33,7 +33,7 @@
                 <a href="/dashboard" class="logo">
                     <span>
                         <img src="{{asset('assets/images/atlantic.png')}}" alt="" height="24">
-                        tlantic
+                        ssessment
                     </span>
                     <i>
                         <img src="{{asset('assets/images/atlantic.png')}}" alt="" height="22">
@@ -132,13 +132,7 @@
                                     </br>
                                     <small class="text-muted">Xem thông tin cá nhân </small>
                                 </a>
-                                <a class="dropdown-item" href="#"><i class="mdi mdi-wallet m-r-5"></i> Ví tiền</a>
-                                <a class="dropdown-item d-block" href="#">
-                                    <i class="mdi mdi-settings m-r-5"></i> Cài đặt
-                                    <span class="badge badge-success ml-2 text-center">11</span>
-                                </a>
-                                <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5"></i> Màn
-                                    hình khóa</a>
+
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item text-danger" href="{{ route('user.logout') }}"><i
                                         class="mdi mdi-power text-danger"></i>
