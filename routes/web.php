@@ -16,6 +16,10 @@ Route::get('/', function () {
     return view('layouts.admin');
 });
 
+Route::get('/thunghiem', function () {
+    return view('layouts.thunghiem');
+});
+
 
 Route::get('user/layouts', function () {
     return view('layouts.user');
